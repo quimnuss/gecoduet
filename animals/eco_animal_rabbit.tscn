@@ -1,13 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bf5usju51t3al"]
+[gd_scene load_steps=2 format=3 uid="uid://bf5usju51t3al"]
 
 [ext_resource type="Script" path="res://animals/eco_animal_controller.gd" id="1_458m4"]
-[ext_resource type="Texture2D" path="res://animals/Outline/MiniBunny.png" id="1_o5les"]
 
 [node name="AnimalSprite" type="CharacterBody2D"]
 script = ExtResource("1_458m4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("1_o5les")
 hframes = 4
 vframes = 4

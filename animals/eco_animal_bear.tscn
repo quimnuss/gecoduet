@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://cnht86jg03jk7"]
+[gd_scene load_steps=25 format=3 uid="uid://cnht86jg03jk7"]
 
 [ext_resource type="Script" path="res://animals/eco_animal_controller.gd" id="1_thqoy"]
 [ext_resource type="Texture2D" uid="uid://md4ykrlp1l5g" path="res://art/lifeforms/outline/MiniBear.png" id="2_mfh8p"]
+[ext_resource type="Script" path="res://animals/AnimalRoam.gd" id="3_lpr7p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q3pdq"]
 atlas = ExtResource("2_mfh8p")
@@ -175,3 +176,13 @@ speed_scale = 1.2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_8fap6")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 10.0
+target_desired_distance = 20.0
+debug_enabled = true
+script = ExtResource("3_lpr7p")
+
+[connection signal="navigation_finished" from="NavigationAgent2D" to="NavigationAgent2D" method="_on_navigation_finished"]
+[connection signal="target_reached" from="NavigationAgent2D" to="NavigationAgent2D" method="_on_target_reached"]
+[connection signal="waypoint_reached" from="NavigationAgent2D" to="NavigationAgent2D" method="_on_waypoint_reached"]
