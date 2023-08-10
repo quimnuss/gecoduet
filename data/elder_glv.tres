@@ -1,0 +1,81 @@
+[gd_resource type="JSON" format=3 uid="uid://dpoffsgnannyy"]
+
+[resource]
+data = {
+"bear": {
+"bear": -0.1,
+"none": -0.3,
+"rabbit": 0.3
+},
+"bee": {
+"bee": -0.1,
+"berry": 0.02,
+"bird": -0.5,
+"carrot": 0.1,
+"grass": 0.01,
+"none": -0.05,
+"tree": 0.02
+},
+"berry": {
+"berry": -0.04,
+"bird": 0.1,
+"none": 0.1,
+"worm": -0.01
+},
+"bird": {
+"bird": -0.1,
+"carrot": 0.1,
+"fox": -0.1,
+"none": -0.1,
+"tree": 0.02
+},
+"carrot": {
+"carrot": -0.2,
+"fox": -0.04,
+"none": 1.27,
+"rabbit": -0.3
+},
+"fish": {
+"berry": 0.02,
+"fish": -0.2,
+"none": -0.1,
+"worm": 0.1
+},
+"fox": {
+"bird": 0.1,
+"fox": -0.1,
+"none": -0.05,
+"rabbit": 0.2
+},
+"grass": {
+"grass": -0.04,
+"none": 0.1
+},
+"rabbit": {
+"bear": -0.4,
+"carrot": 0.3,
+"fox": -0.1,
+"none": -0.08,
+"rabbit": -0.1
+},
+"tree": {
+"bee": 0.15,
+"berry": -0.1,
+"bird": -0.3,
+"grass": -0.05,
+"none": 2.1,
+"rabbit": -0.2,
+"tree": -0.4,
+"worm": -0.4
+},
+"worm": {
+"bee": -0.05,
+"berry": 0.2,
+"bird": -0.5,
+"fish": -0.05,
+"grass": 0.1,
+"none": -0.1,
+"tree": 0.3,
+"worm": -0.1
+}
+}

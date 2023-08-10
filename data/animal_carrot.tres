@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="AnimalResource" load_steps=7 format=3 uid="uid://dtdmnet238ny2"]
+
+[ext_resource type="Texture2D" uid="uid://crdbn81g6qxjc" path="res://art/lifeforms/veggies.png" id="1_xsd6p"]
+[ext_resource type="Script" path="res://data/animal_base_resource.gd" id="2_ncvef"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmmbx"]
+atlas = ExtResource("1_xsd6p")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xy1nh"]
+atlas = ExtResource("1_xsd6p")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5d76"]
+atlas = ExtResource("1_xsd6p")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u2jt0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmmbx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xy1nh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5d76")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}]
+
+[resource]
+script = ExtResource("2_ncvef")
+mobility_type = "static"
+animation_frames = SubResource("SpriteFrames_u2jt0")
+name = "carrot"
+species = "carrot"
+scale = 0.2
