@@ -1,35 +1,56 @@
 extends CharacterBody2D
 
-func _ready():
-    set_process(true)
-#    navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
+@export var animal_resource: Resource
+@export var animal_exposed_var : int # trying to expose child exports to the parent export
 
-func _process(delta):
-    if Input.is_action_pressed("ui_exit"):
-        get_tree().quit()
-
-@onready var animation = $AnimatedSprite2D
+@onready var animation : AnimatedSprite2D = $AnimatedSprite2D
 @onready var nav = $NavigationAgent2D
 
-const SPEED = 70.0
+var speed = 70.0
 const JUMP_VELOCITY = -400.0
+var debug = false
+var state = "alive"
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var possessed = false
 
+func _ready():
+#    navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
+    nav.pawn = self
+    set_from_resource()
+
+func set_from_resource():
+    var frames : SpriteFrames = self.animal_resource.animation_frames
+    self.animation.set_sprite_frames(self.animal_resource.animation_frames)
+    self.name = self.animal_resource.name
+    self.set_scale(Vector2(self.animal_resource.scale,self.animal_resource.scale))
+
+func _process(delta):
+    pass
+
+func kill():
+    state = "die"
+    await get_tree().create_timer(2).timeout
+    queue_free()
+
 func updateAnimation():
     var animationString = "idle"
-    if velocity.length_squared() > 0:
-        animationString = "run"
+    if state == "alive":
+        if velocity.length_squared() > 0:
+            animationString = "run"
 
-    if velocity.x < 0:
-        animation.flip_h = true
-    elif velocity.x > 0:
-        animation.flip_h = false
+        if velocity.x < 0:
+            animation.flip_h = true
+        elif velocity.x > 0:
+            animation.flip_h = false
+    else:
+        animationString = "die"
+        velocity = Vector2.ZERO
 
-    animation.play(animationString)
+    if animation.sprite_frames.has_animation(animationString): # silence carrot running for now
+        animation.play(animationString)
 
 func _physics_process(delta):
     # Add the gravity.
@@ -48,23 +69,11 @@ func _physics_process(delta):
         # As good practice, you should replace UI actions with custom gameplay actions.
         var direction = Input.get_vector("ui_left", "ui_right", "ui_down", "ui_up")
         if direction:
-            velocity = direction * SPEED * Vector2(1,-1)
+            velocity = direction * speed * Vector2(1,-1)
         else:
-            velocity = velocity.move_toward(Vector2(0,0), SPEED/10)
+            velocity = velocity.move_toward(Vector2(0,0), speed/10)
     else:
-        if nav.state == "roaming" and nav.is_target_reachable() and not nav.is_target_reached():
-            var target = nav.get_next_path_position()
-            var vel = (target - position).normalized() * SPEED
-            velocity = vel
-#            print_debug("not reached: ", nav.get_final_position(), target, position, velocity)
-        elif not nav.is_target_reachable():
-            print(nav.get_final_position(), " is unreachable. Next pos ", nav.get_next_path_position())
-            velocity = Vector2(0,0)
-            nav.state = "idle"
-        else:
-            # TODO this doesn't reset elapsed and introduces many bugs
-            velocity = Vector2(0,0)
-            nav.state = "idle"
+        pass
 
     updateAnimation()
     move_and_slide()

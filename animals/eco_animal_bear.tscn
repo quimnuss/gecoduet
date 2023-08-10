@@ -1,7 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://cnht86jg03jk7"]
+[gd_scene load_steps=26 format=3 uid="uid://cnht86jg03jk7"]
 
 [ext_resource type="Script" path="res://animals/eco_animal_controller.gd" id="1_thqoy"]
 [ext_resource type="Texture2D" uid="uid://md4ykrlp1l5g" path="res://art/lifeforms/outline/MiniBear.png" id="2_mfh8p"]
+[ext_resource type="Resource" uid="uid://c7srbv0lv4thg" path="res://data/animal_bear.tres" id="2_xkfkv"]
 [ext_resource type="Script" path="res://animals/AnimalRoam.gd" id="3_lpr7p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q3pdq"]
@@ -81,6 +82,7 @@ atlas = ExtResource("2_mfh8p")
 region = Rect2(160, 32, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sl2y3"]
+resource_name = "bear"
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -165,6 +167,7 @@ size = Vector2(20, 10)
 
 [node name="Animal" type="CharacterBody2D"]
 script = ExtResource("1_thqoy")
+animal_resource = ExtResource("2_xkfkv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -176,11 +179,14 @@ speed_scale = 1.2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_8fap6")
+disabled = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 10.0
 target_desired_distance = 20.0
-debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(0.0235294, 1, 1, 0.792157)
+debug_path_custom_point_size = 1.0
 script = ExtResource("3_lpr7p")
 
 [connection signal="navigation_finished" from="NavigationAgent2D" to="NavigationAgent2D" method="_on_navigation_finished"]

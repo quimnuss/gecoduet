@@ -1,6 +1,5 @@
 [gd_scene load_steps=18 format=3 uid="uid://dr64kox4g6hno"]
 
-[ext_resource type="PackedScene" uid="uid://cnht86jg03jk7" path="res://animals/eco_animal_bear.tscn" id="1_63oot"]
 [ext_resource type="Texture2D" uid="uid://opumiyj3vs6x" path="res://art/sproutlands/Tilesets/Grass.png" id="1_jh57j"]
 [ext_resource type="Texture2D" uid="uid://uo02j43cl7if" path="res://art/sproutlands/Tilesets/Water.png" id="2_7str7"]
 [ext_resource type="Texture2D" uid="uid://cjyhb5jfd7dek" path="res://art/sproutlands/Tilesets/Tilled Dirt.png" id="3_hhbxf"]
@@ -8,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bbcen8t8oisqk" path="res://art/sproutlands/Tilesets/Wooden House.png" id="5_lxyys"]
 [ext_resource type="Texture2D" uid="uid://cwb0mm8q8f044" path="res://art/sproutlands/Tilesets/Fences.png" id="6_q8lvi"]
 [ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="7_1texc"]
+[ext_resource type="PackedScene" uid="uid://otolovkp7woq" path="res://actors/ecosystem.tscn" id="10_rwwbg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_30dsl"]
 texture = ExtResource("1_jh57j")
@@ -301,6 +301,7 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Arr
 outlines = Array[PackedVector2Array]([PackedVector2Array(16, 16, 224, 16, 224, 120, 16, 120), PackedVector2Array(40, 48, 40, 96, 72, 96, 72, 48), PackedVector2Array(136, 48, 200, 48, 200, 104, 136, 104)])
 
 [node name="World" type="Node2D"]
+y_sort_enabled = true
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_ly6fk")
@@ -329,10 +330,10 @@ layer_3/y_sort_origin = 0
 layer_3/z_index = 0
 layer_3/tile_data = PackedInt32Array(14, 524294, 4, 10, 458758, 4, 5, 327686, 4, 524297, 327686, 4, 524291, 393222, 4, 196622, 393222, 4, 262144, 524294, 4, 196611, 524294, 1, 262147, 458758, 1, 327683, 458758, 1, 196613, 65538, 3, 262149, 65538, 4, 327685, 65538, 4, 196614, 131074, 3, 262150, 131074, 4, 327686, 131074, 4, 196615, 196610, 3, 262151, 196610, 4, 327687, 196610, 4, 393221, 65538, 5, 393222, 131074, 5, 393223, 196610, 5)
 
-[node name="Animal" parent="TileMap" instance=ExtResource("1_63oot")]
-position = Vector2(128, 64)
-
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="TileMap"]
 navigation_polygon = SubResource("NavigationPolygon_d5xvu")
 
 [node name="Sprite2D" type="Sprite2D" parent="TileMap"]
+
+[node name="Ecosystem" parent="TileMap" instance=ExtResource("10_rwwbg")]
+position = Vector2(96, 80)
