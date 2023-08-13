@@ -165,3 +165,4 @@ mobility_type = "run"
 animation_frames = SubResource("SpriteFrames_vdw4j")
 name = "bear"
 species = "bear"
+scale = 1.0
