@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://hxc0gatn2ofm"]
+
+[ext_resource type="Texture2D" uid="uid://bgkb0drbftvnx" path="res://art/sproutlands/Objects/Basic Furniture.png" id="1_awtq4"]
+
+[node name="ElderTotemSpawn" type="Sprite2D"]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("1_awtq4")
+region_enabled = true
+region_rect = Rect2(67, 51, 10, 9)

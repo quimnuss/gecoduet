@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dr64kox4g6hno"]
+[gd_scene load_steps=19 format=3 uid="uid://dr64kox4g6hno"]
 
 [ext_resource type="Texture2D" uid="uid://opumiyj3vs6x" path="res://art/sproutlands/Tilesets/Grass.png" id="1_jh57j"]
 [ext_resource type="Texture2D" uid="uid://uo02j43cl7if" path="res://art/sproutlands/Tilesets/Water.png" id="2_7str7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bbcen8t8oisqk" path="res://art/sproutlands/Tilesets/Wooden House.png" id="5_lxyys"]
 [ext_resource type="Texture2D" uid="uid://cwb0mm8q8f044" path="res://art/sproutlands/Tilesets/Fences.png" id="6_q8lvi"]
 [ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="7_1texc"]
+[ext_resource type="PackedScene" uid="uid://hxc0gatn2ofm" path="res://actors/elder_totem_spawn.tscn" id="9_1ycph"]
 [ext_resource type="PackedScene" uid="uid://otolovkp7woq" path="res://actors/ecosystem.tscn" id="10_rwwbg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_30dsl"]
@@ -337,3 +338,12 @@ navigation_polygon = SubResource("NavigationPolygon_d5xvu")
 
 [node name="Ecosystem" parent="TileMap" instance=ExtResource("10_rwwbg")]
 position = Vector2(96, 80)
+
+[node name="ElderTotemSpawn" parent="TileMap/Ecosystem" groups=["totem_spawns"] instance=ExtResource("9_1ycph")]
+position = Vector2(-10, -23)
+
+[node name="ElderTotemSpawn2" parent="TileMap/Ecosystem" groups=["totem_spawns"] instance=ExtResource("9_1ycph")]
+position = Vector2(26, -22)
+
+[node name="ElderTotemSpawn3" parent="TileMap/Ecosystem" groups=["totem_spawns"] instance=ExtResource("9_1ycph")]
+position = Vector2(8, -27)

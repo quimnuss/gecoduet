@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="AnimalResource" load_steps=5 format=3 uid="uid://c8fqp5w3n8x17"]
+
+[ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="1_knq6r"]
+[ext_resource type="Script" path="res://data/animal_base_resource.gd" id="1_yetas"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5tl0n"]
+atlas = ExtResource("1_knq6r")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r8pw0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5tl0n")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("1_yetas")
+mobility_type = "run"
+animation_frames = SubResource("SpriteFrames_r8pw0")
+name = ""
+species = ""
+scale = 1.0

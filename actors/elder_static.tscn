@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce7u43yxsjd2v"]
+
+[ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="1_stfu3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_taa7x"]
+atlas = ExtResource("1_stfu3")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0hhf1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_taa7x")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kqmry"]
+size = Vector2(16, 16)
+
+[node name="EcoFlora" type="StaticBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0hhf1")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kqmry")
