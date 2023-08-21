@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://djnoewirybh00"]
+[gd_scene load_steps=4 format=3 uid="uid://djnoewirybh00"]
 
 [ext_resource type="Script" path="res://scenes/actors/species_elder.gd" id="1_a154l"]
 [ext_resource type="Script" path="res://scenes/actors/GLV.gd" id="2_olwtv"]
+[ext_resource type="Script" path="res://scenes/actors/ecospawner.gd" id="3_dstr4"]
 
 [node name="SpeciesElder" type="Node2D"]
 y_sort_enabled = true
@@ -13,6 +14,9 @@ autostart = true
 
 [node name="GLV" type="Node2D" parent="."]
 script = ExtResource("2_olwtv")
+
+[node name="EcoSpawner" type="Node2D" parent="."]
+script = ExtResource("3_dstr4")
 
 [connection signal="renamed" from="." to="." method="_on_renamed"]
 [connection signal="timeout" from="ChildrenSync" to="." method="_on_children_sync_timeout"]
