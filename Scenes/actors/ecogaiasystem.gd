@@ -12,18 +12,20 @@ var totem = preload("res://scenes/actors/elder_totem.tscn")
 var elders = []
 var density_map : Dictionary = {}
 
-@export var totem_spawns = []
-
 @onready var glv_timer = $Timer
-#@onready var sample_elder = $sample_elder
+
+@export var sample_elders : Array[Elder]
+
+signal elder_registered
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# editor instanced elder
-#    add_elder(sample_elder)
+#	for sample_elder in sample_elders:
+#		register_species(sample_elder)
 	pass
 
-func register_species():
+func register_species(elder):
 	# add a species to the manager (here) and register it to the UI
 	# probably the easier is to have a filtrable UI with alive/extinct species
 	pass

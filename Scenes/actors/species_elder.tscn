@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://djnoewirybh00"]
+
+[ext_resource type="Script" path="res://scenes/actors/species_elder.gd" id="1_a154l"]
+[ext_resource type="PackedScene" uid="uid://cnht86jg03jk7" path="res://scenes/animals/eco_animal_bear.tscn" id="2_vp6dc"]
+
+[node name="SpeciesElder" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_a154l")
+
+[node name="Animal" parent="." instance=ExtResource("2_vp6dc")]
+
+[node name="NameLabel" type="Label" parent="Animal"]
+offset_left = -8.0
+offset_top = -24.0
+offset_right = 62.0
+offset_bottom = 2.0
+scale = Vector2(0.2, 0.2)
+size_flags_horizontal = 4
+text = "name"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="ChildrenSync" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="renamed" from="." to="." method="_on_renamed"]
+[connection signal="tree_exiting" from="Animal" to="." method="_on_animal_tree_exiting"]
+[connection signal="timeout" from="ChildrenSync" to="." method="_on_children_sync_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dqp7bjnxdp6u3"]
+[gd_scene load_steps=23 format=3 uid="uid://dqp7bjnxdp6u3"]
 
 [ext_resource type="Texture2D" uid="uid://opumiyj3vs6x" path="res://art/sproutlands/Tilesets/Grass.png" id="1_po12b"]
 [ext_resource type="Texture2D" uid="uid://uo02j43cl7if" path="res://art/sproutlands/Tilesets/Water.png" id="2_wy7k1"]
@@ -8,6 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://cwb0mm8q8f044" path="res://art/sproutlands/Tilesets/Fences.png" id="6_yjeo0"]
 [ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="7_etpeh"]
 [ext_resource type="PackedScene" uid="uid://b5j1jh4innj27" path="res://scenes/actors/ecogaiasystem.tscn" id="8_8tlbn"]
+[ext_resource type="PackedScene" uid="uid://bvx07aathb05g" path="res://scenes/actors/elder.tscn" id="9_lcpf0"]
+[ext_resource type="JSON" uid="uid://dpoffsgnannyy" path="res://data/elder_glv.tres" id="10_onhvx"]
+[ext_resource type="Resource" uid="uid://c8fqp5w3n8x17" path="res://data/animal_tree.tres" id="11_22ujs"]
+[ext_resource type="Resource" uid="uid://cuy0w8ea1hbdc" path="res://data/animal_rabbit.tres" id="11_u6vbn"]
+[ext_resource type="Resource" uid="uid://c7srbv0lv4thg" path="res://data/animal_bear.tres" id="13_mcden"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_30dsl"]
 texture = ExtResource("1_po12b")
@@ -334,4 +339,20 @@ navigation_polygon = SubResource("NavigationPolygon_1myx2")
 
 [node name="Sprite2D" type="Sprite2D" parent="TileMap"]
 
-[node name="Ecogaiasystem" parent="TileMap" instance=ExtResource("8_8tlbn")]
+[node name="Ecogaiasystem" parent="TileMap" node_paths=PackedStringArray("sample_elders") instance=ExtResource("8_8tlbn")]
+sample_elders = [NodePath("CarrotElder"), NodePath("RabbitElder"), NodePath("BearElder")]
+
+[node name="CarrotElder" parent="TileMap/Ecogaiasystem" instance=ExtResource("9_lcpf0")]
+position = Vector2(248, 232)
+elder_resource = ExtResource("10_onhvx")
+animal_resource = ExtResource("11_22ujs")
+
+[node name="RabbitElder" parent="TileMap/Ecogaiasystem" instance=ExtResource("9_lcpf0")]
+position = Vector2(120, 240)
+elder_resource = ExtResource("10_onhvx")
+animal_resource = ExtResource("11_u6vbn")
+
+[node name="BearElder" parent="TileMap/Ecogaiasystem" instance=ExtResource("9_lcpf0")]
+position = Vector2(248, 288)
+elder_resource = ExtResource("10_onhvx")
+animal_resource = ExtResource("13_mcden")
