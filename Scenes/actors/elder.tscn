@@ -1,10 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://bvx07aathb05g"]
+[gd_scene load_steps=3 format=3 uid="uid://bvx07aathb05g"]
 
 [ext_resource type="Script" path="res://scenes/actors/elder.gd" id="1_v4kwq"]
+[ext_resource type="PackedScene" uid="uid://cnht86jg03jk7" path="res://scenes/animals/eco_animal_bear.tscn" id="2_6ixom"]
 
 [node name="Elder" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_v4kwq")
+
+[node name="Animal" parent="." instance=ExtResource("2_6ixom")]
+
+[node name="NameLabel" type="Label" parent="Animal"]
+offset_left = -8.0
+offset_top = -24.0
+offset_right = 62.0
+offset_bottom = 2.0
+scale = Vector2(0.2, 0.2)
+size_flags_horizontal = 4
+text = "name"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+metadata/_edit_use_anchors_ = true
 
 [node name="ChildrenSync" type="Timer" parent="."]
 wait_time = 2.0
