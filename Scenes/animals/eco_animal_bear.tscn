@@ -1,9 +1,9 @@
 [gd_scene load_steps=26 format=3 uid="uid://cnht86jg03jk7"]
 
-[ext_resource type="Script" path="res://animals/eco_animal_controller.gd" id="1_thqoy"]
+[ext_resource type="Script" path="res://scenes/animals/eco_animal_controller.gd" id="1_thqoy"]
 [ext_resource type="Texture2D" uid="uid://md4ykrlp1l5g" path="res://art/lifeforms/outline/MiniBear.png" id="2_mfh8p"]
 [ext_resource type="Resource" uid="uid://c7srbv0lv4thg" path="res://data/animal_bear.tres" id="2_xkfkv"]
-[ext_resource type="Script" path="res://animals/AnimalRoam.gd" id="3_lpr7p"]
+[ext_resource type="Script" path="res://scenes/animals/AnimalRoam.gd" id="3_lpr7p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q3pdq"]
 atlas = ExtResource("2_mfh8p")

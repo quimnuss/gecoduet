@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cnjt1px1hs8jv"]
+[gd_scene load_steps=7 format=3 uid="uid://dqxgwsdnim8hd"]
 
-[ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="1_elxkd"]
-[ext_resource type="Texture2D" uid="uid://df3jqsjftanw4" path="res://art/totem_animals.png" id="2_0t7ys"]
+[ext_resource type="Script" path="res://scenes/actors/elder_totem.gd" id="1_5krne"]
+[ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="2_waolt"]
+[ext_resource type="Texture2D" uid="uid://coccc0dlohpht" path="res://art/totem_animals_short.png" id="3_13rpa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_taa7x"]
-atlas = ExtResource("1_elxkd")
+atlas = ExtResource("2_waolt")
 region = Rect2(16, 48, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0hhf1"]
@@ -21,7 +22,8 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kqmry"]
 size = Vector2(16, 16)
 
-[node name="EcoFlora" type="StaticBody2D"]
+[node name="ElderTotem" type="StaticBody2D"]
+script = ExtResource("1_5krne")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -32,6 +34,7 @@ animation = &"idle"
 shape = SubResource("RectangleShape2D_kqmry")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_0t7ys")
-region_enabled = true
-region_rect = Rect2(373, 41, 19, 23)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_13rpa")
+hframes = 5
+region_rect = Rect2(0, 0, 32, 32)

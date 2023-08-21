@@ -2,4 +2,4 @@ extends RefCounted
 
 class_name Constants
 
-enum Species {BEAR, CARROT, TREE}
+enum Species {CARROT, BEAR, TREE}

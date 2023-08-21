@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bf5usju51t3al"]
 
-[ext_resource type="Script" path="res://animals/eco_animal_controller.gd" id="1_458m4"]
+[ext_resource type="Script" path="res://scenes/animals/eco_animal_controller.gd" id="1_458m4"]
 
 [node name="AnimalSprite" type="CharacterBody2D"]
 script = ExtResource("1_458m4")

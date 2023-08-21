@@ -18,65 +18,65 @@ var possessed = false
 
 func _ready():
 #    navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
-    nav.pawn = self
-    set_from_resource()
+	nav.pawn = self
+	set_from_resource()
 
 func set_from_resource():
-    var frames : SpriteFrames = self.animal_resource.animation_frames
-    self.animation.set_sprite_frames(self.animal_resource.animation_frames)
-    self.name = self.animal_resource.name
-    self.set_scale(Vector2(self.animal_resource.scale,self.animal_resource.scale))
+	var frames : SpriteFrames = self.animal_resource.animation_frames
+	self.animation.set_sprite_frames(self.animal_resource.animation_frames)
+	self.name = self.animal_resource.name
+	self.set_scale(Vector2(self.animal_resource.scale,self.animal_resource.scale))
 
 func _process(delta):
-    pass
+	pass
 
 func kill():
-    state = "die"
-    await get_tree().create_timer(2).timeout
-    queue_free()
+	state = "die"
+	await get_tree().create_timer(2).timeout
+	queue_free()
 
 func updateAnimation():
-    var animationString = "idle"
-    if state == "alive":
-        if velocity.length_squared() > 0:
-            animationString = "run"
+	var animationString = "idle"
+	if state == "alive":
+		if velocity.length_squared() > 0:
+			animationString = "run"
 
-        if velocity.x < 0:
-            animation.flip_h = true
-        elif velocity.x > 0:
-            animation.flip_h = false
-    else:
-        animationString = "die"
-        velocity = Vector2.ZERO
+		if velocity.x < 0:
+			animation.flip_h = true
+		elif velocity.x > 0:
+			animation.flip_h = false
+	else:
+		animationString = "die"
+		velocity = Vector2.ZERO
 
-    if animation.sprite_frames.has_animation(animationString): # silence carrot running for now
-        animation.play(animationString)
+	if animation.sprite_frames.has_animation(animationString): # silence carrot running for now
+		animation.play(animationString)
 
 func _physics_process(delta):
-    # Add the gravity.
+	# Add the gravity.
 #	if not is_on_floor():
 #		velocity.y += gravity * delta
 
-    if possessed:
-        # Handle Jump.
-        if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-            velocity.y = JUMP_VELOCITY
+	if possessed:
+		# Handle Jump.
+		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
 
-        #TODO ensure norm of velocity is speed so diagonal is not faster
-        # also down should probably be half
+		#TODO ensure norm of velocity is speed so diagonal is not faster
+		# also down should probably be half
 
-        # Get the input direction and handle the movement/deceleration.
-        # As good practice, you should replace UI actions with custom gameplay actions.
-        var direction = Input.get_vector("ui_left", "ui_right", "ui_down", "ui_up")
-        if direction:
-            velocity = direction * speed * Vector2(1,-1)
-        else:
-            velocity = velocity.move_toward(Vector2(0,0), speed/10)
-    else:
-        pass
+		# Get the input direction and handle the movement/deceleration.
+		# As good practice, you should replace UI actions with custom gameplay actions.
+		var direction = Input.get_vector("ui_left", "ui_right", "ui_down", "ui_up")
+		if direction:
+			velocity = direction * speed * Vector2(1,-1)
+		else:
+			velocity = velocity.move_toward(Vector2(0,0), speed/10)
+	else:
+		pass
 
-    updateAnimation()
-    move_and_slide()
+	updateAnimation()
+	move_and_slide()
 
 
 #@export var movement_speed: float = 4.0

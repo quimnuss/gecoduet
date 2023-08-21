@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bvx07aathb05g"]
 
 [ext_resource type="Script" path="res://Elder.gd" id="1_sjmg1"]
-[ext_resource type="PackedScene" uid="uid://cnht86jg03jk7" path="res://animals/eco_animal_bear.tscn" id="2_j6wp0"]
+[ext_resource type="PackedScene" uid="uid://cnht86jg03jk7" path="res://scenes/animals/eco_animal_bear.tscn" id="2_j6wp0"]
 
 [node name="Elder" type="Node2D"]
 y_sort_enabled = true
