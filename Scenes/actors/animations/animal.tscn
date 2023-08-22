@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b68sctlj837jv"]
+
+[ext_resource type="SpriteFrames" uid="uid://brm8jts6qg1ow" path="res://scenes/actors/animations/bear_spriteframes.tres" id="1_lsmqv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jb5ff"]
+
+[node name="Animal" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_jb5ff")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_lsmqv")
+animation = &"die"
