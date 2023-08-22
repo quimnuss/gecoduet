@@ -4,7 +4,8 @@ class_name EcoSpawner
 
 @export var spawnable : PackedScene
 @export var navigable_zone : NavigationAgent2D
-
+@export var species : Constants.Species
+	
 var world_width : int = 1000
 var world_height : int = 600
 
@@ -39,6 +40,9 @@ func random_in_radius(spawnpoint : Vector2, radius = 200):
 func spawn(spawn_center : Vector2 = Vector2(300,300)):
 	if spawnable:
 		var spawn_position = random_in_radius(spawn_center)
-		spawnable.instantiate()
-		spawnable.set_global_position(spawn_position)
+		var child_spawn = spawnable.instantiate()
+		child_spawn.set_global_position(spawn_position)
+		child_spawn.add_to_group("lifeform")
+		child_spawn.add_to_group(Constants.Species.keys()[species])
+		return child_spawn
 	
