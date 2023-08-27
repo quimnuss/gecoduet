@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgqwbvtyuk71g"]
+
+[ext_resource type="Script" path="res://scenes/debug/test_lifeform_factory.gd" id="1_q8hhk"]
+[ext_resource type="Script" path="res://scenes/actors/ecospawner.gd" id="2_4jvfx"]
+
+[node name="test_lifeform_factory" type="Node2D"]
+script = ExtResource("1_q8hhk")
+
+[node name="ChildrenSync" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="EcoSpawner" type="Node2D" parent="."]
+script = ExtResource("2_4jvfx")
+
+[connection signal="timeout" from="ChildrenSync" to="EcoSpawner" method="spawn"]

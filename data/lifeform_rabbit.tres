@@ -1,0 +1,146 @@
+[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=19 format=3 uid="uid://cckfkok1go8q8"]
+
+[ext_resource type="Texture2D" uid="uid://c3odglwpn8a43" path="res://art/lifeforms/outline/MiniBunny.png" id="1_yfalh"]
+[ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="2_3bit5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkdmy"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exxkt"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61snw"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2s4u4"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fp40"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wdkqb"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qats2"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6tg7"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhh1g"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdabh"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvkht"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xu6l7"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onus4"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgreh"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnoxn"]
+atlas = ExtResource("1_yfalh")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1mj2g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkdmy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exxkt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61snw")
+}],
+"loop": true,
+"name": &"die",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2s4u4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fp40")
+}],
+"loop": true,
+"name": &"eat",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wdkqb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qats2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u6tg7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhh1g")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdabh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvkht")
+}],
+"loop": true,
+"name": &"rabbit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xu6l7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onus4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgreh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nnoxn")
+}],
+"loop": false,
+"name": &"run",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("2_3bit5")
+lifeform_type = "animal"
+mobility_type = "run"
+animation_frames = SubResource("SpriteFrames_1mj2g")
+name = "rabbit"
+species = "rabbit"
+scale = 1.0

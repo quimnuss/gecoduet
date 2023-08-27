@@ -1,7 +1,4 @@
-[gd_resource type="JSON" format=3 uid="uid://dpoffsgnannyy"]
-
-[resource]
-data = {
+{
 "bear": {
 "bear": -0.1,
 "none": -0.3,

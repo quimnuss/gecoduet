@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2y4wcv35vwtp"]
+
+[ext_resource type="Script" path="res://scenes/debug/test_lifeform_factory.gd" id="1_m5qsp"]
+[ext_resource type="Script" path="res://scenes/actors/ecospawner.gd" id="2_2r4fm"]
+[ext_resource type="Texture2D" uid="uid://coccc0dlohpht" path="res://art/totem_animals_short.png" id="3_ck80r"]
+
+[node name="test_lifeform_spawner" type="Node2D"]
+script = ExtResource("1_m5qsp")
+
+[node name="ChildrenSync" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="EcoSpawner" type="Node2D" parent="."]
+script = ExtResource("2_2r4fm")
+
+[node name="Marker" type="Sprite2D" parent="EcoSpawner"]
+position = Vector2(300, 300)
+texture = ExtResource("3_ck80r")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[connection signal="timeout" from="ChildrenSync" to="EcoSpawner" method="spawn"]

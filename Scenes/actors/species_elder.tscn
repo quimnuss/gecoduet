@@ -18,5 +18,9 @@ script = ExtResource("2_olwtv")
 [node name="EcoSpawner" type="Node2D" parent="."]
 script = ExtResource("3_dstr4")
 
+[node name="DebugTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="renamed" from="." to="." method="_on_renamed"]
 [connection signal="timeout" from="ChildrenSync" to="." method="_on_children_sync_timeout"]
+[connection signal="timeout" from="DebugTimer" to="." method="_on_density_integer_increased" binds= [1]]
