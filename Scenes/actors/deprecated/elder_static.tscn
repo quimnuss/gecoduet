@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://ce7u43yxsjd2v"]
 
-[ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="1_oudwt"]
+[ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="1_hny6v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_taa7x"]
-atlas = ExtResource("1_oudwt")
+atlas = ExtResource("1_hny6v")
 region = Rect2(16, 48, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0hhf1"]

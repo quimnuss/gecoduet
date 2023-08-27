@@ -6,7 +6,7 @@ class_name Elder
 
 @onready var me = $Animal
 @onready var name_label = $Animal/NameLabel
-var animal_child = preload("res://scenes/animals/eco_animal_bear.tscn")
+var animal_child = preload("res://scenes/actors/deprecated/animals/eco_animal_bear.tscn")
 @export var mutuality : Dictionary #<String,float>
 
 var density : float = 0.3

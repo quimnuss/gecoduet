@@ -1,13 +1,6 @@
 extends Node2D
 
-var res_rabbit = preload("res://data/animal_rabbit.tres")
-var res_bear = preload("res://data/animal_bear.tres")
-
 var res_mutuality = preload("res://data/elder_glv.tres")
-
-var res_elder = preload("res://scenes/actors/elder.tscn")
-
-var totem = preload("res://scenes/actors/elder_totem.tscn")
 
 var elders = []
 var density_map : Dictionary = {}

@@ -24,8 +24,8 @@ var viewport_size : Vector2 = Vector2(ProjectSettings.get_setting("display/windo
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("Hello")
-	$Marker.set_position(DEFAULT_SPAWN_CENTER)
-
+	if $Marker: # mostly for debugging
+		$Marker.set_position(DEFAULT_SPAWN_CENTER)
 
 # should we let the spawner decide where the spawn point start is?
 # we will always have a position, either by player placing or elder logic
@@ -44,23 +44,8 @@ func _ready():
 #		#return navigable_zone.is_target_reachable()
 
 func _process(delta):
-	debug_timer -= delta
-
 	if Engine.is_editor_hint():
-		if debug_timer < 0:
-			debug_timer = DEFAULT_DEBUG_TIMER
-			prints("spawn")
-			spawn()
-			prints(Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"),ProjectSettings.get_setting("display/window/size/viewport_height")))
-
-		var children : Array[Node] = self.get_children()
-		if children.size() > 10:
-			prints("delete one of",children.size(),"children")
-			var child = children.pick_random()
-			if child.name != "Marker":
-				child.queue_free()
-			else:
-				prints("Selected marker, skipping.")
+		_process_debug(delta)
 
 func polar2cartesian(r,alpha:float):
 	var x = r * cos(alpha)
@@ -112,3 +97,20 @@ func _set_from_flora_resource(flora_resource):
 	new_flora.name = flora_resource.name
 	new_flora.set_scale(Vector2(flora_resource.scale,flora_resource.scale))
 	return new_flora
+
+func _process_debug(delta):
+	debug_timer -= delta
+	if debug_timer < 0:
+		debug_timer = DEFAULT_DEBUG_TIMER
+		prints("spawn")
+		spawn()
+		prints(Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"),ProjectSettings.get_setting("display/window/size/viewport_height")))
+
+	var children : Array[Node] = self.get_children()
+	if children.size() > 10:
+		prints("delete one of",children.size(),"children")
+		var child = children.pick_random()
+		if child.name != "Marker":
+			child.queue_free()
+		else:
+			prints("Selected marker, skipping.")

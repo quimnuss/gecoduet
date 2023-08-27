@@ -16,8 +16,7 @@ func _ready():
 	if main_scene == current_scene:
 		pass
 	else: # not main scene
-		var carrot_scene = load("res://scenes/actors/lifeform_static.tscn")
-		spawner.spawnable = carrot_scene
+		spawner.species = Constants.Species.CARROT
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

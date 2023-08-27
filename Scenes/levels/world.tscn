@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dr64kox4g6hno"]
 
-[ext_resource type="PackedScene" uid="uid://otolovkp7woq" path="res://scenes/actors/ecosystem.tscn" id="1_5i6m8"]
-[ext_resource type="PackedScene" uid="uid://hxc0gatn2ofm" path="res://scenes/actors/elder_totem_spawn.tscn" id="2_ikn5f"]
+[ext_resource type="PackedScene" uid="uid://otolovkp7woq" path="res://scenes/actors/deprecated/ecosystem.tscn" id="1_5i6m8"]
+[ext_resource type="PackedScene" uid="uid://hxc0gatn2ofm" path="res://scenes/actors/deprecated/elder_totem_spawn.tscn" id="2_ikn5f"]
 
 [sub_resource type="TileSet" id="TileSet_ly6fk"]
 

@@ -5,9 +5,9 @@ var res_bear = preload("res://data/animal_bear.tres")
 
 var res_mutuality = preload("res://data/elder_glv.tres")
 
-var res_elder = preload("res://scenes/actors/elder.tscn")
+var res_elder = preload("res://scenes/actors/deprecated/elder.tscn")
 
-var totem = preload("res://scenes/actors/elder_totem.tscn")
+var totem = preload("res://scenes/actors/deprecated/elder_totem.tscn")
 
 var elders = []
 var density_map : Dictionary = {}

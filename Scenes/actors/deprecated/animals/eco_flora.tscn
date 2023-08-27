@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://cnjt1px1hs8jv"]
 
-[ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="1_obhqn"]
-[ext_resource type="Texture2D" uid="uid://crdbn81g6qxjc" path="res://art/lifeforms/veggies.png" id="2_o5fm7"]
+[ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="1_p7ap2"]
+[ext_resource type="Texture2D" uid="uid://crdbn81g6qxjc" path="res://art/lifeforms/veggies.png" id="2_yba5g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_taa7x"]
-atlas = ExtResource("1_obhqn")
+atlas = ExtResource("1_p7ap2")
 region = Rect2(16, 48, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0hhf1"]
@@ -33,6 +33,6 @@ shape = SubResource("RectangleShape2D_kqmry")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_o5fm7")
+texture = ExtResource("2_yba5g")
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)

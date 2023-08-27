@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dqxgwsdnim8hd"]
 
-[ext_resource type="Script" path="res://scenes/actors/elder_totem.gd" id="1_5krne"]
+[ext_resource type="Script" path="res://scenes/actors/deprecated/elder_totem.gd" id="1_5krne"]
 [ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="2_waolt"]
 [ext_resource type="Texture2D" uid="uid://coccc0dlohpht" path="res://art/totem_animals_short.png" id="3_13rpa"]
 
