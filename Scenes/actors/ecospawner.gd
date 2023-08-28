@@ -5,7 +5,7 @@ extends Node2D
 class_name EcoSpawner
 
 @export var base_animal : PackedScene = preload("res://scenes/actors/lifeform_animal.tscn")
-@export var base_flora : PackedScene  = preload("res://scenes/actors/lifeform_static.tscn")
+@export var base_flora : PackedScene  = preload("res://scenes/actors/lifeform_flora.tscn")
 
 @export var navigable_zone : NavigationAgent2D
 
@@ -18,6 +18,8 @@ const DEFAULT_DEBUG_TIMER : float = 1
 var debug_timer : float = DEFAULT_DEBUG_TIMER
 
 const DEFAULT_SPAWN_CENTER : Vector2 = Vector2(200,200)
+
+const DEFAULT_SPAWN_RADIUS : int = 50
 
 var viewport_size : Vector2 = Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"),ProjectSettings.get_setting("display/window/size/viewport_height"))
 
@@ -52,7 +54,7 @@ func polar2cartesian(r,alpha:float):
 	var y = r * sin(alpha)
 	return Vector2(x,y)
 
-func random_in_radius(spawnpoint : Vector2, radius = 200):
+func random_in_radius(spawnpoint : Vector2, radius = DEFAULT_SPAWN_RADIUS):
 	var r = randi_range(10, radius)
 	var alpha = randf_range(0,2*PI)
 	# TODO check is target reachable or in bounds
@@ -60,10 +62,18 @@ func random_in_radius(spawnpoint : Vector2, radius = 200):
 	var bound_proposal = proposal.clamp(Vector2(100,100), viewport_size)
 	return bound_proposal
 
+func select_breeder() -> Node2D:
+	var children = get_children().filter(func(child): return child.get(species) == self.species)
+	prints(children)
+	return children.pick_random()
 
-func spawn(spawn_center : Vector2 = DEFAULT_SPAWN_CENTER):
+func spawn_from_breeder(radius : int = 200):
+	var child = select_breeder()
+	spawn(child.position, radius)
+
+func spawn(spawn_center : Vector2 = DEFAULT_SPAWN_CENTER, radius : int = DEFAULT_SPAWN_RADIUS):
 	prints("triggered spawn",self.species,"around",spawn_center)
-	var spawn_position = random_in_radius(spawn_center, 200)
+	var spawn_position = random_in_radius(spawn_center, radius)
 	# The scene path could also be in the resource, no need for the factory after all...
 	var child_spawn = _spawn_from_resource(self.species)
 	add_child(child_spawn)
@@ -93,9 +103,7 @@ func _set_from_animal_resource(animal_resource):
 
 func _set_from_flora_resource(flora_resource):
 	var new_flora = base_flora.instantiate()
-	new_flora.sprite2d = flora_resource.sprite
-	new_flora.name = flora_resource.name
-	new_flora.set_scale(Vector2(flora_resource.scale,flora_resource.scale))
+	new_flora.resource = flora_resource
 	return new_flora
 
 func _process_debug(delta):

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://igiyguijwul8"]
+
+[ext_resource type="Script" path="res://scenes/actors/ecospawner.gd" id="1_igrne"]
+[ext_resource type="Texture2D" uid="uid://coccc0dlohpht" path="res://art/totem_animals_short.png" id="2_7mhr8"]
+
+[node name="EcoSpawner" type="Node2D"]
+script = ExtResource("1_igrne")
+
+[node name="Marker" type="Sprite2D" parent="."]
+position = Vector2(300, 300)
+texture = ExtResource("2_7mhr8")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)

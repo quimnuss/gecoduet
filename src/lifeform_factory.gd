@@ -4,7 +4,7 @@ class_name LifeformFactory
 
 var res_mutuality = preload("res://data/elder_glv.tres")
 @export var base_animal : PackedScene = preload("res://scenes/actors/lifeform_animal.tscn")
-@export var base_flora : PackedScene  = preload("res://scenes/actors/lifeform_static.tscn")
+@export var base_flora : PackedScene  = preload("res://scenes/actors/lifeform_flora.tscn")
 
 func spawn(species: Constants.Species) -> Node:
 	var species_name : String = Constants.species_name(species)

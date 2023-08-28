@@ -3,8 +3,7 @@ extends Node2D
 @onready var spawner = $EcoSpawner
 
 func _ready():
-	spawner.species = Constants.Species.RABBIT
-	$Marker.set_global_position(spawner.DEFAULT_SPAWN_CENTER)
+	pass
 
 func _process(delta):
 	var switch_species = Input.get("ui_next_species")

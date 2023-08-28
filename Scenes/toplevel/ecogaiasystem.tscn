@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://b5j1jh4innj27"]
 
-[ext_resource type="Script" path="res://scenes/actors/ecogaiasystem.gd" id="1_wv8rc"]
+[ext_resource type="Script" path="res://scenes/toplevel/ecogaiasystem.gd" id="1_hvhe6"]
 
 [node name="Ecogaiasystem" type="Node2D"]
 y_sort_enabled = true
-script = ExtResource("1_wv8rc")
+script = ExtResource("1_hvhe6")
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true

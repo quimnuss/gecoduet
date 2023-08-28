@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/actors/species_elder.gd" id="1_a154l"]
 [ext_resource type="Script" path="res://scenes/actors/GLV.gd" id="2_olwtv"]
-[ext_resource type="Script" path="res://scenes/actors/ecospawner.gd" id="3_dstr4"]
+[ext_resource type="PackedScene" uid="uid://igiyguijwul8" path="res://scenes/actors/eco_spawner.tscn" id="3_b6dnc"]
 
 [node name="SpeciesElder" type="Node2D"]
 y_sort_enabled = true
@@ -15,12 +15,12 @@ autostart = true
 [node name="GLV" type="Node2D" parent="."]
 script = ExtResource("2_olwtv")
 
-[node name="EcoSpawner" type="Node2D" parent="."]
-script = ExtResource("3_dstr4")
+[node name="EcoSpawner" parent="." instance=ExtResource("3_b6dnc")]
 
 [node name="DebugTimer" type="Timer" parent="."]
 autostart = true
 
 [connection signal="renamed" from="." to="." method="_on_renamed"]
 [connection signal="timeout" from="ChildrenSync" to="." method="_on_children_sync_timeout"]
+[connection signal="density_number_change" from="GLV" to="EcoSpawner" method="spawn_from_breeder"]
 [connection signal="timeout" from="DebugTimer" to="." method="_on_density_integer_increased" binds= [1]]
