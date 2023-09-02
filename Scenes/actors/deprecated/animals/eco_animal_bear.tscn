@@ -1,9 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://cnht86jg03jk7"]
+[gd_scene load_steps=27 format=3 uid="uid://cnht86jg03jk7"]
 
 [ext_resource type="Script" path="res://scenes/actors/deprecated/animals/eco_animal_controller.gd" id="1_8s10w"]
 [ext_resource type="Resource" uid="uid://c7srbv0lv4thg" path="res://data/animal_bear.tres" id="2_dlwq3"]
 [ext_resource type="Texture2D" uid="uid://md4ykrlp1l5g" path="res://art/lifeforms/outline/MiniBear.png" id="3_qu0sw"]
 [ext_resource type="Script" path="res://scenes/actors/deprecated/animals/AnimalRoam.gd" id="4_3fc0x"]
+[ext_resource type="Script" path="res://scenes/components/Movement.gd" id="5_7aaum"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q3pdq"]
 atlas = ExtResource("3_qu0sw")
@@ -188,6 +189,9 @@ debug_use_custom = true
 debug_path_custom_color = Color(0.0235294, 1, 1, 0.792157)
 debug_path_custom_point_size = 1.0
 script = ExtResource("4_3fc0x")
+
+[node name="Movement" type="Node2D" parent="."]
+script = ExtResource("5_7aaum")
 
 [connection signal="navigation_finished" from="NavigationAgent2D" to="NavigationAgent2D" method="_on_navigation_finished"]
 [connection signal="target_reached" from="NavigationAgent2D" to="NavigationAgent2D" method="_on_target_reached"]

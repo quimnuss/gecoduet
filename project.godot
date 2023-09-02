@@ -33,6 +33,10 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="ecoduet"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/imjp94.yafsm/plugin.cfg")
+
 [input]
 
 ui_left={
