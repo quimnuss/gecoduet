@@ -75,7 +75,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_61snw")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
 "speed": 2.0
 }, {
@@ -142,5 +142,6 @@ lifeform_type = "animal"
 mobility_type = "run"
 animation_frames = SubResource("SpriteFrames_1mj2g")
 name = "rabbit"
-species = "rabbit"
+species = 2
 scale = 1.0
+speed = 100.0

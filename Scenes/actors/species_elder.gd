@@ -1,9 +1,14 @@
 extends Node2D
 
+class_name SpeciesElder
+
 @export var species : Constants.Species = Constants.Species.CARROT
-@export var lifeforms : Array[Node2D]
+var res_mutuality = preload("res://data/glv.json")
 
 @onready var spawner : EcoSpawner = $EcoSpawner
+@onready var glv : GLV = $GLV
+
+signal elder_extinct
 
 func _init():
 	pass
@@ -18,25 +23,40 @@ func _ready():
 		spawner.species = self.species
 	else: # not main scene
 		spawner.species = self.species
+	prints(res_mutuality.get_data())
+	glv.mutuality = res_mutuality.get_data()[Constants.species_name(self.species)]
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
-func choose_breeder() -> Node2D:
-	return lifeforms.pick_random()
+func get_density() -> float:
+	return glv.density
+	
+func set_density(density : float):
+	glv.density = density
+
+func kill_elder():
+	$ChildrenSync.stop()
+	await get_tree().create_timer(2).timeout
+	queue_free()
+
+func check_extinction(density: float) -> bool:
+	if density < 0.01:
+		prints("elder",self.name,"went extinct with density",density)
+		spawner.kill_all_children()
+		kill_elder()
+		elder_extinct.emit()
+		return true
+	return false
 
 func _on_density_integer_increased(num_births : int):
-	var breeder = choose_breeder()
 	prints("spawning",num_births)
 	while num_births > 0:
 		num_births -= 1
-		if not breeder:
-			prints("no lifeforms for breeding",self.name)
-			spawner.spawn()
-		else:
-			spawner.spawn_from_breeder()
+		spawner.spawn()
+
 
 	
 	

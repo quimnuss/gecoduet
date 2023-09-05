@@ -94,7 +94,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cb30w")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
 "speed": 5.0
 }, {
@@ -165,5 +165,6 @@ lifeform_type = "animal"
 mobility_type = "run"
 animation_frames = SubResource("SpriteFrames_s7ujc")
 name = "bear"
-species = "bear"
+species = 1
 scale = 1.0
+speed = 50.0

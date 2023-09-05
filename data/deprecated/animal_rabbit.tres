@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AnimalResource" load_steps=19 format=3 uid="uid://cuy0w8ea1hbdc"]
 
 [ext_resource type="Texture2D" uid="uid://c3odglwpn8a43" path="res://art/lifeforms/outline/MiniBunny.png" id="1_5yy4x"]
-[ext_resource type="Script" path="res://data/animal_base_resource.gd" id="1_vwxn1"]
+[ext_resource type="Script" path="res://data/deprecated/animal_base_resource.gd" id="1_vwxn1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jkdmy"]
 atlas = ExtResource("1_5yy4x")
@@ -143,3 +143,4 @@ animation_frames = SubResource("SpriteFrames_ghrkm")
 name = "rabbit"
 species = "rabbit"
 scale = 0.7
+speed = 200.0

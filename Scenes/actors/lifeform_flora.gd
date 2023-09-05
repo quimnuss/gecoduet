@@ -11,3 +11,7 @@ func _ready():
 	self.set_scale(Vector2(resource.scale,resource.scale))
 	self.sprite.set_scale(Vector2(resource.scale,resource.scale))
 
+func kill():
+	self.set_scale(self.get_scale()*0.3)
+	await get_tree().create_timer(2).timeout
+	queue_free()

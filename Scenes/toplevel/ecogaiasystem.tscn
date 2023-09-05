@@ -6,7 +6,7 @@
 y_sort_enabled = true
 script = ExtResource("1_hvhe6")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="DensitySyncTimer" type="Timer" parent="."]
 autostart = true
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="DensitySyncTimer" to="." method="_on_density_sync_timer_timeout"]

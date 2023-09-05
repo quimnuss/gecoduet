@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bob0pxtor755"]
+[gd_scene load_steps=48 format=3 uid="uid://bob0pxtor755"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_animal.gd" id="1_jq6ja"]
 [ext_resource type="Texture2D" uid="uid://md4ykrlp1l5g" path="res://art/lifeforms/outline/MiniBear.png" id="3_6mk7o"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://addons/imjp94.yafsm/src/transitions/Transition.gd" id="6_1f7gq"]
 [ext_resource type="Script" path="res://scenes/components/Movement.gd" id="7_ygqcy"]
 [ext_resource type="Script" path="res://addons/imjp94.yafsm/src/conditions/FloatCondition.gd" id="8_jpikf"]
+[ext_resource type="Script" path="res://addons/imjp94.yafsm/src/conditions/Condition.gd" id="9_v5ojv"]
+[ext_resource type="Script" path="res://scenes/actors/DebugNode.gd" id="11_3mfao"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q3pdq"]
 atlas = ExtResource("3_6mk7o")
@@ -102,7 +104,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7uioy")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
 "speed": 5.0
 }, {
@@ -175,6 +177,11 @@ script = ExtResource("5_guam0")
 name = "Entry"
 metadata/graph_offset = Vector2(432, 290)
 
+[sub_resource type="Resource" id="Resource_nlgyt"]
+script = ExtResource("5_guam0")
+name = "death"
+metadata/graph_offset = Vector2(635, 442.62)
+
 [sub_resource type="Resource" id="Resource_qny6e"]
 script = ExtResource("5_guam0")
 name = "idle"
@@ -192,6 +199,19 @@ to = "idle"
 conditions = {}
 priority = 0
 
+[sub_resource type="Resource" id="Resource_6opds"]
+script = ExtResource("9_v5ojv")
+name = "die"
+
+[sub_resource type="Resource" id="Resource_40h0v"]
+script = ExtResource("6_1f7gq")
+from = "idle"
+to = "death"
+conditions = {
+"die": SubResource("Resource_6opds")
+}
+priority = 0
+
 [sub_resource type="Resource" id="Resource_tdmg3"]
 script = ExtResource("8_jpikf")
 value = 0.01
@@ -204,6 +224,19 @@ from = "idle"
 to = "run"
 conditions = {
 "velocity": SubResource("Resource_tdmg3")
+}
+priority = 0
+
+[sub_resource type="Resource" id="Resource_hhe2g"]
+script = ExtResource("9_v5ojv")
+name = "die"
+
+[sub_resource type="Resource" id="Resource_a7u31"]
+script = ExtResource("6_1f7gq")
+from = "run"
+to = "death"
+conditions = {
+"die": SubResource("Resource_hhe2g")
 }
 priority = 0
 
@@ -226,6 +259,7 @@ priority = 0
 script = ExtResource("4_ibjlq")
 states = {
 "Entry": SubResource("Resource_taicv"),
+"death": SubResource("Resource_nlgyt"),
 "idle": SubResource("Resource_qny6e"),
 "run": SubResource("Resource_6kood")
 }
@@ -234,33 +268,45 @@ transitions = {
 "idle": SubResource("Resource_cg1n3")
 },
 "idle": {
+"death": SubResource("Resource_40h0v"),
 "run": SubResource("Resource_d0lj3")
 },
 "run": {
+"death": SubResource("Resource_a7u31"),
 "idle": SubResource("Resource_ibpgm")
 }
 }
 name = ""
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_vy1fw"]
+vertices = PackedVector2Array(-24, -32, 176, -32, 176, 96, -24, 96)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-24, -32, 176, -32, 176, 96, -24, 96)])
+
 [node name="Animal" type="CharacterBody2D"]
+motion_mode = 1
 script = ExtResource("1_jq6ja")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("pawn")]
 texture_filter = 1
 position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_sl2y3")
-animation = &"run"
+animation = &"die"
 speed_scale = 1.2
 script = ExtResource("3_dl337")
+pawn = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_8fap6")
-disabled = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 10.0
-target_desired_distance = 20.0
+path_desired_distance = 40.0
+target_desired_distance = 30.0
+path_max_distance = 10.0
+avoidance_enabled = true
+radius = 20.0
+debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0.0235294, 1, 1, 0.792157)
 debug_path_custom_point_size = 1.0
@@ -269,12 +315,23 @@ debug_path_custom_point_size = 1.0
 script = ExtResource("3_uofv4")
 state_machine = SubResource("Resource_qywea")
 
-[node name="Movement" type="Node2D" parent="." node_paths=PackedStringArray("nav")]
+[node name="Movement" type="Node2D" parent="." node_paths=PackedStringArray("pawn", "nav")]
 script = ExtResource("7_ygqcy")
+pawn = NodePath("..")
 nav = NodePath("../NavigationAgent2D")
 
-[connection signal="navigation_finished" from="NavigationAgent2D" to="NavigationAgent2D" method="_on_navigation_finished"]
-[connection signal="target_reached" from="NavigationAgent2D" to="NavigationAgent2D" method="_on_target_reached"]
-[connection signal="waypoint_reached" from="NavigationAgent2D" to="NavigationAgent2D" method="_on_waypoint_reached"]
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
+position = Vector2(-72, -32)
+navigation_polygon = SubResource("NavigationPolygon_vy1fw")
+enabled = false
+
+[node name="DebugNode" type="Node2D" parent="."]
+script = ExtResource("11_3mfao")
+
+[connection signal="navigation_finished" from="NavigationAgent2D" to="Movement" method="_on_navigation_finished"]
+[connection signal="transited" from="StateMachinePlayer" to="AnimatedSprite2D" method="_on_state_machine_player_transited"]
+[connection signal="transited" from="StateMachinePlayer" to="Movement" method="_on_state_machine_player_transited"]
+[connection signal="transited" from="StateMachinePlayer" to="DebugNode" method="_on_state_machine_player_transited"]
 [connection signal="updated" from="StateMachinePlayer" to="AnimatedSprite2D" method="_on_state_machine_player_updated"]
 [connection signal="updated" from="StateMachinePlayer" to="Movement" method="_on_state_machine_player_updated"]

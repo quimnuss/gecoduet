@@ -39,3 +39,4 @@ animation_frames = SubResource("SpriteFrames_u2jt0")
 name = "carrot"
 species = "carrot"
 scale = 0.2
+speed = 200.0

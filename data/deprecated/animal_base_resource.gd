@@ -8,3 +8,4 @@ class_name AnimalResource
 @export var name : String
 @export var species : String
 @export var scale : float = 1
+@export var speed : float = 200

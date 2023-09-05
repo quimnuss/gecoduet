@@ -9,7 +9,7 @@ y_sort_enabled = true
 script = ExtResource("1_a154l")
 
 [node name="ChildrenSync" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 10.0
 autostart = true
 
 [node name="GLV" type="Node2D" parent="."]
@@ -18,9 +18,7 @@ script = ExtResource("2_olwtv")
 [node name="EcoSpawner" parent="." instance=ExtResource("3_b6dnc")]
 
 [node name="DebugTimer" type="Timer" parent="."]
-autostart = true
 
 [connection signal="renamed" from="." to="." method="_on_renamed"]
-[connection signal="timeout" from="ChildrenSync" to="." method="_on_children_sync_timeout"]
-[connection signal="density_number_change" from="GLV" to="EcoSpawner" method="spawn_from_breeder"]
+[connection signal="density_change" from="GLV" to="EcoSpawner" method="_on_sync_children_to_density"]
 [connection signal="timeout" from="DebugTimer" to="." method="_on_density_integer_increased" binds= [1]]

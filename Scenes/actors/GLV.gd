@@ -1,8 +1,13 @@
 extends Node2D
 
+class_name GLV
+
 @export var mutuality : Dictionary #<String,float>
 # should this be a component as well?
-@export var density : float
+@export var density : float = 0.3
+
+# how slow are step changes. (the dt size of the differential equation)
+@export var time_stretch : float = 10.0
 
 signal density_change
 signal density_number_change
@@ -13,14 +18,14 @@ var major_driver = [null,0,null,0]
 func _ready():
 	pass # Replace with function body.
 
-
 func lotka(densities : Dictionary):
 	var total_delta_d = 0
+	var previous_density = self.density
 
 	major_driver = [null,0,null,0]
 
 	for species in mutuality:
-		var mutual = mutuality[species]
+		var mutual = mutuality[species]/time_stretch
 		var delta_d = 0
 		if species == "none":
 			delta_d = self.density*mutual
@@ -42,9 +47,15 @@ func lotka(densities : Dictionary):
 		density = 0
 	elif density > 100:
 		density = 100
+	
+	# how do we account for float errors?
+	if abs(total_delta_d) > 0.0001:
+		density_change.emit(density)
+	
+	if abs(int(previous_density) - int(density)) > 1:
+		density_number_change.emit()
+	
 	return density # is it confusing to change internal state but also return?
-
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

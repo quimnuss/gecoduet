@@ -1,0 +1,95 @@
+[gd_scene load_steps=4 format=3 uid="uid://dddjexq84ur7m"]
+
+[ext_resource type="Script" path="res://scenes/menu/hud.gd" id="1_otiii"]
+[ext_resource type="Texture2D" uid="uid://crdbn81g6qxjc" path="res://art/lifeforms/veggies.png" id="3_72122"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nmr8"]
+atlas = ExtResource("3_72122")
+region = Rect2(32, 0, 32, 32)
+
+[node name="hud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_otiii")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LifeformBox" type="Control" parent="CanvasLayer/GUI"]
+anchors_preset = 0
+offset_right = 24.0
+offset_bottom = 352.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUI/LifeformBox"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 128.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Button1" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+layout_mode = 2
+text = "🐻"
+
+[node name="Button2" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+layout_mode = 2
+text = "🐇"
+
+[node name="Button3" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+layout_mode = 2
+text = "🥕"
+
+[node name="Button4" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+layout_mode = 2
+text = "🦊"
+
+[node name="Button5" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+layout_mode = 2
+text = "🌱"
+
+[node name="Button6" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+visible = false
+layout_mode = 2
+icon = SubResource("AtlasTexture_1nmr8")
+
+[node name="Button7" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+visible = false
+layout_mode = 2
+icon = SubResource("AtlasTexture_1nmr8")
+
+[node name="Button8" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+visible = false
+layout_mode = 2
+icon = SubResource("AtlasTexture_1nmr8")
+
+[node name="Button9" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+visible = false
+layout_mode = 2
+icon = SubResource("AtlasTexture_1nmr8")
+
+[node name="Button10" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+layout_mode = 2
+text = "🐦"
+
+[node name="Button11" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+visible = false
+layout_mode = 2
+icon = SubResource("AtlasTexture_1nmr8")
+
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button1" to="." method="_on_species_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button1" to="." method="_on_species_name_button_pressed" binds= ["bear"]]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button2" to="." method="_on_species_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button2" to="." method="_on_species_name_button_pressed" binds= ["rabbit"]]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button3" to="." method="_on_species_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button3" to="." method="_on_species_name_button_pressed" binds= ["carrot"]]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button4" to="." method="_on_species_button_pressed"]

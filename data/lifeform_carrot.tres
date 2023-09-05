@@ -27,7 +27,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lmmbx")
 }],
-"loop": true,
+"loop": false,
 "name": &"idle",
 "speed": 1.0
 }]
@@ -38,5 +38,6 @@ lifeform_type = "flora"
 mobility_type = "static"
 animation_frames = SubResource("SpriteFrames_8m0q6")
 name = "carrot"
-species = "carrot"
+species = 0
 scale = 0.5
+speed = 100.0

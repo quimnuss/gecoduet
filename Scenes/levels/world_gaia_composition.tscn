@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://5nfi5oqdbppw"]
+[gd_scene load_steps=20 format=3 uid="uid://5nfi5oqdbppw"]
 
 [ext_resource type="Texture2D" uid="uid://opumiyj3vs6x" path="res://art/sproutlands/Tilesets/Grass.png" id="1_jyxb0"]
 [ext_resource type="Texture2D" uid="uid://uo02j43cl7if" path="res://art/sproutlands/Tilesets/Water.png" id="2_nk3r7"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="7_ocod4"]
 [ext_resource type="PackedScene" uid="uid://b5j1jh4innj27" path="res://scenes/toplevel/ecogaiasystem.tscn" id="8_w28kk"]
 [ext_resource type="PackedScene" uid="uid://djnoewirybh00" path="res://scenes/actors/species_elder.tscn" id="9_xn6jy"]
+[ext_resource type="PackedScene" uid="uid://dddjexq84ur7m" path="res://scenes/menu/hud.tscn" id="10_kaq8a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_30dsl"]
 texture = ExtResource("1_jyxb0")
@@ -336,7 +337,7 @@ navigation_polygon = SubResource("NavigationPolygon_1myx2")
 [node name="Sprite2D" type="Sprite2D" parent="TileMap"]
 
 [node name="Ecogaiasystem" parent="TileMap" node_paths=PackedStringArray("sample_elders") instance=ExtResource("8_w28kk")]
-sample_elders = [null, null, null]
+sample_elders = [NodePath("BearSpecies"), NodePath("RabbitSpecies"), NodePath("CarrotSpecies")]
 
 [node name="BearSpecies" parent="TileMap/Ecogaiasystem" instance=ExtResource("9_xn6jy")]
 species = 1
@@ -346,4 +347,6 @@ species = 2
 
 [node name="CarrotSpecies" parent="TileMap/Ecogaiasystem" instance=ExtResource("9_xn6jy")]
 
-[editable path="TileMap/Ecogaiasystem"]
+[node name="hud" parent="." instance=ExtResource("10_kaq8a")]
+
+[connection signal="create_species" from="hud" to="TileMap/Ecogaiasystem" method="_on_hud_create_species"]

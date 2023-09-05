@@ -29,28 +29,60 @@ func get_random_point(travel_radius: int):
 
 	return ideal_position
 
+func stop():
+	pawn.velocity = Vector2.ZERO # when last target is out of bounds this does not work for some reason
+	elapsed = 0
+
+func velocity_to_nav_target():
+	var agent_position : Vector2 = pawn.global_position
+	var target = nav.get_next_path_position()
+	var distance = (nav.get_final_position() - agent_position)
+	var speed = pawn.speed
+	# also nav.distance_to_target()
+	# todo fix spinning
+	if distance.length() < 20:
+		speed = pawn.speed/5
+	pawn.velocity = distance.normalized() * speed
+	if pawn.debug:
+		prints(pawn.name, pawn.global_position, pawn.position, agent_position, "->", target, pawn.velocity)
+	return pawn.velocity
+
+# todo state-machine elapsed
 func _on_state_machine_player_updated(state, delta):
 	match state:
-		"idle":
+		"seek_move", "idle":
 			pawn.velocity = Vector2.ZERO # this should not be necessary but for some reason it is
 			elapsed += delta
 			if elapsed > 3:
-				for tries in 10:
-					nav.set_target_position(get_random_point(200))
-					if nav.is_target_reachable():
-						break
 				elapsed = 0
-				state = "roaming"
-		"run/Entry":
-			if nav.is_target_reachable() and not nav.is_target_reached():
-				var agent_position : Vector2 = pawn.global_position
-				var target = nav.get_next_path_position()
-				pawn.velocity = (target - agent_position).normalized() * pawn.speed
-				if pawn.debug:
-					prints(pawn.name, pawn.global_position, pawn.position, agent_position, "->", target, pawn.velocity)
+				for tries in 10:
+					var target = get_random_point(50)
+					nav.set_target_position(target)
+					if nav.is_target_reachable():
+						if pawn.debug:
+							prints(target,"is reachable.")
+						velocity_to_nav_target()
+						break
+		"run":
+			if nav.is_target_reachable() and not (nav.distance_to_target() < 30):
+				velocity_to_nav_target()
 			elif not nav.is_target_reachable():
-				print(nav.get_final_position(), " is unreachable. Next pos ", nav.get_next_path_position())
-				nav.stop()
+				if pawn.debug:
+					print(nav.get_final_position(), " is unreachable. Next pos ", nav.get_next_path_position())
+				self.stop()
 			else:
-				nav.stop()
+				self.stop()
+		_:
+			self.stop()
 
+func _on_navigation_finished():
+	self.stop()
+
+func _on_state_machine_player_transited(from, to):
+	match from:
+		"idle":
+			pass
+		"run":
+			match to:
+				"idle":
+					pass

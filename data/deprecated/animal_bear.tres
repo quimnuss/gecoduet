@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AnimalResource" load_steps=23 format=3 uid="uid://c7srbv0lv4thg"]
 
 [ext_resource type="Texture2D" uid="uid://md4ykrlp1l5g" path="res://art/lifeforms/outline/MiniBear.png" id="1_j8pkx"]
-[ext_resource type="Script" path="res://data/animal_base_resource.gd" id="1_odsaq"]
+[ext_resource type="Script" path="res://data/deprecated/animal_base_resource.gd" id="1_odsaq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_08ba7"]
 atlas = ExtResource("1_j8pkx")
@@ -166,3 +166,4 @@ animation_frames = SubResource("SpriteFrames_vdw4j")
 name = "bear"
 species = "bear"
 scale = 1.0
+speed = 100.0

@@ -1,9 +1,6 @@
 extends Node2D
 
-var res_rabbit = preload("res://data/animal_rabbit.tres")
-var res_bear = preload("res://data/animal_bear.tres")
-
-var res_mutuality = preload("res://data/elder_glv.tres")
+var res_mutuality = preload("res://data/deprecated/elder_glv.tres")
 
 var res_elder = preload("res://scenes/actors/deprecated/elder.tscn")
 
