@@ -3,7 +3,7 @@ extends Node2D
 var elders = []
 var density_map : Dictionary = {}
 
-
+var species_elder_scene = preload("res://scenes/actors/species_elder.tscn")
 
 @onready var glv_timer = $DensitySyncTimer
 
@@ -47,18 +47,16 @@ func _on_density_sync_timer_timeout():
 	
 func create_species(species : Constants.Species):
 	# TODO does not work. sample_elders can't be sleeping node... I have to figure out how to defer initialization...
-	for elder in sample_elders:
-		if elder.species == species:
-			var new_elder : SpeciesElder = elder.duplicate()
-			for living_elder in elders:
-				if new_elder.species == living_elder.species:
-					prints("Species",Constants.species_name(new_elder.species),"already living")
-					return null
-			elders.append(new_elder)
-			add_child(new_elder)
-			return new_elder
-	prints("Species",Constants.species_name(species),"not found")
-	return null
+	for living_elder in elders:
+		if species == living_elder.species:
+			prints("Species",Constants.species_name(species),"already living")
+			return null
+	var new_elder = species_elder_scene.instantiate()
+	new_elder.species = species
+	elders.append(new_elder)
+	add_child(new_elder)
+	return new_elder
+
 
 func _on_hud_create_species(species):
 	create_species(species)

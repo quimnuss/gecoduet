@@ -306,7 +306,6 @@ target_desired_distance = 30.0
 path_max_distance = 10.0
 avoidance_enabled = true
 radius = 20.0
-debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0.0235294, 1, 1, 0.792157)
 debug_path_custom_point_size = 1.0

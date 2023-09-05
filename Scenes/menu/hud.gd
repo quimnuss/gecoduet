@@ -32,8 +32,8 @@ func _on_species_button_pressed(caller: Button):
 
 func _on_species_name_button_pressed(name : String):
 	var species = Constants.Species.get(name.to_upper())
-	if species:
+	if species != null:
 		create_species.emit(species)
 	else:
-		prints("species",name,"unknown. Species:",Constants.Species.keys())
+		prints("species",name.to_upper(),"unknown. Species:",Constants.Species.keys())
 	
