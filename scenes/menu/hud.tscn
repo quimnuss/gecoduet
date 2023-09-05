@@ -68,39 +68,39 @@ disabled = true
 text = "🌱"
 
 [node name="Button6" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme = ExtResource("2_nta24")
+disabled = true
 icon = SubResource("AtlasTexture_1nmr8")
 
 [node name="Button7" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme = ExtResource("2_nta24")
+disabled = true
 icon = SubResource("AtlasTexture_1nmr8")
 
 [node name="Button8" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme = ExtResource("2_nta24")
+disabled = true
 icon = SubResource("AtlasTexture_1nmr8")
 
 [node name="Button9" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme = ExtResource("2_nta24")
+disabled = true
 icon = SubResource("AtlasTexture_1nmr8")
 
 [node name="Button10" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme = ExtResource("2_nta24")
+disabled = true
 text = "🐦"
 
 [node name="Button11" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme = ExtResource("2_nta24")
+disabled = true
 icon = SubResource("AtlasTexture_1nmr8")
 
 [connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button1" to="." method="_on_species_button_pressed"]
