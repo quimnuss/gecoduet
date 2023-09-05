@@ -24,8 +24,9 @@ func _ready():
 	else: # not main scene
 		spawner.species = self.species
 	prints(res_mutuality.get_data())
-	glv.mutuality = res_mutuality.get_data()[Constants.species_name(self.species)]
-
+	var species_name = Constants.species_name(self.species)
+	glv.mutuality = res_mutuality.get_data()[species_name]
+	glv.display_name = species_name
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -43,7 +44,7 @@ func kill_elder():
 	queue_free()
 
 func check_extinction(density: float) -> bool:
-	if density < 0.01:
+	if density < 0.1:
 		prints("elder",self.name,"went extinct with density",density)
 		spawner.kill_all_children()
 		kill_elder()

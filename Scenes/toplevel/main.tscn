@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://bgdewg1tjfwj6"]
 
 [ext_resource type="Script" path="res://scenes/toplevel/main.gd" id="1_fqsob"]
-[ext_resource type="PackedScene" uid="uid://5nfi5oqdbppw" path="res://scenes/levels/world_gaia_composition.tscn" id="2_r41u0"]
+[ext_resource type="PackedScene" uid="uid://bgtx5crm8swga" path="res://scenes/levels/world_gaia_composition_sandbox.tscn" id="2_7xqob"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_fqsob")
 
-[node name="world_gaia_composition" parent="." instance=ExtResource("2_r41u0")]
+[node name="world_gaia_composition_sandbox" parent="." instance=ExtResource("2_7xqob")]

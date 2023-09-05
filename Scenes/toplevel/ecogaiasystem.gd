@@ -52,6 +52,7 @@ func create_species(species : Constants.Species):
 			prints("Species",Constants.species_name(species),"already living")
 			return null
 	var new_elder = species_elder_scene.instantiate()
+	new_elder.name = Constants.species_name(species)
 	new_elder.species = species
 	elders.append(new_elder)
 	add_child(new_elder)

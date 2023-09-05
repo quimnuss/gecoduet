@@ -4,14 +4,17 @@ class_name GLV
 
 @export var mutuality : Dictionary #<String,float>
 # should this be a component as well?
-@export var density : float = 0.3
+@export var density : float = 1.5
 
 # how slow are step changes. (the dt size of the differential equation)
 @export var time_stretch : float = 10.0
 
+var display_name : String = 'GLV'
+
 signal density_change
 signal density_number_change
 
+# major negative and positive drivers
 var major_driver = [null,0,null,0]
 
 # Called when the node enters the scene tree for the first time.
@@ -41,7 +44,7 @@ func lotka(densities : Dictionary):
 			major_driver[3] = delta_d
 
 		total_delta_d += delta_d
-	prints(self.name,"major driver",major_driver)
+	prints(self.display_name,"major driver",major_driver)
 	density += total_delta_d
 	if density < 0.02:
 		density = 0

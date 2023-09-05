@@ -8,6 +8,7 @@ script = ExtResource("1_igrne")
 
 [node name="Marker" type="Sprite2D" parent="."]
 position = Vector2(300, 300)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_7mhr8")
 region_enabled = true
 region_rect = Rect2(0, 0, 32, 32)

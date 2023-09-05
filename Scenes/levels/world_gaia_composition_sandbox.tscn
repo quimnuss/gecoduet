@@ -1,21 +1,17 @@
-[gd_scene load_steps=23 format=3 uid="uid://dqp7bjnxdp6u3"]
+[gd_scene load_steps=19 format=3 uid="uid://bgtx5crm8swga"]
 
-[ext_resource type="Texture2D" uid="uid://opumiyj3vs6x" path="res://art/sproutlands/Tilesets/Grass.png" id="1_po12b"]
-[ext_resource type="Texture2D" uid="uid://uo02j43cl7if" path="res://art/sproutlands/Tilesets/Water.png" id="2_wy7k1"]
-[ext_resource type="Texture2D" uid="uid://cjyhb5jfd7dek" path="res://art/sproutlands/Tilesets/Tilled Dirt.png" id="3_na8py"]
-[ext_resource type="Texture2D" uid="uid://cku132l82xhbn" path="res://art/sproutlands/Tilesets/Hills.png" id="4_1kes4"]
-[ext_resource type="Texture2D" uid="uid://bbcen8t8oisqk" path="res://art/sproutlands/Tilesets/Wooden House.png" id="5_l0tsj"]
-[ext_resource type="Texture2D" uid="uid://cwb0mm8q8f044" path="res://art/sproutlands/Tilesets/Fences.png" id="6_yjeo0"]
-[ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="7_etpeh"]
-[ext_resource type="PackedScene" uid="uid://b5j1jh4innj27" path="res://scenes/actors/ecogaiasystem.tscn" id="8_8tlbn"]
-[ext_resource type="PackedScene" uid="uid://bvx07aathb05g" path="res://scenes/actors/deprecated/elder.tscn" id="9_lcpf0"]
-[ext_resource type="JSON" uid="uid://dpoffsgnannyy" path="res://data/elder_glv.tres" id="10_onhvx"]
-[ext_resource type="Resource" uid="uid://c8fqp5w3n8x17" path="res://data/animal_tree.tres" id="11_22ujs"]
-[ext_resource type="Resource" uid="uid://cuy0w8ea1hbdc" path="res://data/animal_rabbit.tres" id="11_u6vbn"]
-[ext_resource type="Resource" uid="uid://c7srbv0lv4thg" path="res://data/animal_bear.tres" id="13_mcden"]
+[ext_resource type="Texture2D" uid="uid://opumiyj3vs6x" path="res://art/sproutlands/Tilesets/Grass.png" id="1_v5rgt"]
+[ext_resource type="Texture2D" uid="uid://uo02j43cl7if" path="res://art/sproutlands/Tilesets/Water.png" id="2_s1un5"]
+[ext_resource type="Texture2D" uid="uid://cjyhb5jfd7dek" path="res://art/sproutlands/Tilesets/Tilled Dirt.png" id="3_kdlvj"]
+[ext_resource type="Texture2D" uid="uid://cku132l82xhbn" path="res://art/sproutlands/Tilesets/Hills.png" id="4_2keeu"]
+[ext_resource type="Texture2D" uid="uid://bbcen8t8oisqk" path="res://art/sproutlands/Tilesets/Wooden House.png" id="5_1d2ml"]
+[ext_resource type="Texture2D" uid="uid://cwb0mm8q8f044" path="res://art/sproutlands/Tilesets/Fences.png" id="6_86oga"]
+[ext_resource type="Texture2D" uid="uid://crj3wllm3iy7h" path="res://art/sproutlands/Objects/Basic Grass Biom things 1.png" id="7_5fufh"]
+[ext_resource type="PackedScene" uid="uid://b5j1jh4innj27" path="res://scenes/toplevel/ecogaiasystem.tscn" id="8_ql7dh"]
+[ext_resource type="PackedScene" uid="uid://dddjexq84ur7m" path="res://scenes/menu/hud.tscn" id="10_3e8fg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_30dsl"]
-texture = ExtResource("1_po12b")
+texture = ExtResource("1_v5rgt")
 4:2/0 = 0
 5:1/0 = 0
 4:0/0 = 0
@@ -81,14 +77,14 @@ texture = ExtResource("1_po12b")
 6:1/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jxx0s"]
-texture = ExtResource("2_wy7k1")
+texture = ExtResource("2_s1un5")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_slcqd"]
-texture = ExtResource("3_na8py")
+texture = ExtResource("3_kdlvj")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -153,7 +149,7 @@ texture = ExtResource("3_na8py")
 7:7/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tlnm2"]
-texture = ExtResource("4_1kes4")
+texture = ExtResource("4_2keeu")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -192,7 +188,7 @@ texture = ExtResource("4_1kes4")
 5:5/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1kv4g"]
-texture = ExtResource("5_l0tsj")
+texture = ExtResource("5_1d2ml")
 1:0/0 = 0
 3:0/0 = 0
 4:0/0 = 0
@@ -225,7 +221,7 @@ texture = ExtResource("5_l0tsj")
 6:4/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0fcys"]
-texture = ExtResource("6_yjeo0")
+texture = ExtResource("6_86oga")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -244,7 +240,7 @@ texture = ExtResource("6_yjeo0")
 3:3/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mww13"]
-texture = ExtResource("7_etpeh")
+texture = ExtResource("7_5fufh")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -305,7 +301,7 @@ vertices = PackedVector2Array(232, 120, 408, 312, 40, 312, 104, 192, 168, 120, 7
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 3, 2), PackedInt32Array(5, 2, 6, 7), PackedInt32Array(0, 8, 9, 1), PackedInt32Array(6, 9, 8, 10), PackedInt32Array(4, 3, 11, 10), PackedInt32Array(7, 6, 10, 11)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(40, 40, 408, 40, 408, 312, 40, 312), PackedVector2Array(72, 144, 72, 192, 104, 192, 104, 144), PackedVector2Array(168, 56, 232, 56, 232, 120, 168, 120)])
 
-[node name="world_gaia" type="Node2D"]
+[node name="world_gaia_composition_sandbox" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_5g2k5")
@@ -339,20 +335,8 @@ navigation_polygon = SubResource("NavigationPolygon_1myx2")
 
 [node name="Sprite2D" type="Sprite2D" parent="TileMap"]
 
-[node name="Ecogaiasystem" parent="TileMap" node_paths=PackedStringArray("sample_elders") instance=ExtResource("8_8tlbn")]
-sample_elders = [NodePath("CarrotElder"), NodePath("RabbitElder"), NodePath("BearElder")]
+[node name="Ecogaiasystem" parent="TileMap" instance=ExtResource("8_ql7dh")]
 
-[node name="CarrotElder" parent="TileMap/Ecogaiasystem" instance=ExtResource("9_lcpf0")]
-position = Vector2(248, 232)
-elder_resource = ExtResource("10_onhvx")
-animal_resource = ExtResource("11_22ujs")
+[node name="hud" parent="." instance=ExtResource("10_3e8fg")]
 
-[node name="RabbitElder" parent="TileMap/Ecogaiasystem" instance=ExtResource("9_lcpf0")]
-position = Vector2(120, 240)
-elder_resource = ExtResource("10_onhvx")
-animal_resource = ExtResource("11_u6vbn")
-
-[node name="BearElder" parent="TileMap/Ecogaiasystem" instance=ExtResource("9_lcpf0")]
-position = Vector2(248, 288)
-elder_resource = ExtResource("10_onhvx")
-animal_resource = ExtResource("13_mcden")
+[connection signal="create_species" from="hud" to="TileMap/Ecogaiasystem" method="_on_hud_create_species"]
