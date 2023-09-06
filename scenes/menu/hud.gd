@@ -1,16 +1,16 @@
 extends Control
 
 var emoji_to_species : Dictionary = {
-	'🐺': Constants.Species.BEAR,
-	'🐇': Constants.Species.RABBIT,
-	'🥕': Constants.Species.CARROT,
-	'🦊': Constants.Species.TREE,
-	'🐦': Constants.Species.TREE,
-	'🐝': Constants.Species.TREE,
-	'🐛': Constants.Species.TREE,
-	'🐟': Constants.Species.TREE,
-	'🌱': Constants.Species.TREE,
-	'🍒': Constants.Species.TREE
+    '🐺': Constants.Species.BEAR,
+    '🐇': Constants.Species.RABBIT,
+    '🥕': Constants.Species.CARROT,
+    '🐦': Constants.Species.BIRD,
+    '🐝': Constants.Species.BOAR,
+    '🦊': Constants.Species.FOX,
+    '🐛': Constants.Species.DEER,
+    '🐟': Constants.Species.FISH,
+    '🌱': Constants.Species.TREE,
+    '🍒': Constants.Species.BERRY
 }
 
 signal create_species(lifeform : Constants.Species)
@@ -24,16 +24,9 @@ func _ready():
 func _process(delta):
 	pass
 
-func _on_species_button_pressed(caller: Button):
-	prints("pressed",caller)
-	var species_emoji = caller.get_text()
-	var species = emoji_to_species[species_emoji]
-	create_species.emit(species)
-
 func _on_species_name_button_pressed(name : String):
-	var species = Constants.Species.get(name.to_upper())
-	if species != null:
-		create_species.emit(species)
-	else:
-		prints("species",name.to_upper(),"unknown. Species:",Constants.Species.keys())
-
+    var species = Constants.Species.get(name.to_upper())
+    if species != null:
+        create_species.emit(species)
+    else:
+        prints("species",name.to_upper(),"unknown. Species:",Constants.Species.keys())

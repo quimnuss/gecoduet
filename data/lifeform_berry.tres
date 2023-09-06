@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=5 format=3 uid="uid://d26ik1uqudta4"]
+
+[ext_resource type="Texture2D" uid="uid://crdbn81g6qxjc" path="res://art/lifeforms/veggies.png" id="1_7vtjd"]
+[ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="2_xo2eb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pciux"]
+atlas = ExtResource("1_7vtjd")
+region = Rect2(224, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mhjgd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pciux")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("2_xo2eb")
+lifeform_type = "flora"
+mobility_type = "static"
+animation_frames = SubResource("SpriteFrames_mhjgd")
+name = "berry"
+species = 10
+scale = 0.5
+speed = 100.0

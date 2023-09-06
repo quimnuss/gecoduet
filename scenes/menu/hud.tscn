@@ -65,37 +65,37 @@ text = "🦊"
 layout_mode = 2
 theme = ExtResource("2_nta24")
 disabled = true
-text = "🌱"
+text = "🐦"
 
 [node name="Button6" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_nta24")
 disabled = true
-icon = SubResource("AtlasTexture_1nmr8")
+text = "🐟"
 
 [node name="Button7" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_nta24")
 disabled = true
-icon = SubResource("AtlasTexture_1nmr8")
+text = "🌱"
 
 [node name="Button8" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_nta24")
 disabled = true
-icon = SubResource("AtlasTexture_1nmr8")
+text = "🍒"
 
 [node name="Button9" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_nta24")
 disabled = true
-icon = SubResource("AtlasTexture_1nmr8")
+text = "🐝"
 
 [node name="Button10" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_nta24")
 disabled = true
-text = "🐦"
+text = "🐛"
 
 [node name="Button11" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 layout_mode = 2
@@ -103,10 +103,13 @@ theme = ExtResource("2_nta24")
 disabled = true
 icon = SubResource("AtlasTexture_1nmr8")
 
-[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button1" to="." method="_on_species_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button1" to="." method="_on_species_name_button_pressed" binds= ["bear"]]
-[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button2" to="." method="_on_species_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button2" to="." method="_on_species_name_button_pressed" binds= ["rabbit"]]
-[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button3" to="." method="_on_species_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button3" to="." method="_on_species_name_button_pressed" binds= ["carrot"]]
-[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button4" to="." method="_on_species_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button4" to="." method="_on_species_name_button_pressed" binds= ["wolf"]]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button5" to="." method="_on_species_name_button_pressed" binds= ["bird"]]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button6" to="." method="_on_species_name_button_pressed" binds= ["fish"]]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button7" to="." method="_on_species_name_button_pressed" binds= ["tree"]]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button8" to="." method="_on_species_name_button_pressed" binds= ["berry"]]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button9" to="." method="_on_species_name_button_pressed" binds= ["bee"]]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button10" to="." method="_on_species_name_button_pressed" binds= ["worm"]]
