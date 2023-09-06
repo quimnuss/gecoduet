@@ -58,13 +58,11 @@ text = "🥕"
 [node name="Button4" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_nta24")
-disabled = true
 text = "🦊"
 
 [node name="Button5" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_nta24")
-disabled = true
 text = "🐦"
 
 [node name="Button6" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
@@ -76,13 +74,11 @@ text = "🐟"
 [node name="Button7" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_nta24")
-disabled = true
 text = "🌱"
 
 [node name="Button8" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_nta24")
-disabled = true
 text = "🍒"
 
 [node name="Button9" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]

@@ -1,81 +1,80 @@
-[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=22 format=3 uid="uid://b5r4w26o5cwlc"]
+[gd_resource type="SpriteFrames" load_steps=20 format=3 uid="uid://frui3nkmhhyk"]
 
-[ext_resource type="Texture2D" uid="uid://bltsndosjisoq" path="res://art/lifeforms/outline/MiniBoar.png" id="1_r6rwg"]
-[ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="2_vgb3p"]
+[ext_resource type="Texture2D" uid="uid://bltsndosjisoq" path="res://art/lifeforms/outline/MiniBoar.png" id="1_c1b2p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2q4k6"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o8jev"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(0, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b0ui3"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(32, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f78p6"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(64, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j3l1n"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(96, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sfpal"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(0, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_104o5"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(32, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqgap"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(64, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ecf85"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(96, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_thx5j"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(128, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_esvoq"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_88w4h"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_snss4"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8x56c"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qrmuo"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(0, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_beei7"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(32, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0sblh"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(64, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5r02r"]
-atlas = ExtResource("1_r6rwg")
+atlas = ExtResource("1_c1b2p")
 region = Rect2(96, 32, 32, 32)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_srpp8"]
+[resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -151,13 +150,3 @@ animations = [{
 "name": &"run",
 "speed": 5.0
 }]
-
-[resource]
-script = ExtResource("2_vgb3p")
-lifeform_type = "animal"
-mobility_type = "run"
-animation_frames = SubResource("SpriteFrames_srpp8")
-name = "boar"
-species = 5
-scale = 1.0
-speed = 50.0

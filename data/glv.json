@@ -17,6 +17,11 @@
 	"none": 1.27,
 	"rabbit": -0.3
 },
+"wolf": {
+	"wolf": -0.1,
+	"none": -0.3,
+	"rabbit": 0.3
+},
 "bee": {
 	"bee": -0.1,
 	"berry": 0.02,
