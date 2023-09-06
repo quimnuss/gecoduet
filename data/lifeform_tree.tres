@@ -49,8 +49,16 @@ animations = [{
 "texture": SubResource("AtlasTexture_k5rq5")
 }],
 "loop": false,
-"name": &"idle",
+"name": &"grow",
 "speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eh4e4")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
 }]
 
 [resource]
@@ -60,5 +68,5 @@ mobility_type = "static"
 animation_frames = SubResource("SpriteFrames_8m0q6")
 name = "tree"
 species = 3
-scale = 1.0
+scale = 0.7
 speed = 100.0
