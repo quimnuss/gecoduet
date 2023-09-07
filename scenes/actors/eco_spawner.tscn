@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://coccc0dlohpht" path="res://art/totem_animals_short.png" id="2_7mhr8"]
 
 [node name="EcoSpawner" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_igrne")
 
 [node name="Marker" type="Sprite2D" parent="."]

@@ -5,6 +5,8 @@ extends Node2D
 
 var elapsed = 2
 
+var movement_delta : float = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -36,19 +38,28 @@ func stop():
 func velocity_to_nav_target():
 	var agent_position : Vector2 = pawn.global_position
 	var target = nav.get_next_path_position()
-	var distance = (nav.get_final_position() - agent_position)
+	var distance = (target - agent_position)
+	var distance_to_end = (nav.get_final_position() - agent_position)
 	var speed = pawn.speed
 	# also nav.distance_to_target()
 	# todo fix spinning
-	if distance.length() < 20:
+	if distance_to_end.length() < 20:
 		speed = pawn.speed/5
-	pawn.velocity = distance.normalized() * speed
+	var velocity = distance.normalized() * speed
+	# TODO figure out how to get avoidance working correctly
+	if false and nav.avoidance_enabled:
+		nav.set_velocity(velocity)
+	else:
+		pawn.velocity = velocity
+	
+	#pawn.velocity = velocity
 	if pawn.debug:
 		prints(pawn.name, pawn.global_position, pawn.position, agent_position, "->", target, pawn.velocity)
 	return pawn.velocity
 
 # todo state-machine elapsed
 func _on_state_machine_player_updated(state, delta):
+	movement_delta = pawn.speed * delta
 	match state:
 		"seek_move", "idle":
 			pawn.velocity = Vector2.ZERO # this should not be necessary but for some reason it is
@@ -64,7 +75,7 @@ func _on_state_machine_player_updated(state, delta):
 						velocity_to_nav_target()
 						break
 		"run":
-			if nav.is_target_reachable() and not (nav.distance_to_target() < 30):
+			if nav.is_target_reachable() and not (nav.distance_to_target() < 15):
 				velocity_to_nav_target()
 			elif not nav.is_target_reachable():
 				if pawn.debug:
@@ -86,3 +97,14 @@ func _on_state_machine_player_transited(from, to):
 			match to:
 				"idle":
 					pass
+
+
+func _on_navigation_agent_2d_velocity_computed(safe_velocity):
+#	pawn.global_position = pawn.global_position.move_toward(pawn.global_position + safe_velocity, movement_delta)
+	print(safe_velocity)
+	pawn.velocity = safe_velocity
+	if pawn.debug:
+		prints(pawn.name, pawn.global_position, pawn.position, pawn.global_position, "->", nav.get_next_path_position(), pawn.velocity)
+	pawn.move_and_slide()
+	return 
+

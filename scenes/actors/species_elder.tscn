@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://igiyguijwul8" path="res://scenes/actors/eco_spawner.tscn" id="3_b6dnc"]
 
 [node name="SpeciesElder" type="Node2D"]
-y_sort_enabled = true
 script = ExtResource("1_a154l")
 
 [node name="ChildrenSync" type="Timer" parent="."]
@@ -16,6 +15,7 @@ autostart = true
 script = ExtResource("2_olwtv")
 
 [node name="EcoSpawner" parent="." instance=ExtResource("3_b6dnc")]
+y_sort_enabled = true
 
 [node name="DebugTimer" type="Timer" parent="."]
 

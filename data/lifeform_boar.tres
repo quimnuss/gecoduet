@@ -160,4 +160,4 @@ animation_frames = SubResource("SpriteFrames_srpp8")
 name = "boar"
 species = 5
 scale = 1.0
-speed = 50.0
+speed = 40.0

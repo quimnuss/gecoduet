@@ -108,3 +108,11 @@ of the species will traverse the zone of death.
 environmental conditions are humidity, heat, wind... which changes glvs.
 We will have a few different equilibrium or non-equilibrium points
 that the player can change to move the equilibrium point or oscillation.
+
+## credit
+
+[trees](https://ninjikin.itch.io/trees)
+[fruits](https://ninjikin.itch.io/fruit)
+[veggies](https://kiriuozoru.itch.io/pixel-art-assets-2d-veggies)
+[sproutland](https://cupnooble.itch.io/sprout-lands-asset-pack)
+[animals](https://lyaseek.itch.io/miniffanimals)

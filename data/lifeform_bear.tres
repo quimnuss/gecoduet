@@ -167,4 +167,4 @@ animation_frames = SubResource("SpriteFrames_s7ujc")
 name = "bear"
 species = 1
 scale = 1.0
-speed = 50.0
+speed = 40.0

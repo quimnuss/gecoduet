@@ -144,4 +144,4 @@ animation_frames = SubResource("SpriteFrames_1mj2g")
 name = "rabbit"
 species = 2
 scale = 1.0
-speed = 100.0
+speed = 70.0

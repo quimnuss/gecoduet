@@ -11,4 +11,4 @@ animation_frames = ExtResource("1_asc6o")
 name = "bird"
 species = 4
 scale = 0.8
-speed = 100.0
+speed = 50.0
