@@ -23,11 +23,11 @@ func _process(delta):
 func polar2cartesian(travel_radius, angle):
 	return Vector2(travel_radius*sin(angle), travel_radius*cos(angle))
 
-func set_move_mode(move_mode : Constants.MoveMode, target_lifeform : Node2D):
+func set_move_mode(new_move_mode : Constants.MoveMode, target_lifeform : Node2D):
 	self.target_lifeform = target_lifeform
-	prints(pawn.name,"switched to", Constants.move_mode_name(move_mode))
-	self.move_mode = move_mode
-	match move_mode:
+	prints(pawn.name,"switched to", Constants.move_mode_name(new_move_mode))
+	self.move_mode = new_move_mode
+	match self.move_mode:
 		Constants.MoveMode.CHASE_PREY:
 			self.target_lifeform.set_highlight(true)
 		_:

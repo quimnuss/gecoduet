@@ -36,10 +36,6 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="ecoduet"
 
-[editor_plugins]
-
-enabled=PackedStringArray()
-
 [input]
 
 ui_left={

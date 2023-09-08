@@ -10,7 +10,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var resource : LifeformAnimalResource = preload("res://data/lifeform_bear.tres")
 
 @onready var animation = $AnimatedSprite2D
-@onready var state_machine = $StateMachinePlayer
+@onready var state_machine 
 @onready var movement = $Movement
 
 var species : Constants.Species
