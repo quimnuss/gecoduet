@@ -7,6 +7,10 @@ var elapsed = 2
 
 var movement_delta : float = 0
 
+var move_mode : Constants.MoveMode = Constants.MoveMode.DEFAULT
+
+var target_lifeform : Node2D = null
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -19,6 +23,16 @@ func _process(delta):
 func polar2cartesian(travel_radius, angle):
 	return Vector2(travel_radius*sin(angle), travel_radius*cos(angle))
 
+func set_move_mode(move_mode : Constants.MoveMode, target_lifeform : Node2D):
+	self.target_lifeform = target_lifeform
+	prints(pawn.name,"switched to", Constants.move_mode_name(move_mode))
+	self.move_mode = move_mode
+	match move_mode:
+		Constants.MoveMode.CHASE_PREY:
+			self.target_lifeform.set_highlight(true)
+		_:
+			self.target_lifeform.set_highlight(false)
+
 func get_random_point(travel_radius: int):
 	var angle = randf_range(0, 2*PI)
 	var distance = randi_range(100,travel_radius)
@@ -30,6 +44,15 @@ func get_random_point(travel_radius: int):
 		ideal_position.x = -ideal_position.x
 
 	return ideal_position
+
+func follow_leader():
+	pass
+
+func avoid_predator():
+	pass
+
+func chase_prey():
+	pass
 
 func stop():
 	pawn.velocity = Vector2.ZERO # when last target is out of bounds this does not work for some reason
@@ -57,6 +80,18 @@ func velocity_to_nav_target():
 		prints(pawn.name, pawn.global_position, pawn.position, agent_position, "->", target, pawn.velocity)
 	return pawn.velocity
 
+func nav_target_selector() -> Vector2:
+	var target = get_random_point(50)	
+	match move_mode:
+		Constants.MoveMode.CHASE_PREY:
+			target = target_lifeform.global_position
+			pass
+		Constants.MoveMode.CHASE_LEADER:
+			pass
+		Constants.MoveMode.AVOID_PREDATOR:
+			pass
+	return target
+		
 # todo state-machine elapsed
 func _on_state_machine_player_updated(state, delta):
 	movement_delta = pawn.speed * delta
@@ -67,7 +102,8 @@ func _on_state_machine_player_updated(state, delta):
 			if elapsed > 3:
 				elapsed = 0
 				for tries in 10:
-					var target = get_random_point(50)
+					var target = nav_target_selector()	
+					
 					nav.set_target_position(target)
 					if nav.is_target_reachable():
 						if pawn.debug:
@@ -75,14 +111,34 @@ func _on_state_machine_player_updated(state, delta):
 						velocity_to_nav_target()
 						break
 		"run":
-			if nav.is_target_reachable() and not (nav.distance_to_target() < 15):
-				velocity_to_nav_target()
-			elif not nav.is_target_reachable():
-				if pawn.debug:
-					print(nav.get_final_position(), " is unreachable. Next pos ", nav.get_next_path_position())
-				self.stop()
-			else:
-				self.stop()
+			match move_mode:
+				Constants.MoveMode.CHASE_PREY:
+					var target = target_lifeform.global_position
+					nav.set_target_position(target)
+					if(nav.distance_to_target() < 5):
+						self.stop()
+					else:
+						velocity_to_nav_target()
+				Constants.MoveMode.AVOID_PREDATOR:
+					var predator_position = target_lifeform.global_position
+					var predator_distance = (predator_position - self.global_position)
+					var away_direction = predator_distance.normalized()
+					var away_angle = randf_range(0,0.2) if predator_distance.length() > 30 else 0.5*PI
+					var opposite = self.global_position - away_direction.rotated(away_angle*PI)*100
+					nav.set_target_position(opposite)
+					if(nav.distance_to_target() < 5):
+						self.stop()
+					else:
+						velocity_to_nav_target()
+				Constants.MoveMode.DEFAULT,_:
+					if nav.is_target_reachable() and not (nav.distance_to_target() < 15):
+						velocity_to_nav_target()
+					elif not nav.is_target_reachable():
+						if pawn.debug:
+							print(nav.get_final_position(), " is unreachable. Next pos ", nav.get_next_path_position())
+						self.stop()
+					else:
+						self.stop()
 		_:
 			self.stop()
 

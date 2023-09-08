@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+class_name Animal
 
 var speed = 200.0
 const JUMP_VELOCITY = -400.0
@@ -42,15 +43,28 @@ func _physics_process(delta):
 #
 #	if velocity == Vector2.ZERO:
 #		controlled = false
-#
+##
 #	var debug_pressed = Input.is_action_pressed("ui_debug")
 #	if debug_pressed:
+#		var move_mode = ["chase_prey","chase_leader","avoid_predator"].pick_random()
+#		prints("switching to",move_mode)
+#		movement.move_mode = move_mode
 ##		state_machine.set_trigger("die")
 #		kill()
 
 	state_machine.set_param("velocity", velocity.length())
 	move_and_slide()
 	pass
+
+func set_target_lifeform(target_lifeform : Node2D):
+	self.movement.target_lifeform = target_lifeform
+
+func set_highlight(turn_on = true, blueish = false):
+	var highlight : Sprite2D = $Highlight
+	highlight.visible = turn_on
+	if blueish:
+		highlight.modulate = Color(0, 0, 1) # blue shade
+	
 
 func kill():
 	state_machine.set_trigger("die")

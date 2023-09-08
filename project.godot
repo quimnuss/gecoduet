@@ -18,7 +18,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Species="*res://other/species.gd"
+Species="*res://other/constants.gd"
 
 [debug]
 
@@ -38,7 +38,7 @@ project/assembly_name="ecoduet"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/imjp94.yafsm/plugin.cfg")
+enabled=PackedStringArray()
 
 [input]
 
@@ -96,3 +96,4 @@ ui_debug={
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

@@ -15,7 +15,6 @@ autostart = true
 script = ExtResource("2_olwtv")
 
 [node name="EcoSpawner" parent="." instance=ExtResource("3_b6dnc")]
-y_sort_enabled = true
 
 [node name="DebugTimer" type="Timer" parent="."]
 

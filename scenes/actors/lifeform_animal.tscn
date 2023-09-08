@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://bob0pxtor755"]
+[gd_scene load_steps=49 format=3 uid="uid://bob0pxtor755"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_animal.gd" id="1_jq6ja"]
 [ext_resource type="Texture2D" uid="uid://md4ykrlp1l5g" path="res://art/lifeforms/outline/MiniBear.png" id="3_6mk7o"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://addons/imjp94.yafsm/src/conditions/FloatCondition.gd" id="8_jpikf"]
 [ext_resource type="Script" path="res://addons/imjp94.yafsm/src/conditions/Condition.gd" id="9_v5ojv"]
 [ext_resource type="Script" path="res://scenes/actors/DebugNode.gd" id="11_3mfao"]
+[ext_resource type="Texture2D" uid="uid://b4egb35lt1y82" path="res://art/sproutlands/Objects/Egg item.png" id="12_0eber"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q3pdq"]
 atlas = ExtResource("3_6mk7o")
@@ -330,6 +331,12 @@ enabled = false
 
 [node name="DebugNode" type="Node2D" parent="."]
 script = ExtResource("11_3mfao")
+
+[node name="Highlight" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -16)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("12_0eber")
 
 [connection signal="navigation_finished" from="NavigationAgent2D" to="Movement" method="_on_navigation_finished"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
