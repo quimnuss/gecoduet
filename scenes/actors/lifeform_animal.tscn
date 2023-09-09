@@ -1,20 +1,14 @@
-[gd_scene load_steps=46 format=3 uid="uid://bob0pxtor755"]
+[gd_scene load_steps=20 format=3 uid="uid://bob0pxtor755"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_animal.gd" id="1_jq6ja"]
-[ext_resource type="AnimationLibrary" uid="uid://bnlvoitrcrbnj" path="res://scenes/actors/animations/bear_animation_player.tres" id="2_7ugnn"]
-[ext_resource type="Texture2D" uid="uid://md4ykrlp1l5g" path="res://art/lifeforms/outline/MiniBear.png" id="3_6mk7o"]
-[ext_resource type="Script" path="res://scenes/actors/animal_animation.gd" id="3_dl337"]
-[ext_resource type="AnimationLibrary" uid="uid://cl3eoesg3wj57" path="res://scenes/actors/animations/bear_animation_player.res" id="3_xl5hn"]
-[ext_resource type="Texture2D" uid="uid://bwvlhwb3sko1q" path="res://art/lifeforms/outline/MiniBird.png" id="4_ju2il"]
+[ext_resource type="Resource" uid="uid://b5r4w26o5cwlc" path="res://data/lifeform_boar.tres" id="2_wk7oc"]
+[ext_resource type="AnimationLibrary" uid="uid://u74yhei1845t" path="res://scenes/actors/animations/boar_animation_library.tres" id="3_wcmft"]
+[ext_resource type="Texture2D" uid="uid://bltsndosjisoq" path="res://art/lifeforms/outline/MiniBoar.png" id="4_rkc35"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="5_5ny6y"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="7_dgbcq"]
-[ext_resource type="AnimationLibrary" uid="uid://cnfrav1iraafw" path="res://scenes/actors/animations/bear_animation_library.tres" id="7_le8so"]
-[ext_resource type="AnimationLibrary" uid="uid://ciy65nsqy47fc" path="res://scenes/actors/animations/rabbit_animation_library.tres" id="7_pst6h"]
 [ext_resource type="Script" path="res://scenes/components/Movement.gd" id="7_ygqcy"]
-[ext_resource type="AnimationLibrary" uid="uid://calex4vkosthw" path="res://scenes/actors/animations/bird_animation_library.tres" id="8_13a0d"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="8_dverp"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="8_lqor1"]
-[ext_resource type="AnimationLibrary" uid="uid://de01mppyo6ego" path="res://scenes/actors/animations/doe_animation_library.tres" id="9_e72bk"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="9_x7iv2"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="10_13ioa"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/animation_player_state.gd" id="10_frylo"]
@@ -22,163 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://b4egb35lt1y82" path="res://art/sproutlands/Objects/Egg item.png" id="12_0eber"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/not_guard.gd" id="12_h28at"]
 [ext_resource type="Resource" uid="uid://brea607hp7eq3" path="res://scenes/actors/StateConditions/is_moving.tres" id="13_ibwot"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_q3pdq"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(0, 224, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7un3x"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(32, 224, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tbqm0"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(64, 224, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7uioy"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(96, 224, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ws8yj"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(0, 128, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g5xhx"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(32, 128, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sihdr"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(64, 128, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kvtyn"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(96, 128, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sk6hl"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(128, 128, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cupv2"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b7hyp"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r0ffx"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g1mep"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_d1vdf"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(0, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yegxa"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(32, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_21bto"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(64, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rt6cb"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(96, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sewxb"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(128, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_32c0o"]
-atlas = ExtResource("3_6mk7o")
-region = Rect2(160, 32, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_sl2y3"]
-resource_name = "bear"
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_q3pdq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7un3x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tbqm0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7uioy")
-}],
-"loop": false,
-"name": &"die",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ws8yj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_g5xhx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sihdr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kvtyn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sk6hl")
-}],
-"loop": true,
-"name": &"eat",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cupv2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b7hyp")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r0ffx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_g1mep")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_d1vdf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yegxa")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_21bto")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rt6cb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sewxb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_32c0o")
-}],
-"loop": true,
-"name": &"run",
-"speed": 5.0
-}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8fap6"]
 size = Vector2(20, 10)
@@ -196,39 +33,18 @@ guard = ExtResource("13_ibwot")
 y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_jq6ja")
+resource = ExtResource("2_wk7oc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": ExtResource("2_7ugnn"),
-"bear_animation_player": ExtResource("3_xl5hn")
+"boar_animation_library": ExtResource("3_wcmft")
 }
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -8)
-texture = ExtResource("4_ju2il")
-hframes = 4
-vframes = 3
-frame = 4
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("pawn")]
-y_sort_enabled = true
-texture_filter = 1
-position = Vector2(32, -8)
-sprite_frames = SubResource("SpriteFrames_sl2y3")
-animation = &"idle"
-speed_scale = 1.2
-offset = Vector2(0, -7)
-script = ExtResource("3_dl337")
-pawn = NodePath("..")
-
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="AnimatedSprite2D"]
-root_node = NodePath("../..")
-libraries = {
-"bear_animation_library": ExtResource("7_le8so"),
-"bird_animation_library": ExtResource("8_13a0d"),
-"doe_animation_library": ExtResource("9_e72bk"),
-"rabbit_animation_library": ExtResource("7_pst6h")
-}
+position = Vector2(0, -16)
+texture = ExtResource("4_rkc35")
+hframes = 5
+vframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
@@ -291,7 +107,7 @@ event = &"death"
 [node name="IdleAnim" type="Node" parent="StateChart/ParallelState/Animation"]
 script = ExtResource("10_frylo")
 animation_player = NodePath("../../../../AnimationPlayer")
-animation_name = &"idle"
+animation_name = &"animal/idle"
 
 [node name="ToRun" type="Node" parent="StateChart/ParallelState/Animation/IdleAnim"]
 script = ExtResource("10_13ioa")
@@ -302,7 +118,7 @@ guard = ExtResource("13_ibwot")
 [node name="RunAnim" type="Node" parent="StateChart/ParallelState/Animation"]
 script = ExtResource("10_frylo")
 animation_player = NodePath("../../../../AnimationPlayer")
-animation_name = &"run"
+animation_name = &"animal/run"
 
 [node name="ToIdle" type="Node" parent="StateChart/ParallelState/Animation/RunAnim"]
 script = ExtResource("10_13ioa")
@@ -313,7 +129,7 @@ guard = SubResource("Resource_83iit")
 [node name="DeathAnim" type="Node" parent="StateChart/ParallelState/Animation"]
 script = ExtResource("10_frylo")
 animation_player = NodePath("../../../../AnimationPlayer")
-animation_name = &"die"
+animation_name = &"animal/die"
 
 [node name="Behavior" type="Node" parent="StateChart/ParallelState"]
 script = ExtResource("8_dverp")

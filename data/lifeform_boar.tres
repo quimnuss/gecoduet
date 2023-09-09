@@ -1,163 +1,19 @@
-[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=22 format=3 uid="uid://b5r4w26o5cwlc"]
+[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=4 format=3 uid="uid://b5r4w26o5cwlc"]
 
+[ext_resource type="AnimationLibrary" uid="uid://u74yhei1845t" path="res://scenes/actors/animations/boar_animation_library.tres" id="1_86a7t"]
 [ext_resource type="Texture2D" uid="uid://bltsndosjisoq" path="res://art/lifeforms/outline/MiniBoar.png" id="1_r6rwg"]
 [ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="2_vgb3p"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2q4k6"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_o8jev"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(0, 160, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b0ui3"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(32, 160, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f78p6"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(64, 160, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j3l1n"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(96, 160, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sfpal"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(0, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_104o5"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(32, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dqgap"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(64, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ecf85"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(96, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_thx5j"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(128, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_esvoq"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_88w4h"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_snss4"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8x56c"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qrmuo"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(0, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_beei7"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(32, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0sblh"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(64, 32, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5r02r"]
-atlas = ExtResource("1_r6rwg")
-region = Rect2(96, 32, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_srpp8"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2q4k6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_o8jev")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b0ui3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f78p6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j3l1n")
-}],
-"loop": true,
-"name": &"die",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sfpal")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_104o5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dqgap")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ecf85")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_thx5j")
-}],
-"loop": true,
-"name": &"eat",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_esvoq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_88w4h")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_snss4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8x56c")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qrmuo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_beei7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0sblh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5r02r")
-}],
-"loop": true,
-"name": &"run",
-"speed": 5.0
-}]
 
 [resource]
 script = ExtResource("2_vgb3p")
 lifeform_type = "animal"
 mobility_type = "run"
-animation_frames = SubResource("SpriteFrames_srpp8")
 name = "boar"
 species = 5
 scale = 1.0
 speed = 40.0
+animation_library = ExtResource("1_86a7t")
+texture = ExtResource("1_r6rwg")
+texture_shape = Vector2i(5, 6)
+texture_coords = Vector2i(0, 0)
+region = Rect2i(0, 0, 0, 0)

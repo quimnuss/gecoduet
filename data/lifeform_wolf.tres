@@ -1,14 +1,19 @@
-[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=3 format=3 uid="uid://dw8megmlt1m0e"]
+[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=4 format=3 uid="uid://dw8megmlt1m0e"]
 
-[ext_resource type="SpriteFrames" uid="uid://ch7v8t8qobqiy" path="res://scenes/actors/animations/wolf_sprite_frames.tres" id="1_p1n4e"]
+[ext_resource type="AnimationLibrary" path="res://scenes/actors/animations/wolf_animation_library.tres" id="1_jp64r"]
+[ext_resource type="Texture2D" uid="uid://vkgs4advxpnt" path="res://art/lifeforms/outline/MiniWolf.png" id="2_1igi0"]
 [ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="2_bkuha"]
 
 [resource]
 script = ExtResource("2_bkuha")
 lifeform_type = "animal"
 mobility_type = "run"
-animation_frames = ExtResource("1_p1n4e")
 name = "wolf"
 species = 8
 scale = 1.0
 speed = 50.0
+animation_library = ExtResource("1_jp64r")
+texture = ExtResource("2_1igi0")
+texture_shape = Vector2i(7, 8)
+texture_coords = Vector2i(0, 0)
+region = Rect2i(0, 0, 0, 0)

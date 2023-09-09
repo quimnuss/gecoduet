@@ -1,0 +1,138 @@
+[gd_scene load_steps=12 format=3 uid="uid://davyd610wwspt"]
+
+[ext_resource type="Texture2D" uid="uid://md4ykrlp1l5g" path="res://art/lifeforms/outline/MiniBear.png" id="1_0m26n"]
+[ext_resource type="AnimationLibrary" uid="uid://cnfrav1iraafw" path="res://scenes/actors/animations/bear_animation_library.tres" id="2_0g36r"]
+[ext_resource type="AnimationLibrary" uid="uid://dg0qbkrawbghr" path="res://scenes/actors/animations/deer_animation_library.tres" id="2_3x8ip"]
+[ext_resource type="Texture2D" uid="uid://ba35fa4dx70it" path="res://art/lifeforms/outline/MiniFox.png" id="3_iimx8"]
+[ext_resource type="Texture2D" uid="uid://c3odglwpn8a43" path="res://art/lifeforms/outline/MiniBunny.png" id="4_tp4se"]
+[ext_resource type="Texture2D" uid="uid://bltsndosjisoq" path="res://art/lifeforms/outline/MiniBoar.png" id="5_j784o"]
+[ext_resource type="Texture2D" uid="uid://bwvlhwb3sko1q" path="res://art/lifeforms/outline/MiniBird.png" id="6_6d5ft"]
+[ext_resource type="Texture2D" uid="uid://bf2d7kvndwnfl" path="res://art/lifeforms/outline/MiniDeer1.png" id="7_nvusk"]
+[ext_resource type="Texture2D" uid="uid://bh3kruda7jagj" path="res://art/lifeforms/outline/MiniDeer2.png" id="8_x0c2f"]
+[ext_resource type="Texture2D" uid="uid://vkgs4advxpnt" path="res://art/lifeforms/outline/MiniWolf.png" id="9_5mej2"]
+[ext_resource type="AnimationLibrary" uid="uid://dlchlpl0x450f" path="res://scenes/actors/animations/wolf_animation_library.tres" id="11_hkvmq"]
+
+[node name="animation_library_builder" type="Node2D"]
+
+[node name="Bear" type="Node2D" parent="."]
+position = Vector2(256, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Bear"]
+texture = ExtResource("1_0m26n")
+hframes = 10
+vframes = 8
+frame = 70
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Bear"]
+root_node = NodePath("../..")
+libraries = {
+"bear_animation_library": ExtResource("2_0g36r"),
+"deer_animation_library": ExtResource("2_3x8ip")
+}
+
+[node name="Fox" type="Node2D" parent="."]
+position = Vector2(232, 144)
+
+[node name="Sprite2D" type="Sprite2D" parent="Fox"]
+texture = ExtResource("3_iimx8")
+hframes = 6
+vframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Fox"]
+libraries = {
+"deer_animation_library": ExtResource("2_3x8ip")
+}
+
+[node name="Rabbit" type="Node2D" parent="."]
+position = Vector2(136, 168)
+
+[node name="Sprite2D" type="Sprite2D" parent="Rabbit"]
+texture = ExtResource("4_tp4se")
+hframes = 4
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Rabbit"]
+root_node = NodePath("../..")
+libraries = {
+"deer_animation_library": ExtResource("2_3x8ip")
+}
+
+[node name="Boar" type="Node2D" parent="."]
+position = Vector2(368, 88)
+
+[node name="Sprite2D" type="Sprite2D" parent="Boar"]
+texture = ExtResource("5_j784o")
+hframes = 4
+vframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Boar"]
+root_node = NodePath("../..")
+libraries = {
+"deer_animation_library": ExtResource("2_3x8ip")
+}
+
+[node name="Bird" type="Node2D" parent="."]
+position = Vector2(280, 224)
+
+[node name="Sprite2D" type="Sprite2D" parent="Bird"]
+texture = ExtResource("6_6d5ft")
+hframes = 4
+vframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Bird"]
+root_node = NodePath("../..")
+libraries = {
+"deer_animation_library": ExtResource("2_3x8ip")
+}
+
+[node name="Doe" type="Node2D" parent="."]
+position = Vector2(208, 72)
+
+[node name="Sprite2D" type="Sprite2D" parent="Doe"]
+texture = ExtResource("7_nvusk")
+hframes = 5
+vframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Doe"]
+root_node = NodePath("../..")
+libraries = {
+"deer_animation_library": ExtResource("2_3x8ip")
+}
+
+[node name="Stag" type="Node2D" parent="."]
+position = Vector2(72, 56)
+
+[node name="Sprite2D" type="Sprite2D" parent="Stag"]
+texture = ExtResource("8_x0c2f")
+hframes = 7
+vframes = 7
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Stag"]
+libraries = {
+"deer_animation_library": ExtResource("2_3x8ip")
+}
+
+[node name="Wolf" type="Node2D" parent="."]
+position = Vector2(32, 200)
+
+[node name="Sprite2D" type="Sprite2D" parent="Wolf"]
+texture = ExtResource("9_5mej2")
+hframes = 7
+vframes = 8
+frame = 32
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Wolf"]
+libraries = {
+"wolf_animation_library": ExtResource("11_hkvmq")
+}
+
+[node name="Bear9" type="Node2D" parent="."]
+position = Vector2(368, 296)
+
+[node name="Sprite2D" type="Sprite2D" parent="Bear9"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Bear9"]
+root_node = NodePath("../..")
+libraries = {
+"deer_animation_library": ExtResource("2_3x8ip")
+}

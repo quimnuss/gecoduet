@@ -122,7 +122,6 @@ func _spawn_from_resource(species: Constants.Species) -> Node:
 			return null
 
 func _set_from_animal_resource(animal_resource):
-	var frames : SpriteFrames = animal_resource.animation_frames
 	var new_animal = base_animal.instantiate()
 	new_animal.resource = animal_resource
 	return new_animal

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=5 format=3 uid="uid://whqr0v0o6bbi"]
 
-[ext_resource type="SpriteFrames" uid="uid://bpjjdnbol31w4" path="res://scenes/actors/animations/bird_sprite_frames.tres" id="1_asc6o"]
+[ext_resource type="SpriteFrames" uid="uid://bpjjdnbol31w4" path="res://scenes/actors/animations/deprecated/bird_sprite_frames.tres" id="1_asc6o"]
 [ext_resource type="AnimationLibrary" uid="uid://calex4vkosthw" path="res://scenes/actors/animations/bird_animation_library.tres" id="2_qhl7g"]
 [ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="2_tqigj"]
 [ext_resource type="Texture2D" uid="uid://bwvlhwb3sko1q" path="res://art/lifeforms/outline/MiniBird.png" id="4_gajop"]

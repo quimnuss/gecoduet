@@ -1,14 +1,19 @@
-[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=3 format=3 uid="uid://b13ywalfrleiq"]
+[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=4 format=3 uid="uid://b13ywalfrleiq"]
 
-[ext_resource type="SpriteFrames" uid="uid://bf87d3s3r3xnk" path="res://scenes/actors/animations/doe_sprite_frames.tres" id="1_1drrd"]
+[ext_resource type="AnimationLibrary" uid="uid://de01mppyo6ego" path="res://scenes/actors/animations/doe_animation_library.tres" id="1_3pcvj"]
+[ext_resource type="Texture2D" uid="uid://bf2d7kvndwnfl" path="res://art/lifeforms/outline/MiniDeer1.png" id="2_mrhfl"]
 [ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="2_ojrrw"]
 
 [resource]
 script = ExtResource("2_ojrrw")
 lifeform_type = "animal"
 mobility_type = "run"
-animation_frames = ExtResource("1_1drrd")
-name = "bear"
-species = 1
+name = "doe"
+species = 6
 scale = 1.0
 speed = 50.0
+animation_library = ExtResource("1_3pcvj")
+texture = ExtResource("2_mrhfl")
+texture_shape = Vector2i(5, 6)
+texture_coords = Vector2i(0, 0)
+region = Rect2i(0, 0, 0, 0)

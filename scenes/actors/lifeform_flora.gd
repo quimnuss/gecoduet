@@ -5,8 +5,10 @@ extends StaticBody2D
 @onready var sprite = $Sprite2D
 
 func _ready():
-	var animation_frame = resource.animation_frames.get_frame_texture('idle', 0)
-	self.sprite.set_texture(animation_frame) 
+	sprite.set_texture(resource.texture) 
+	sprite.hframes = resource.texture_shape[0]
+	sprite.vframes = resource.texture_shape[1]
+	sprite.set_frame_coords(resource.texture_coords)
 	self.name = resource.name
 	self.set_scale(Vector2(resource.scale,resource.scale))
 	self.sprite.set_scale(Vector2(resource.scale,resource.scale))

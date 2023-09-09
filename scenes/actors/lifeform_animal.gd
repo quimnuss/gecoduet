@@ -9,7 +9,6 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @export var resource : LifeformAnimalResource = preload("res://data/lifeform_bear.tres")
 
-@onready var animation = $AnimatedSprite2D
 @onready var state_machine = $StateChart
 @onready var movement = $Movement
 @onready var animation_player = $AnimationPlayer
@@ -22,7 +21,6 @@ var debug = false
 var controlled = false
 
 func _ready():
-	self.animation.set_sprite_frames(resource.animation_frames)
 	self.name = resource.name
 	self.set_scale(Vector2(resource.scale,resource.scale))
 	self.speed = resource.speed
@@ -33,7 +31,6 @@ func _ready():
 
 	animation_player.add_animation_library("animal",resource.animation_library)
 	movement.pawn = self
-	animation.pawn = self
 
 
 func _physics_process(delta):

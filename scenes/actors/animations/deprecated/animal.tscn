@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b68sctlj837jv"]
 
-[ext_resource type="SpriteFrames" uid="uid://brm8jts6qg1ow" path="res://scenes/actors/animations/bear_sprite_frames.tres" id="1_lsmqv"]
+[ext_resource type="SpriteFrames" uid="uid://brm8jts6qg1ow" path="res://scenes/actors/animations/deprecated/bear_sprite_frames.tres" id="1_h5blr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jb5ff"]
 
@@ -10,5 +10,5 @@
 shape = SubResource("CapsuleShape2D_jb5ff")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("1_lsmqv")
+sprite_frames = ExtResource("1_h5blr")
 animation = &"die"
