@@ -41,3 +41,4 @@ name = "berry"
 species = 10
 scale = 0.8
 speed = 100.0
+texture_shape = Vector2i(0, 0)

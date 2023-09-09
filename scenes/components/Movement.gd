@@ -3,7 +3,7 @@ extends Node2D
 @export var pawn : CharacterBody2D
 @export var nav : NavigationAgent2D
 
-var elapsed = 2
+var tired_timer = 2
 
 var movement_delta : float = 0
 
@@ -11,12 +11,14 @@ var move_mode : Constants.MoveMode = Constants.MoveMode.DEFAULT
 
 var target_lifeform : Node2D = null
 
+@export var state_machine : StateChart
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+# Called every frame. 'delta' is the tired_timer time since the previous frame.
 func _process(delta):
 	pass
 
@@ -56,7 +58,7 @@ func chase_prey():
 
 func stop():
 	pawn.velocity = Vector2.ZERO # when last target is out of bounds this does not work for some reason
-	elapsed = 0
+	tired_timer = 0
 
 func velocity_to_nav_target():
 	var agent_position : Vector2 = pawn.global_position
@@ -91,16 +93,22 @@ func nav_target_selector() -> Vector2:
 		Constants.MoveMode.AVOID_PREDATOR:
 			pass
 	return target
-		
-# todo state-machine elapsed
+
+
+
+# todo state-machine tired_timer
+# todo we're mixing behavior with state
+# we should seperate the will/actions from the actual state
+# so, in physics move_slide, trigger state state_machine
+# and somewhere else the behaviour (set target etc)
 func _on_state_machine_player_updated(state, delta):
 	movement_delta = pawn.speed * delta
 	match state:
 		"seek_move", "idle":
 			pawn.velocity = Vector2.ZERO # this should not be necessary but for some reason it is
-			elapsed += delta
-			if elapsed > 3:
-				elapsed = 0
+			tired_timer += delta
+			if tired_timer <= 0:
+				tired_timer = 3
 				for tries in 10:
 					var target = nav_target_selector()	
 					
@@ -108,6 +116,7 @@ func _on_state_machine_player_updated(state, delta):
 					if nav.is_target_reachable():
 						if pawn.debug:
 							prints(target,"is reachable.")
+						state_machine.send_event("is_moving")
 						velocity_to_nav_target()
 						break
 		"run":

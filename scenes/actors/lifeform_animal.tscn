@@ -1,11 +1,27 @@
-[gd_scene load_steps=29 format=3 uid="uid://bob0pxtor755"]
+[gd_scene load_steps=46 format=3 uid="uid://bob0pxtor755"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_animal.gd" id="1_jq6ja"]
+[ext_resource type="AnimationLibrary" uid="uid://bnlvoitrcrbnj" path="res://scenes/actors/animations/bear_animation_player.tres" id="2_7ugnn"]
 [ext_resource type="Texture2D" uid="uid://md4ykrlp1l5g" path="res://art/lifeforms/outline/MiniBear.png" id="3_6mk7o"]
 [ext_resource type="Script" path="res://scenes/actors/animal_animation.gd" id="3_dl337"]
+[ext_resource type="AnimationLibrary" uid="uid://cl3eoesg3wj57" path="res://scenes/actors/animations/bear_animation_player.res" id="3_xl5hn"]
+[ext_resource type="Texture2D" uid="uid://bwvlhwb3sko1q" path="res://art/lifeforms/outline/MiniBird.png" id="4_ju2il"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="5_5ny6y"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="7_dgbcq"]
+[ext_resource type="AnimationLibrary" uid="uid://cnfrav1iraafw" path="res://scenes/actors/animations/bear_animation_library.tres" id="7_le8so"]
+[ext_resource type="AnimationLibrary" uid="uid://ciy65nsqy47fc" path="res://scenes/actors/animations/rabbit_animation_library.tres" id="7_pst6h"]
 [ext_resource type="Script" path="res://scenes/components/Movement.gd" id="7_ygqcy"]
+[ext_resource type="AnimationLibrary" uid="uid://calex4vkosthw" path="res://scenes/actors/animations/bird_animation_library.tres" id="8_13a0d"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="8_dverp"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="8_lqor1"]
+[ext_resource type="AnimationLibrary" uid="uid://de01mppyo6ego" path="res://scenes/actors/animations/doe_animation_library.tres" id="9_e72bk"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="9_x7iv2"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="10_13ioa"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/animation_player_state.gd" id="10_frylo"]
 [ext_resource type="Script" path="res://scenes/actors/DebugNode.gd" id="11_3mfao"]
 [ext_resource type="Texture2D" uid="uid://b4egb35lt1y82" path="res://art/sproutlands/Objects/Egg item.png" id="12_0eber"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/not_guard.gd" id="12_h28at"]
+[ext_resource type="Resource" uid="uid://brea607hp7eq3" path="res://scenes/actors/StateConditions/is_moving.tres" id="13_ibwot"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q3pdq"]
 atlas = ExtResource("3_6mk7o")
@@ -172,21 +188,47 @@ vertices = PackedVector2Array(-24, -32, 176, -32, 176, 96, -24, 96)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-24, -32, 176, -32, 176, 96, -24, 96)])
 
+[sub_resource type="Resource" id="Resource_83iit"]
+script = ExtResource("12_h28at")
+guard = ExtResource("13_ibwot")
+
 [node name="Animal" type="CharacterBody2D"]
 y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_jq6ja")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": ExtResource("2_7ugnn"),
+"bear_animation_player": ExtResource("3_xl5hn")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("4_ju2il")
+hframes = 4
+vframes = 3
+frame = 4
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." node_paths=PackedStringArray("pawn")]
 y_sort_enabled = true
 texture_filter = 1
-position = Vector2(0, -8)
+position = Vector2(32, -8)
 sprite_frames = SubResource("SpriteFrames_sl2y3")
-animation = &"die"
+animation = &"idle"
 speed_scale = 1.2
 offset = Vector2(0, -7)
 script = ExtResource("3_dl337")
 pawn = NodePath("..")
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="AnimatedSprite2D"]
+root_node = NodePath("../..")
+libraries = {
+"bear_animation_library": ExtResource("7_le8so"),
+"bird_animation_library": ExtResource("8_13a0d"),
+"doe_animation_library": ExtResource("9_e72bk"),
+"rabbit_animation_library": ExtResource("7_pst6h")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
@@ -201,16 +243,26 @@ debug_use_custom = true
 debug_path_custom_color = Color(0.0235294, 1, 1, 0.792157)
 debug_path_custom_point_size = 1.0
 
-[node name="Movement" type="Node2D" parent="." node_paths=PackedStringArray("pawn", "nav")]
+[node name="Movement" type="Node2D" parent="." node_paths=PackedStringArray("pawn", "nav", "state_machine")]
 script = ExtResource("7_ygqcy")
 pawn = NodePath("..")
 nav = NodePath("../NavigationAgent2D")
+state_machine = NodePath("../StateChart")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 visible = false
 position = Vector2(-72, -32)
 navigation_polygon = SubResource("NavigationPolygon_vy1fw")
 enabled = false
+
+[node name="StateChartDebugger" parent="." instance=ExtResource("5_5ny6y")]
+top_level = true
+offset_left = 208.0
+offset_top = 16.0
+offset_right = 604.0
+offset_bottom = 463.0
+scale = Vector2(0.626088, 0.626088)
+initial_node_to_watch = NodePath("../StateChart")
 
 [node name="DebugNode" type="Node2D" parent="."]
 script = ExtResource("11_3mfao")
@@ -220,6 +272,70 @@ visible = false
 position = Vector2(0, -16)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("12_0eber")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("7_dgbcq")
+
+[node name="ParallelState" type="Node" parent="StateChart"]
+script = ExtResource("8_lqor1")
+
+[node name="Animation" type="Node" parent="StateChart/ParallelState"]
+script = ExtResource("8_dverp")
+initial_state = NodePath("IdleAnim")
+
+[node name="ToDeath" type="Node" parent="StateChart/ParallelState/Animation"]
+script = ExtResource("10_13ioa")
+to = NodePath("../DeathAnim")
+event = &"death"
+
+[node name="IdleAnim" type="Node" parent="StateChart/ParallelState/Animation"]
+script = ExtResource("10_frylo")
+animation_player = NodePath("../../../../AnimationPlayer")
+animation_name = &"idle"
+
+[node name="ToRun" type="Node" parent="StateChart/ParallelState/Animation/IdleAnim"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../RunAnim")
+event = &"velocity_update"
+guard = ExtResource("13_ibwot")
+
+[node name="RunAnim" type="Node" parent="StateChart/ParallelState/Animation"]
+script = ExtResource("10_frylo")
+animation_player = NodePath("../../../../AnimationPlayer")
+animation_name = &"run"
+
+[node name="ToIdle" type="Node" parent="StateChart/ParallelState/Animation/RunAnim"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../IdleAnim")
+event = &"velocity_update"
+guard = SubResource("Resource_83iit")
+
+[node name="DeathAnim" type="Node" parent="StateChart/ParallelState/Animation"]
+script = ExtResource("10_frylo")
+animation_player = NodePath("../../../../AnimationPlayer")
+animation_name = &"die"
+
+[node name="Behavior" type="Node" parent="StateChart/ParallelState"]
+script = ExtResource("8_dverp")
+initial_state = NodePath("SeekTarget")
+
+[node name="Idle" type="Node" parent="StateChart/ParallelState/Behavior"]
+script = ExtResource("9_x7iv2")
+
+[node name="SeekTarget" type="Node" parent="StateChart/ParallelState/Behavior"]
+script = ExtResource("9_x7iv2")
+
+[node name="ToRun" type="Node" parent="StateChart/ParallelState/Behavior/SeekTarget"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../Run")
+event = &"is_moving"
+
+[node name="Run" type="Node" parent="StateChart/ParallelState/Behavior"]
+script = ExtResource("9_x7iv2")
+
+[node name="ToIdle" type="Node" parent="StateChart/ParallelState/Behavior/Run"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../Idle")
 
 [connection signal="navigation_finished" from="NavigationAgent2D" to="Movement" method="_on_navigation_finished"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

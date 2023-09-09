@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=23 format=3 uid="uid://bt2m0w2tchcwy"]
+[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=24 format=3 uid="uid://bt2m0w2tchcwy"]
 
 [ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="1_3cufi"]
 [ext_resource type="Texture2D" uid="uid://md4ykrlp1l5g" path="res://art/lifeforms/outline/MiniBear.png" id="1_7ctno"]
+[ext_resource type="AnimationLibrary" uid="uid://cnfrav1iraafw" path="res://scenes/actors/animations/bear_animation_library.tres" id="2_kmpgw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_08ba7"]
 atlas = ExtResource("1_7ctno")
@@ -168,3 +169,6 @@ name = "bear"
 species = 1
 scale = 1.0
 speed = 40.0
+animation_library = ExtResource("2_kmpgw")
+texture = ExtResource("1_7ctno")
+texture_shape = Vector2i(10, 8)
