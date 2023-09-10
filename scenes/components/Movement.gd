@@ -109,8 +109,6 @@ func nav_target_selector() -> Vector2:
 			pass
 	return target
 
-
-
 # todo state-machine tired_timer
 # todo we're mixing behavior with state
 # we should seperate the will/actions from the actual state
@@ -178,7 +176,6 @@ func _on_state_machine_player_transited(from, to):
 				"idle":
 					pass
 
-
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 #	pawn.global_position = pawn.global_position.move_toward(pawn.global_position + safe_velocity, movement_delta)
 	print(safe_velocity)
@@ -187,8 +184,6 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 		prints(pawn.name, pawn.global_position, pawn.position, pawn.global_position, "->", nav.get_next_path_position(), pawn.velocity)
 	pawn.move_and_slide()
 	return 
-
-
 
 func _on_seek_target_state_entered():
 	self.stop()
@@ -238,7 +233,11 @@ func _set_velocity_given_move_mode():
 func _on_run_state_entered():
 	_set_velocity_given_move_mode
 
-
 func _on_run_state_physics_processing(delta):
 	_set_velocity_given_move_mode()
 
+func _on_idle_state_entered():
+	self.stop()
+
+func _on_death_state_entered():
+	self.stop()
