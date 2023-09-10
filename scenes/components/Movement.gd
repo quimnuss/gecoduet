@@ -132,7 +132,7 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 	return 
 
 func _on_seek_target_state_entered():
-	var target
+	var target = null
 	for try in range(10):
 		target = nav_target_selector()	
 
@@ -172,7 +172,7 @@ func _set_velocity_given_move_mode():
 				if pawn.debug:
 					print(nav.get_final_position(), " is unreachable. Next pos ", nav.get_next_path_position())
 				state_machine.send_event("target_reached")
-			else:
+			elif nav.is_navigation_finished():
 				state_machine.send_event("target_reached")
 
 func _on_run_state_entered():

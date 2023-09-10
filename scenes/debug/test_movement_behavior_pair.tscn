@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://bmisd1j354jf4"]
+
+[ext_resource type="Script" path="res://scenes/debug/test_movement_behavior.gd" id="1_vrnjh"]
+[ext_resource type="PackedScene" uid="uid://bob0pxtor755" path="res://scenes/actors/lifeform_animal.tscn" id="2_ab23v"]
+[ext_resource type="Resource" uid="uid://dw8megmlt1m0e" path="res://data/lifeform_wolf.tres" id="3_l0taa"]
+[ext_resource type="Resource" uid="uid://cckfkok1go8q8" path="res://data/lifeform_rabbit.tres" id="4_js2ya"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_njwi6"]
+vertices = PackedVector2Array(152, 16, 448, 8, 432, 336, 24, 344, 24, 24)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(152, 16, 448, 8, 432, 336, 24, 344, 24, 24)])
+
+[node name="test_movement_behavior" type="Node2D" node_paths=PackedStringArray("predators", "preys")]
+y_sort_enabled = true
+script = ExtResource("1_vrnjh")
+predators = [NodePath("wolf")]
+preys = [NodePath("rabbit")]
+
+[node name="wolf" parent="." instance=ExtResource("2_ab23v")]
+position = Vector2(120, 72)
+resource = ExtResource("3_l0taa")
+
+[node name="rabbit" parent="." instance=ExtResource("2_ab23v")]
+position = Vector2(256, 128)
+resource = ExtResource("4_js2ya")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_njwi6")

@@ -8,7 +8,7 @@ var res_mutuality = preload("res://data/glv.json")
 @onready var spawner : EcoSpawner = $EcoSpawner
 @onready var glv : GLV = $GLV
 
-signal elder_extinct
+signal elder_extinct(elder : SpeciesElder)
 
 func _init():
 	pass
@@ -36,7 +36,10 @@ func get_density() -> float:
 	return glv.density
 	
 func set_density(density : float):
-	glv.density = density
+	glv.set_density(density)
+	
+func increase_density(delta_density : float):
+	self.set_density(get_density() + delta_density)
 
 func kill_elder():
 	$ChildrenSync.stop()
@@ -48,7 +51,7 @@ func check_extinction(density: float) -> bool:
 		prints("elder",self.name,"went extinct with density",density)
 		spawner.kill_all_children()
 		kill_elder()
-		elder_extinct.emit()
+		elder_extinct.emit(self)
 		return true
 	return false
 

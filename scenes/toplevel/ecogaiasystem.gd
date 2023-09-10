@@ -50,14 +50,20 @@ func create_species(species : Constants.Species):
 	for living_elder in elders:
 		if species == living_elder.species:
 			prints("Species",Constants.species_name(species),"already living")
+			living_elder.increase_density(1)
 			return null
 	var new_elder = species_elder_scene.instantiate()
 	new_elder.name = Constants.species_name(species)
 	new_elder.species = species
 	elders.append(new_elder)
+	new_elder.elder_extinct.connect(_on_elder_extinct)
 	add_child(new_elder)
 	return new_elder
 
+func _on_elder_extinct(elder : SpeciesElder):
+	prints(elder,"is extinct")
+	elders.erase(elder)
+		
 
 func _on_hud_create_species(species):
 	create_species(species)

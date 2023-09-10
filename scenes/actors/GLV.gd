@@ -24,6 +24,7 @@ func _ready():
 func lotka(densities : Dictionary):
 	var total_delta_d = 0
 	var previous_density = self.density
+	var new_density
 
 	major_driver = [null,0,null,0]
 
@@ -31,10 +32,10 @@ func lotka(densities : Dictionary):
 		var mutual = mutuality[species]/time_stretch
 		var delta_d = 0
 		if species == "none":
-			delta_d = self.density*mutual
+			delta_d = previous_density*mutual
 		else:
 			var d_other = densities.get(species, 0)
-			delta_d = mutual*d_other*self.density
+			delta_d = mutual*d_other*previous_density
 
 		if delta_d < major_driver[1]:
 			major_driver[0] = species
@@ -45,20 +46,25 @@ func lotka(densities : Dictionary):
 
 		total_delta_d += delta_d
 	prints(self.display_name,"major driver",major_driver)
-	density += total_delta_d
-	if density < 0.02:
-		density = 0
-	elif density > 100:
-		density = 100
+	new_density = previous_density + total_delta_d
+	if new_density < 0.02:
+		new_density = 0
+	elif new_density > 100:
+		new_density = 100
 	
-	# how do we account for float errors?
-	if abs(total_delta_d) > 0.0001:
+	self.set_density(new_density)
+	
+	return new_density # is it confusing to change internal state but also return?
+
+func set_density(density : float):
+	var previous_density = self.density
+	self.density = density
+	
+	if abs(density - previous_density) > 0.0001:
 		density_change.emit(density)
 	
 	if abs(int(previous_density) - int(density)) > 1:
 		density_number_change.emit()
-	
-	return density # is it confusing to change internal state but also return?
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

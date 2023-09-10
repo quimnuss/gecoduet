@@ -56,7 +56,7 @@ func _physics_process(delta):
 		if $StateChartDebugger:
 			$StateChartDebugger.enabled = !$StateChartDebugger.enabled
 	
-	if Input.is_action_pressed("ui_debug"):
+	if Input.is_action_pressed("ui_debug_navigation"):
 		if $NavigationAgent2D:
 			$NavigationAgent2D.debug_enabled = !$NavigationAgent2D.debug_enabled
 	
