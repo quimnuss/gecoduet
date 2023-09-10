@@ -52,8 +52,15 @@ func _physics_process(delta):
 		controlled = false
 
 
-	var debug_pressed = Input.is_action_pressed("ui_debug")
-	if debug_pressed:
+	if Input.is_action_pressed("ui_state_debug"):
+		if $StateChartDebugger:
+			$StateChartDebugger.enabled = !$StateChartDebugger.enabled
+	
+	if Input.is_action_pressed("ui_debug"):
+		if $NavigationAgent2D:
+			$NavigationAgent2D.debug_enabled = !$NavigationAgent2D.debug_enabled
+	
+	if Input.is_action_pressed("ui_debug_action"):
 #		var move_mode = ["chase_prey","chase_leader","avoid_predator"].pick_random()
 #		prints("switching to",move_mode)
 #		movement.move_mode = move_mode

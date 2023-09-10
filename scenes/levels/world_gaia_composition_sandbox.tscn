@@ -297,9 +297,9 @@ sources/5 = SubResource("TileSetAtlasSource_0fcys")
 sources/6 = SubResource("TileSetAtlasSource_mww13")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1myx2"]
-vertices = PackedVector2Array(232, 120, 408, 312, 40, 312, 104, 192, 168, 120, 72, 192, 40, 40, 72, 144, 232, 56, 408, 40, 168, 56, 104, 144)
+vertices = PackedVector2Array(232, 120, 400, 304, 48, 304, 104, 192, 168, 120, 72, 192, 48, 48, 72, 144, 232, 56, 400, 48, 168, 56, 104, 144)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 3, 2), PackedInt32Array(5, 2, 6, 7), PackedInt32Array(0, 8, 9, 1), PackedInt32Array(6, 9, 8, 10), PackedInt32Array(4, 3, 11, 10), PackedInt32Array(7, 6, 10, 11)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(40, 40, 408, 40, 408, 312, 40, 312), PackedVector2Array(72, 144, 72, 192, 104, 192, 104, 144), PackedVector2Array(168, 56, 232, 56, 232, 120, 168, 120)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(48, 48, 400, 48, 400, 304, 48, 304), PackedVector2Array(72, 144, 72, 192, 104, 192, 104, 144), PackedVector2Array(168, 56, 232, 56, 232, 120, 168, 120)])
 
 [node name="world_gaia_composition_sandbox" type="Node2D"]
 

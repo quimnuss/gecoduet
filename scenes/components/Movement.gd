@@ -55,7 +55,7 @@ func bound_to_world(point : Vector2):
 
 func get_random_point(travel_radius: int):
 	var angle = randf_range(0, 2*PI)
-	var distance = randi_range(100,travel_radius)
+	var distance = randi_range(100, travel_radius)
 	var ideal_position = pawn.global_position + polar2cartesian(distance, angle)
 
 	ideal_position = bound_to_world(ideal_position)
@@ -132,7 +132,6 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 	return 
 
 func _on_seek_target_state_entered():
-	self.stop()
 	var target
 	for try in range(10):
 		target = nav_target_selector()	
