@@ -2,37 +2,19 @@
 
 [sub_resource type="Animation" id="Animation_rkwok"]
 resource_name = "die_animated"
-length = 0.8
+length = 0.550005
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/path = NodePath(".:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.45),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2i(0, 5), Vector2i(3, 5)]
-}
-
-[sub_resource type="Animation" id="Animation_rv8pb"]
-resource_name = "idle"
-length = 0.6
-loop_mode = 1
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2i(0, 0), Vector2i(3, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_6hotj"]
@@ -42,7 +24,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/path = NodePath(".:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/keys = {
@@ -54,18 +36,37 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_66pjr"]
 resource_name = "eat"
+length = 1.10001
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/path = NodePath(".:frame_coords")
 tracks/0/interp = 1
-tracks/0/loop_wrap = false
+tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.8),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2i(0, 3), Vector2i(4, 3)]
+}
+
+[sub_resource type="Animation" id="Animation_rv8pb"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2i(0, 0), Vector2i(3, 0)]
 }
 
 [resource]

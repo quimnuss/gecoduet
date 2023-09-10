@@ -1,8 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://bob0pxtor755"]
+[gd_scene load_steps=19 format=3 uid="uid://bob0pxtor755"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_animal.gd" id="1_jq6ja"]
 [ext_resource type="Resource" uid="uid://b5r4w26o5cwlc" path="res://data/lifeform_boar.tres" id="2_wk7oc"]
-[ext_resource type="AnimationLibrary" uid="uid://u74yhei1845t" path="res://scenes/actors/animations/boar_animation_library.tres" id="3_wcmft"]
 [ext_resource type="Texture2D" uid="uid://bltsndosjisoq" path="res://art/lifeforms/outline/MiniBoar.png" id="4_rkc35"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="5_5ny6y"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="7_dgbcq"]
@@ -21,9 +20,9 @@
 size = Vector2(20, 10)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_vy1fw"]
-vertices = PackedVector2Array(-24, -32, 176, -32, 176, 96, -24, 96)
+vertices = PackedVector2Array(-88, -80, 136, -80, 136, 96, -88, 96)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-24, -32, 176, -32, 176, 96, -24, 96)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-88, -80, 136, -80, 136, 96, -88, 96)])
 
 [sub_resource type="Resource" id="Resource_83iit"]
 script = ExtResource("12_h28at")
@@ -35,16 +34,15 @@ motion_mode = 1
 script = ExtResource("1_jq6ja")
 resource = ExtResource("2_wk7oc")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"boar_animation_library": ExtResource("3_wcmft")
-}
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -16)
 texture = ExtResource("4_rkc35")
 hframes = 5
 vframes = 6
+frame = 25
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
@@ -55,6 +53,7 @@ disabled = true
 path_desired_distance = 10.0
 path_max_distance = 10.0
 radius = 20.0
+debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0.0235294, 1, 1, 0.792157)
 debug_path_custom_point_size = 1.0
@@ -67,20 +66,21 @@ state_machine = NodePath("../StateChart")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 visible = false
-position = Vector2(-72, -32)
 navigation_polygon = SubResource("NavigationPolygon_vy1fw")
-enabled = false
 
 [node name="StateChartDebugger" parent="." instance=ExtResource("5_5ny6y")]
+visible = false
 top_level = true
 offset_left = 208.0
 offset_top = 16.0
-offset_right = 604.0
-offset_bottom = 463.0
+offset_right = 153.0
+offset_bottom = 98.0
 scale = Vector2(0.626088, 0.626088)
+enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [node name="DebugNode" type="Node2D" parent="."]
+visible = false
 script = ExtResource("11_3mfao")
 
 [node name="Highlight" type="Sprite2D" parent="."]
@@ -133,10 +133,16 @@ animation_name = &"animal/die"
 
 [node name="Behavior" type="Node" parent="StateChart/ParallelState"]
 script = ExtResource("8_dverp")
-initial_state = NodePath("SeekTarget")
+initial_state = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="StateChart/ParallelState/Behavior"]
 script = ExtResource("9_x7iv2")
+
+[node name="ToSeekTarget" type="Node" parent="StateChart/ParallelState/Behavior/Idle"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../SeekTarget")
+event = &"seek"
+delay_seconds = 3.0
 
 [node name="SeekTarget" type="Node" parent="StateChart/ParallelState/Behavior"]
 script = ExtResource("9_x7iv2")
@@ -144,7 +150,12 @@ script = ExtResource("9_x7iv2")
 [node name="ToRun" type="Node" parent="StateChart/ParallelState/Behavior/SeekTarget"]
 script = ExtResource("10_13ioa")
 to = NodePath("../../Run")
-event = &"is_moving"
+event = &"has_target"
+
+[node name="ToIdle" type="Node" parent="StateChart/ParallelState/Behavior/SeekTarget"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../Idle")
+event = &"cancel_seek"
 
 [node name="Run" type="Node" parent="StateChart/ParallelState/Behavior"]
 script = ExtResource("9_x7iv2")
@@ -152,7 +163,12 @@ script = ExtResource("9_x7iv2")
 [node name="ToIdle" type="Node" parent="StateChart/ParallelState/Behavior/Run"]
 script = ExtResource("10_13ioa")
 to = NodePath("../../Idle")
+event = &"target_reached"
 
 [connection signal="navigation_finished" from="NavigationAgent2D" to="Movement" method="_on_navigation_finished"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="Movement" method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="state_entered" from="StateChart/ParallelState/Behavior/Idle" to="." method="_on_idle_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/Behavior/SeekTarget" to="Movement" method="_on_seek_target_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/Behavior/Run" to="Movement" method="_on_run_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/Behavior/Run" to="Movement" method="_on_run_state_physics_processing"]

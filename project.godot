@@ -20,10 +20,6 @@ config/icon="res://icon.svg"
 
 Species="*res://other/constants.gd"
 
-[debug]
-
-settings/stdout/print_fps=true
-
 [display]
 
 window/size/viewport_width=464

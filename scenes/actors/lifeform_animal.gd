@@ -21,7 +21,7 @@ var debug = false
 var controlled = false
 
 func _ready():
-	self.name = resource.name
+	self.set_name.call_deferred(resource.name)
 	self.set_scale(Vector2(resource.scale,resource.scale))
 	self.speed = resource.speed
 	self.species = resource.species
@@ -30,6 +30,7 @@ func _ready():
 	sprite.vframes = resource.texture_shape[1]
 
 	animation_player.add_animation_library("animal",resource.animation_library)
+	var has_idle = animation_player.has_animation('animal/idle')
 	movement.pawn = self
 
 
@@ -58,10 +59,17 @@ func _physics_process(delta):
 		kill()
 
 #	state_machine.set_param("velocity", velocity.length())
+
+	# this logic should be in the state machine somehow
+	if velocity.x < 0:
+		sprite.set_flip_h(true)
+	elif velocity.x > 0:
+		sprite.set_flip_h(false)
+	
 	state_machine.set_expression_property("velocity",velocity.length())
 	state_machine.send_event("velocity_update")
 	move_and_slide()
-	pass
+
 
 func set_target_lifeform(target_lifeform : Node2D):
 	self.movement.target_lifeform = target_lifeform
@@ -78,6 +86,9 @@ func kill():
 	await get_tree().create_timer(4).timeout
 	queue_free()
 
-
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 	state_machine.set_param("velocity", safe_velocity.length())
+
+func _on_idle_state_entered():
+	
+	state_machine.send_event("seek")

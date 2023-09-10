@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://davyd610wwspt"]
+[gd_scene load_steps=13 format=3 uid="uid://davyd610wwspt"]
 
 [ext_resource type="Texture2D" uid="uid://md4ykrlp1l5g" path="res://art/lifeforms/outline/MiniBear.png" id="1_0m26n"]
 [ext_resource type="AnimationLibrary" uid="uid://cnfrav1iraafw" path="res://scenes/actors/animations/bear_animation_library.tres" id="2_0g36r"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bltsndosjisoq" path="res://art/lifeforms/outline/MiniBoar.png" id="5_j784o"]
 [ext_resource type="Texture2D" uid="uid://bwvlhwb3sko1q" path="res://art/lifeforms/outline/MiniBird.png" id="6_6d5ft"]
 [ext_resource type="Texture2D" uid="uid://bf2d7kvndwnfl" path="res://art/lifeforms/outline/MiniDeer1.png" id="7_nvusk"]
+[ext_resource type="AnimationLibrary" uid="uid://u74yhei1845t" path="res://scenes/actors/animations/boar_animation_library.tres" id="7_qq1qk"]
 [ext_resource type="Texture2D" uid="uid://bh3kruda7jagj" path="res://art/lifeforms/outline/MiniDeer2.png" id="8_x0c2f"]
 [ext_resource type="Texture2D" uid="uid://vkgs4advxpnt" path="res://art/lifeforms/outline/MiniWolf.png" id="9_5mej2"]
 [ext_resource type="AnimationLibrary" uid="uid://dlchlpl0x450f" path="res://scenes/actors/animations/wolf_animation_library.tres" id="11_hkvmq"]
@@ -62,13 +63,13 @@ position = Vector2(368, 88)
 
 [node name="Sprite2D" type="Sprite2D" parent="Boar"]
 texture = ExtResource("5_j784o")
-hframes = 4
+hframes = 5
 vframes = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Boar"]
-root_node = NodePath("../..")
+root_node = NodePath("../Sprite2D")
 libraries = {
-"deer_animation_library": ExtResource("2_3x8ip")
+"boar_animation_library": ExtResource("7_qq1qk")
 }
 
 [node name="Bird" type="Node2D" parent="."]
