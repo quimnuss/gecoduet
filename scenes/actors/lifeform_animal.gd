@@ -21,14 +21,15 @@ var debug = false
 var controlled = false
 
 func _ready():
-	self.set_name.call_deferred(resource.name)
+	self.set_name(resource.name)
 	self.set_scale(Vector2(resource.scale,resource.scale))
 	self.speed = resource.speed
 	self.species = resource.species
 	sprite.set_texture(resource.texture)
 	sprite.hframes = resource.texture_shape[0]
 	sprite.vframes = resource.texture_shape[1]
-
+	prints("animation library",resource.animation_library.get_animation_list())
+	animation_player.remove_animation_library()
 	animation_player.add_animation_library("animal",resource.animation_library)
 	var has_idle = animation_player.has_animation('animal/idle')
 	movement.pawn = self

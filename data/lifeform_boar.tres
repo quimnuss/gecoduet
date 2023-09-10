@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=4 format=3 uid="uid://b5r4w26o5cwlc"]
+[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=5 format=3 uid="uid://b5r4w26o5cwlc"]
 
 [ext_resource type="AnimationLibrary" uid="uid://u74yhei1845t" path="res://scenes/actors/animations/boar_animation_library.tres" id="1_86a7t"]
 [ext_resource type="Texture2D" uid="uid://bltsndosjisoq" path="res://art/lifeforms/outline/MiniBoar.png" id="1_r6rwg"]
 [ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="2_vgb3p"]
+[ext_resource type="SpriteFrames" uid="uid://frui3nkmhhyk" path="res://scenes/actors/animations/deprecated/boar_sprite_frames.tres" id="3_b5qj7"]
 
 [resource]
 script = ExtResource("2_vgb3p")
@@ -12,6 +13,7 @@ name = "boar"
 species = 5
 scale = 1.0
 speed = 40.0
+spriteframes = ExtResource("3_b5qj7")
 animation_library = ExtResource("1_86a7t")
 texture = ExtResource("1_r6rwg")
 texture_shape = Vector2i(5, 6)

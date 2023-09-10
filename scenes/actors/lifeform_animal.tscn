@@ -1,8 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://bob0pxtor755"]
+[gd_scene load_steps=20 format=3 uid="uid://bob0pxtor755"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_animal.gd" id="1_jq6ja"]
 [ext_resource type="Resource" uid="uid://b5r4w26o5cwlc" path="res://data/lifeform_boar.tres" id="2_wk7oc"]
-[ext_resource type="Texture2D" uid="uid://bltsndosjisoq" path="res://art/lifeforms/outline/MiniBoar.png" id="4_rkc35"]
+[ext_resource type="Texture2D" uid="uid://bh3kruda7jagj" path="res://art/lifeforms/outline/MiniDeer2.png" id="3_kedx4"]
+[ext_resource type="AnimationLibrary" uid="uid://qr4hkr5vsu6l" path="res://scenes/actors/animations/stag_animation_library.tres" id="4_eyc41"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="5_5ny6y"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="7_dgbcq"]
 [ext_resource type="Script" path="res://scenes/components/Movement.gd" id="7_ygqcy"]
@@ -36,13 +37,16 @@ resource = ExtResource("2_wk7oc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -16)
-texture = ExtResource("4_rkc35")
-hframes = 5
-vframes = 6
-frame = 25
+texture = ExtResource("3_kedx4")
+hframes = 7
+vframes = 7
+frame = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite2D")
+libraries = {
+"stag_animation_library": ExtResource("4_eyc41")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)

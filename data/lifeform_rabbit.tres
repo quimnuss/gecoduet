@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=4 format=3 uid="uid://cckfkok1go8q8"]
+[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=5 format=3 uid="uid://cckfkok1go8q8"]
 
 [ext_resource type="AnimationLibrary" uid="uid://ciy65nsqy47fc" path="res://scenes/actors/animations/rabbit_animation_library.tres" id="1_c8nbn"]
 [ext_resource type="Texture2D" uid="uid://c3odglwpn8a43" path="res://art/lifeforms/outline/MiniBunny.png" id="1_yfalh"]
 [ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="2_3bit5"]
+[ext_resource type="SpriteFrames" uid="uid://bqi2yfcagcmvn" path="res://scenes/actors/animations/deprecated/rabbit_sprite_frames.tres" id="3_b1vcd"]
 
 [resource]
 script = ExtResource("2_3bit5")
@@ -12,6 +13,7 @@ name = "rabbit"
 species = 2
 scale = 1.0
 speed = 70.0
+spriteframes = ExtResource("3_b1vcd")
 animation_library = ExtResource("1_c8nbn")
 texture = ExtResource("1_yfalh")
 texture_shape = Vector2i(4, 4)

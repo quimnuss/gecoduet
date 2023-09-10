@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=4 format=3 uid="uid://b13ywalfrleiq"]
+[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=5 format=3 uid="uid://b13ywalfrleiq"]
 
 [ext_resource type="AnimationLibrary" uid="uid://de01mppyo6ego" path="res://scenes/actors/animations/doe_animation_library.tres" id="1_3pcvj"]
 [ext_resource type="Texture2D" uid="uid://bf2d7kvndwnfl" path="res://art/lifeforms/outline/MiniDeer1.png" id="2_mrhfl"]
 [ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="2_ojrrw"]
+[ext_resource type="SpriteFrames" uid="uid://bf87d3s3r3xnk" path="res://scenes/actors/animations/deprecated/doe_sprite_frames.tres" id="3_ep3mi"]
 
 [resource]
 script = ExtResource("2_ojrrw")
@@ -12,6 +13,7 @@ name = "doe"
 species = 6
 scale = 1.0
 speed = 50.0
+spriteframes = ExtResource("3_ep3mi")
 animation_library = ExtResource("1_3pcvj")
 texture = ExtResource("2_mrhfl")
 texture_shape = Vector2i(5, 6)

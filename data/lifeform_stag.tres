@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=4 format=3 uid="uid://yhyyvxi35nun"]
+[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=5 format=3 uid="uid://yhyyvxi35nun"]
 
-[ext_resource type="AnimationLibrary" path="res://scenes/actors/animations/stag_animation_library.tres" id="1_cjeuq"]
+[ext_resource type="AnimationLibrary" uid="uid://qr4hkr5vsu6l" path="res://scenes/actors/animations/stag_animation_library.tres" id="1_cjeuq"]
 [ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="2_5jo6c"]
 [ext_resource type="Texture2D" uid="uid://bh3kruda7jagj" path="res://art/lifeforms/outline/MiniDeer2.png" id="2_q5v0s"]
+[ext_resource type="SpriteFrames" uid="uid://cprlk2mkx2ygc" path="res://scenes/actors/animations/deprecated/stag_sprite_frames.tres" id="3_65ho1"]
 
 [resource]
 script = ExtResource("2_5jo6c")
@@ -12,6 +13,7 @@ name = "stag"
 species = 6
 scale = 1.0
 speed = 50.0
+spriteframes = ExtResource("3_65ho1")
 animation_library = ExtResource("1_cjeuq")
 texture = ExtResource("2_q5v0s")
 texture_shape = Vector2i(7, 7)

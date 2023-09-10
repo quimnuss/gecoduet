@@ -9,11 +9,13 @@
 script = ExtResource("2_tqigj")
 lifeform_type = "animal"
 mobility_type = "run"
-animation_frames = ExtResource("1_asc6o")
 name = "bird"
 species = 4
 scale = 0.8
 speed = 50.0
+spriteframes = ExtResource("1_asc6o")
 animation_library = ExtResource("2_qhl7g")
 texture = ExtResource("4_gajop")
 texture_shape = Vector2i(4, 3)
+texture_coords = Vector2i(0, 0)
+region = Rect2i(0, 0, 0, 0)

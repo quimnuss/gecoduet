@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=4 format=3 uid="uid://crgbo8a84f4jd"]
+[gd_resource type="Resource" script_class="LifeformAnimalResource" load_steps=5 format=3 uid="uid://crgbo8a84f4jd"]
 
-[ext_resource type="AnimationLibrary" path="res://scenes/actors/animations/fox_animation_library.tres" id="1_ro6iv"]
+[ext_resource type="AnimationLibrary" uid="uid://0jr3pmlb5l6l" path="res://scenes/actors/animations/fox_animation_library.tres" id="1_ro6iv"]
 [ext_resource type="Texture2D" uid="uid://ba35fa4dx70it" path="res://art/lifeforms/outline/MiniFox.png" id="2_3ncdg"]
 [ext_resource type="Script" path="res://data/lifeform_animal_resource.gd" id="2_obei1"]
+[ext_resource type="SpriteFrames" uid="uid://lvs4lfbkjxkr" path="res://scenes/actors/animations/deprecated/fox_sprite_frames.tres" id="3_vd8hw"]
 
 [resource]
 script = ExtResource("2_obei1")
@@ -12,6 +13,7 @@ name = "fox"
 species = 7
 scale = 1.0
 speed = 50.0
+spriteframes = ExtResource("3_vd8hw")
 animation_library = ExtResource("1_ro6iv")
 texture = ExtResource("2_3ncdg")
 texture_shape = Vector2i(6, 6)
