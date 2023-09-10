@@ -176,7 +176,7 @@ func _set_velocity_given_move_mode():
 				state_machine.send_event("target_reached")
 
 func _on_run_state_entered():
-	_set_velocity_given_move_mode
+	_set_velocity_given_move_mode()
 
 func _on_run_state_physics_processing(delta):
 	_set_velocity_given_move_mode()
