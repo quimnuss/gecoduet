@@ -109,62 +109,8 @@ func nav_target_selector() -> Vector2:
 			pass
 	return target
 
-# todo state-machine tired_timer
-# todo we're mixing behavior with state
-# we should seperate the will/actions from the actual state
-# so, in physics move_slide, trigger state state_machine
-# and somewhere else the behaviour (set target etc)
-func _on_state_machine_player_updated(state, delta):
-	movement_delta = pawn.speed * delta
-	match state:
-		"seek_move", "idle":
-			pawn.velocity = Vector2.ZERO # this should not be necessary but for some reason it is
-			tired_timer += delta
-			if tired_timer <= 0:
-				tired_timer = 3
-				for tries in 10:
-					var target = nav_target_selector()	
-					
-					nav.set_target_position(target)
-					if nav.is_target_reachable():
-						if pawn.debug:
-							prints(target,"is reachable.")
-						state_machine.send_event("is_moving")
-						velocity_to_nav_target()
-						break
-		"run":
-			match move_mode:
-				Constants.MoveMode.CHASE_PREY:
-					var target = target_lifeform.global_position
-					nav.set_target_position(target)
-					if(nav.distance_to_target() < 5):
-						self.stop()
-					else:
-						velocity_to_nav_target()
-				Constants.MoveMode.AVOID_PREDATOR:
-					var predator_position = target_lifeform.global_position
-					var predator_distance = (predator_position - self.global_position)
-					var away_direction = predator_distance.normalized()
-					var away_angle = randf_range(0,0.2) if predator_distance.length() > 30 else 0.5*PI
-					var opposite = self.global_position - away_direction.rotated(away_angle*PI)*100
-					nav.set_target_position(opposite)
-					if(nav.distance_to_target() < 5):
-						self.stop()
-					else:
-						velocity_to_nav_target()
-				Constants.MoveMode.DEFAULT,_:
-					if nav.is_target_reachable() and not (nav.distance_to_target() < 15):
-						velocity_to_nav_target()
-					elif not nav.is_target_reachable():
-						if pawn.debug:
-							print(nav.get_final_position(), " is unreachable. Next pos ", nav.get_next_path_position())
-						self.stop()
-					else:
-						self.stop()
-		_:
-			self.stop()
-
 func _on_navigation_finished():
+	state_machine.send_event("target_reached")
 	self.stop()
 
 func _on_state_machine_player_transited(from, to):

@@ -12,6 +12,6 @@ species = 0
 scale = 0.5
 speed = 100.0
 texture = ExtResource("1_otbck")
-texture_shape = Vector2i(13, 5)
+texture_shape = Vector2i(12, 5)
 texture_coords = Vector2i(0, 0)
 region = Rect2i(0, 0, 0, 0)

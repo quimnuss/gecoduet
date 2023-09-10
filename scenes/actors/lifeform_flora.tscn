@@ -12,4 +12,3 @@ shape = SubResource("CapsuleShape2D_tswmy")
 disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-region_enabled = true

@@ -80,6 +80,7 @@ offset_top = 16.0
 offset_right = 153.0
 offset_bottom = 98.0
 scale = Vector2(0.626088, 0.626088)
+enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [node name="DebugNode" type="Node2D" parent="."]

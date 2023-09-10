@@ -12,6 +12,6 @@ species = 3
 scale = 0.7
 speed = 100.0
 texture = ExtResource("1_kqs8r")
-texture_shape = Vector2i(6, 0)
+texture_shape = Vector2i(6, 1)
 texture_coords = Vector2i(3, 0)
 region = Rect2i(0, 0, 0, 0)
