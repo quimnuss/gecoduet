@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bgtx5crm8swga"]
+[gd_scene load_steps=25 format=3 uid="uid://bgtx5crm8swga"]
 
 [ext_resource type="Texture2D" uid="uid://opumiyj3vs6x" path="res://art/sproutlands/Tilesets/Grass.png" id="1_v5rgt"]
 [ext_resource type="Texture2D" uid="uid://uo02j43cl7if" path="res://art/sproutlands/Tilesets/Water.png" id="2_s1un5"]
@@ -297,9 +297,27 @@ sources/5 = SubResource("TileSetAtlasSource_0fcys")
 sources/6 = SubResource("TileSetAtlasSource_mww13")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1myx2"]
-vertices = PackedVector2Array(232, 120, 400, 304, 48, 304, 104, 192, 168, 120, 72, 192, 48, 48, 72, 144, 232, 56, 400, 48, 168, 56, 104, 144)
+vertices = PackedVector2Array(232, 120, 400, 304, 48, 304, 104, 200, 168, 120, 72, 200, 48, 48, 72, 136, 232, 56, 400, 48, 168, 56, 104, 136)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 3, 2), PackedInt32Array(5, 2, 6, 7), PackedInt32Array(0, 8, 9, 1), PackedInt32Array(6, 9, 8, 10), PackedInt32Array(4, 3, 11, 10), PackedInt32Array(7, 6, 10, 11)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(48, 48, 400, 48, 400, 304, 48, 304), PackedVector2Array(72, 144, 72, 192, 104, 192, 104, 144), PackedVector2Array(168, 56, 232, 56, 232, 120, 168, 120)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(48, 48, 400, 48, 400, 304, 48, 304), PackedVector2Array(72, 136, 72, 200, 104, 200, 104, 136), PackedVector2Array(168, 56, 232, 56, 232, 120, 168, 120)])
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r762b"]
+height = 52.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hwdj5"]
+size = Vector2(48, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yw4y0"]
+size = Vector2(37, 352)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5gcqn"]
+size = Vector2(48, 352)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sgvnf"]
+size = Vector2(464, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5f7q6"]
+size = Vector2(464, 36)
 
 [node name="world_gaia_composition_sandbox" type="Node2D"]
 
@@ -333,9 +351,45 @@ layer_3/tile_data = PackedInt32Array(10, 458758, 4, 5, 327686, 4, 524291, 458758
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="TileMap"]
 navigation_polygon = SubResource("NavigationPolygon_1myx2")
 
-[node name="Sprite2D" type="Sprite2D" parent="TileMap"]
-
 [node name="Ecogaiasystem" parent="TileMap" instance=ExtResource("8_ql7dh")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="TileMap"]
+position = Vector2(88, 168)
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/StaticBody2D"]
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_r762b")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="TileMap"]
+position = Vector2(200, 80)
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/StaticBody2D2"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_hwdj5")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="TileMap"]
+position = Vector2(200, 176)
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/StaticBody2D3"]
+position = Vector2(-186.5, 0)
+shape = SubResource("RectangleShape2D_yw4y0")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TileMap/StaticBody2D3"]
+position = Vector2(240, 0)
+shape = SubResource("RectangleShape2D_5gcqn")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="TileMap/StaticBody2D3"]
+position = Vector2(32, 162)
+shape = SubResource("RectangleShape2D_sgvnf")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="TileMap/StaticBody2D3"]
+position = Vector2(32, -162)
+shape = SubResource("RectangleShape2D_5f7q6")
 
 [node name="hud" parent="." instance=ExtResource("10_3e8fg")]
 

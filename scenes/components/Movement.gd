@@ -75,7 +75,7 @@ func stop():
 	pawn.velocity = Vector2.ZERO # when last target is out of bounds this does not work for some reason
 	tired_timer = 0
 
-func velocity_to_nav_target():
+func velocity_to_nav_target(delta = 0.01):
 	var agent_position : Vector2 = pawn.global_position
 	var target = nav.get_next_path_position()
 	var distance = (target - agent_position)
@@ -84,13 +84,13 @@ func velocity_to_nav_target():
 	# also nav.distance_to_target()
 	# todo fix spinning
 	if distance_to_end.length() < 20:
-		speed = pawn.speed/5
+		speed = pawn.speed/3
 	var velocity = distance.normalized() * speed
 	# TODO figure out how to get avoidance working correctly
 	if false and nav.avoidance_enabled:
 		nav.set_velocity(velocity)
 	else:
-		pawn.velocity = velocity
+		pawn.velocity = pawn.velocity.move_toward(velocity, delta*speed)
 	
 	#pawn.velocity = velocity
 	if pawn.debug:
@@ -113,15 +113,6 @@ func _on_navigation_finished():
 	state_machine.send_event("target_reached")
 	self.stop()
 
-func _on_state_machine_player_transited(from, to):
-	match from:
-		"idle":
-			pass
-		"run":
-			match to:
-				"idle":
-					pass
-
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 #	pawn.global_position = pawn.global_position.move_toward(pawn.global_position + safe_velocity, movement_delta)
 	print(safe_velocity)
@@ -141,11 +132,12 @@ func _on_seek_target_state_entered():
 			if pawn.debug:
 				prints(target,"is reachable.")
 			state_machine.send_event("has_target")
+			
 			return
-	prints(target,"is unreachable",pawn.global_position - target)
+	prints(target,"is unreachable by",get_parent().name,"distance",pawn.global_position - target,"nav final position",nav.get_final_position())
 	state_machine.send_event("cancel_seek")
 
-func _set_velocity_given_move_mode():
+func _set_velocity_given_move_mode(delta = 0.01):
 	match move_mode:
 		Constants.MoveMode.CHASE_PREY:
 			var target = target_lifeform.global_position
@@ -166,23 +158,34 @@ func _set_velocity_given_move_mode():
 			else:
 				velocity_to_nav_target()
 		Constants.MoveMode.DEFAULT,_:
-			if nav.is_target_reachable() and not (nav.distance_to_target() < 15):
-				velocity_to_nav_target()
+			prints("distance to target",nav.distance_to_target())
+			if not nav.is_navigation_finished() and not (nav.distance_to_target() < 15):
+				velocity_to_nav_target(delta)
 			elif not nav.is_target_reachable():
 				if pawn.debug:
 					print(nav.get_final_position(), " is unreachable. Next pos ", nav.get_next_path_position())
 				state_machine.send_event("target_reached")
+				prints('foo1',nav.distance_to_target())
 			elif nav.is_navigation_finished():
 				state_machine.send_event("target_reached")
+				prints('foo2',nav.distance_to_target())
+			else:
+				state_machine.send_event("target_reached")
+				prints('foo3',nav.distance_to_target())
 
 func _on_run_state_entered():
 	_set_velocity_given_move_mode()
 
 func _on_run_state_physics_processing(delta):
-	_set_velocity_given_move_mode()
+	_set_velocity_given_move_mode(delta)
 
 func _on_idle_state_entered():
 	self.stop()
 
 func _on_death_state_entered():
 	self.stop()
+
+
+func _on_run_anim_state_physics_processing(delta):
+	
+	pass # Replace with function body.

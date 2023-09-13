@@ -17,8 +17,9 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/not_guard.gd" id="12_h28at"]
 [ext_resource type="Resource" uid="uid://brea607hp7eq3" path="res://scenes/actors/StateConditions/is_moving.tres" id="13_ibwot"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fap6"]
-size = Vector2(20, 10)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pqhh5"]
+radius = 8.0
+height = 16.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_vy1fw"]
 vertices = PackedVector2Array(-88, -80, 136, -80, 136, 96, -88, 96)
@@ -31,6 +32,8 @@ guard = ExtResource("13_ibwot")
 
 [node name="Animal" type="CharacterBody2D"]
 y_sort_enabled = true
+collision_layer = 4
+collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_jq6ja")
 resource = ExtResource("2_wk7oc")
@@ -40,7 +43,7 @@ position = Vector2(0, -16)
 texture = ExtResource("3_kedx4")
 hframes = 7
 vframes = 7
-frame = 7
+frame = 42
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite2D")
@@ -49,13 +52,12 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -5)
-shape = SubResource("RectangleShape2D_8fap6")
-disabled = true
+position = Vector2(0, -8)
+shape = SubResource("CapsuleShape2D_pqhh5")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 10.0
-path_max_distance = 10.0
+path_max_distance = 200.0
 radius = 20.0
 debug_use_custom = true
 debug_path_custom_color = Color(0.0235294, 1, 1, 0.792157)
@@ -72,14 +74,12 @@ visible = false
 navigation_polygon = SubResource("NavigationPolygon_vy1fw")
 
 [node name="StateChartDebugger" parent="." instance=ExtResource("5_5ny6y")]
-visible = false
 top_level = true
-offset_left = 208.0
-offset_top = 16.0
-offset_right = 153.0
-offset_bottom = 98.0
-scale = Vector2(0.626088, 0.626088)
-enabled = false
+offset_left = 304.0
+offset_top = 136.0
+offset_right = 156.0
+offset_bottom = 218.0
+scale = Vector2(0.500511, 0.500511)
 initial_node_to_watch = NodePath("../StateChart")
 
 [node name="DebugNode" type="Node2D" parent="."]
@@ -118,6 +118,11 @@ to = NodePath("../../RunAnim")
 event = &"velocity_update"
 guard = ExtResource("13_ibwot")
 
+[node name="ToRun2" type="Node" parent="StateChart/ParallelState/Animation/IdleAnim"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../RunAnim")
+event = &"is_moving"
+
 [node name="RunAnim" type="Node" parent="StateChart/ParallelState/Animation"]
 script = ExtResource("10_frylo")
 animation_player = NodePath("../../../../AnimationPlayer")
@@ -128,6 +133,11 @@ script = ExtResource("10_13ioa")
 to = NodePath("../../IdleAnim")
 event = &"velocity_update"
 guard = SubResource("Resource_83iit")
+
+[node name="ToIdle2" type="Node" parent="StateChart/ParallelState/Animation/RunAnim"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../IdleAnim")
+event = &"stopped"
 
 [node name="DeathAnim" type="Node" parent="StateChart/ParallelState/Animation"]
 script = ExtResource("10_frylo")
@@ -179,6 +189,8 @@ script = ExtResource("9_x7iv2")
 [connection signal="navigation_finished" from="NavigationAgent2D" to="Movement" method="_on_navigation_finished"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="Movement" method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/Animation/IdleAnim" to="." method="_on_idle_anim_state_physics_processing"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/Animation/RunAnim" to="." method="_on_run_anim_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/Idle" to="." method="_on_idle_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/Idle" to="Movement" method="_on_idle_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/SeekTarget" to="Movement" method="_on_seek_target_state_entered"]

@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("2_tqigj")
 lifeform_type = "animal"
-mobility_type = "run"
+mobility_type = "fly"
 name = "bird"
 species = 4
 scale = 0.8

@@ -102,6 +102,12 @@ ui_debug_navigation={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="hard_terrain"
+2d_physics/layer_2="ground_terrain"
+2d_physics/layer_3="lifeforms"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

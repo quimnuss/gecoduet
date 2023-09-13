@@ -25,6 +25,8 @@ func _ready():
 	self.set_scale(Vector2(resource.scale,resource.scale))
 	self.speed = resource.speed
 	self.species = resource.species
+	if resource.mobility_type == 'fly':
+		self.set_collision_mask_value(2,false)
 	sprite.set_texture(resource.texture)
 	sprite.hframes = resource.texture_shape[0]
 	sprite.vframes = resource.texture_shape[1]
@@ -35,8 +37,27 @@ func _ready():
 	var has_idle = animation_player.has_animation('animal/idle')
 	movement.pawn = self
 
+func _input(event):
+	if event.is_action_pressed("ui_state_debug"):
+		if $StateChartDebugger:
+			$StateChartDebugger.visible = !$StateChartDebugger.visible
+	
+	if event.is_action_pressed("ui_debug_navigation"):
+		if $NavigationAgent2D:
+			$NavigationAgent2D.debug_enabled = !$NavigationAgent2D.debug_enabled
+	
+	if event.is_action_pressed("ui_debug_action"):
+#		var move_mode = ["chase_prey","chase_leader","avoid_predator"].pick_random()
+#		prints("switching to",move_mode)
+#		movement.move_mode = move_mode
+#		state_machine.set_trigger("die")
+		kill()
 
+# un-estated input processing
 func _physics_process(delta):
+	pass
+
+func _physics_input_process(delta):
 
 #	if Input.is_action_just_pressed("ui_accept"):
 #		velocity.y = JUMP_VELOCITY
@@ -51,22 +72,6 @@ func _physics_process(delta):
 	if velocity == Vector2.ZERO:
 		controlled = false
 
-
-	if Input.is_action_pressed("ui_state_debug"):
-		if $StateChartDebugger:
-			$StateChartDebugger.enabled = !$StateChartDebugger.enabled
-	
-	if Input.is_action_pressed("ui_debug_navigation"):
-		if $NavigationAgent2D:
-			$NavigationAgent2D.debug_enabled = !$NavigationAgent2D.debug_enabled
-	
-	if Input.is_action_pressed("ui_debug_action"):
-#		var move_mode = ["chase_prey","chase_leader","avoid_predator"].pick_random()
-#		prints("switching to",move_mode)
-#		movement.move_mode = move_mode
-#		state_machine.set_trigger("die")
-		kill()
-
 #	state_machine.set_param("velocity", velocity.length())
 
 	# this logic should be in the state machine somehow
@@ -75,8 +80,8 @@ func _physics_process(delta):
 	elif velocity.x > 0:
 		sprite.set_flip_h(false)
 	
-	state_machine.set_expression_property("velocity",velocity.length())
-	state_machine.send_event("velocity_update")
+#	state_machine.set_expression_property("velocity",velocity.length())
+#	state_machine.send_event("velocity_update")
 	move_and_slide()
 
 
@@ -99,5 +104,18 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 	state_machine.set_param("velocity", safe_velocity.length())
 
 func _on_idle_state_entered():
-	
 	state_machine.send_event("seek")
+
+
+func _on_run_anim_state_physics_processing(delta):
+	_physics_input_process(delta)
+	if velocity.length_squared() <= 0.1:
+		state_machine.send_event("stopped")
+	else:
+		prints("velocity",self.name,velocity.length_squared())
+
+func _on_idle_anim_state_physics_processing(delta):
+	_physics_input_process(delta)
+	if not velocity.length_squared() <= 0.05:
+		state_machine.send_event("is_moving")
+

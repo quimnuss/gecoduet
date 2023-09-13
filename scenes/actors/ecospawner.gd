@@ -80,7 +80,7 @@ func kill_all_children():
 			
 func kill_children(num_children: int):
 	var num_children_to_kill = min(num_children,len(lifeforms))
-	while num_children_to_kill > 0:
+	while num_children_to_kill > 0 and not lifeforms.is_empty():
 		num_children_to_kill -= 1
 		var child = lifeforms.pop_back()
 		child.kill()
