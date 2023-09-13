@@ -51,6 +51,10 @@ func _process(delta):
 	if Engine.is_editor_hint():
 		_process_debug(delta)
 
+func _input(event):
+	if event.is_action_pressed("ui_debug_action"):
+		lifeforms.clear()
+
 func polar2cartesian(r,alpha:float):
 	var x = r * cos(alpha)
 	var y = r * sin(alpha)

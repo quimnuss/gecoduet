@@ -17,3 +17,12 @@ func kill():
 	self.set_scale(self.get_scale()*0.3)
 	await get_tree().create_timer(2).timeout
 	queue_free()
+
+
+func _input(event):
+	if event.is_action_pressed("ui_debug_action"):
+#		var move_mode = ["chase_prey","chase_leader","avoid_predator"].pick_random()
+#		prints("switching to",move_mode)
+#		movement.move_mode = move_mode
+#		state_machine.set_trigger("die")
+		kill()

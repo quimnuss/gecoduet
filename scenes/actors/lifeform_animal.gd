@@ -36,6 +36,7 @@ func _ready():
     animation_player.add_animation_library("animal",resource.animation_library)
     var has_idle = animation_player.has_animation('animal/idle')
     movement.pawn = self
+    $StateChartDebugger.visible = false
 
 func _input(event):
     if event.is_action_pressed("ui_state_debug"):
@@ -112,7 +113,8 @@ func _on_run_anim_state_physics_processing(delta):
     if velocity.length_squared() <= 0.1:
         state_machine.send_event("stopped")
     else:
-        prints("velocity",self.name,velocity.length_squared())
+        #prints("velocity",self.name,velocity.length_squared())
+        pass
 
 func _on_idle_anim_state_physics_processing(delta):
     _physics_input_process(delta)

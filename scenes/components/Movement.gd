@@ -158,20 +158,17 @@ func _set_velocity_given_move_mode(delta = 0.01):
 			else:
 				velocity_to_nav_target()
 		Constants.MoveMode.DEFAULT,_:
-			prints("distance to target",nav.distance_to_target())
+			#prints("distance to target",nav.distance_to_target())
 			if not nav.is_navigation_finished() and not (nav.distance_to_target() < 15):
 				velocity_to_nav_target(delta)
 			elif not nav.is_target_reachable():
 				if pawn.debug:
 					print(nav.get_final_position(), " is unreachable. Next pos ", nav.get_next_path_position())
 				state_machine.send_event("target_reached")
-				prints('foo1',nav.distance_to_target())
 			elif nav.is_navigation_finished():
 				state_machine.send_event("target_reached")
-				prints('foo2',nav.distance_to_target())
 			else:
 				state_machine.send_event("target_reached")
-				prints('foo3',nav.distance_to_target())
 
 func _on_run_state_entered():
 	_set_velocity_given_move_mode()

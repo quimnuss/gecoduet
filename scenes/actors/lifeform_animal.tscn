@@ -74,6 +74,7 @@ visible = false
 navigation_polygon = SubResource("NavigationPolygon_vy1fw")
 
 [node name="StateChartDebugger" parent="." instance=ExtResource("5_5ny6y")]
+visible = false
 top_level = true
 offset_left = 304.0
 offset_top = 136.0
