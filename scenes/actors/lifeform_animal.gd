@@ -3,6 +3,7 @@ extends CharacterBody2D
 class_name Animal
 
 var speed = 200.0
+var acceleration = 100.0
 const JUMP_VELOCITY = -400.0
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -37,11 +38,13 @@ func _ready():
     var has_idle = animation_player.has_animation('animal/idle')
     movement.pawn = self
     $StateChartDebugger.visible = false
+    input_pickable = true
+
 
 func _input(event):
     if event.is_action_pressed("ui_state_debug"):
         if $StateChartDebugger:
-            $StateChartDebugger.visible = !$StateChartDebugger.visible
+            $StateChartDebugger.visible = false
 
     if event.is_action_pressed("ui_debug_navigation"):
         if $NavigationAgent2D:
@@ -53,6 +56,10 @@ func _input(event):
 #		movement.move_mode = move_mode
 #		state_machine.set_trigger("die")
         kill()
+
+func _input_event(viewport, event, shape_idx):
+    if event.is_action_pressed("ui_select_actor"):
+        $StateChartDebugger.visible = !$StateChartDebugger.visible
 
 # un-estated input processing
 func _physics_process(delta):
@@ -67,18 +74,22 @@ func _physics_input_process(delta):
     if direction:
         velocity = direction * speed * Vector2(1,-1)
         controlled = true
+        state_machine.send_event("posess")
     elif controlled:
-        velocity = velocity.lerp(Vector2(0,0), delta*speed/10)
+        velocity = velocity.lerp(Vector2(0,0), delta*acceleration)
 #
-    if velocity == Vector2.ZERO:
+    if velocity.is_zero_approx():
         controlled = false
+        state_machine.send_event("unposess")
+    else:
+        prints(velocity)
 
 #	state_machine.set_param("velocity", velocity.length())
 
     # this logic should be in the state machine somehow
-    if velocity.x < 0:
+    if velocity.x < 0.01:
         sprite.set_flip_h(true)
-    elif velocity.x > 0:
+    elif velocity.x > 0.01:
         sprite.set_flip_h(false)
 
 #	state_machine.set_expression_property("velocity",velocity.length())

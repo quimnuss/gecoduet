@@ -6,9 +6,9 @@
 [ext_resource type="Resource" uid="uid://cckfkok1go8q8" path="res://data/lifeform_rabbit.tres" id="4_js2ya"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_njwi6"]
-vertices = PackedVector2Array(152, 16, 448, 8, 432, 336, 24, 344, 24, 24)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(152, 16, 448, 8, 432, 336, 24, 344, 24, 24)])
+vertices = PackedVector2Array(170, 45, 428, 48, 385, 298, 50, 297, 46, 38)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(170, 45, 428, 48, 385, 298, 50, 297, 46, 38)])
 
 [node name="test_movement_behavior" type="Node2D" node_paths=PackedStringArray("predators", "preys")]
 y_sort_enabled = true
@@ -25,4 +25,5 @@ position = Vector2(256, 128)
 resource = ExtResource("4_js2ya")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(-5, -1)
 navigation_polygon = SubResource("NavigationPolygon_njwi6")

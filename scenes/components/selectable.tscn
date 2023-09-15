@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuvrnb25h6djc"]
+
+[sub_resource type="GDScript" id="GDScript_ye7p0"]
+script/source = "extends Node2D
+
+
+signal open_menu
+signal exit_menu
+
+signal selected
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+    pass # Replace with function body.
+
+func _on_NPC_input_event(viewport, event, shape_idx):
+    if event.is_action_pressed(\"ui_select\"):
+            emit_signal(\"open_menu\", self.get_parent())
+    elif event.is_action_pressed(\"ui_deselect\"):
+            emit_signal(\"exit_menu\")
+"
+
+[node name="Selectable" type="Node2D"]
+script = SubResource("GDScript_ye7p0")
