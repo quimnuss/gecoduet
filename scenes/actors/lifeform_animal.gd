@@ -14,15 +14,23 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var movement = $Movement
 @onready var animation_player = $AnimationPlayer
 @onready var sprite = $Sprite2D
+@onready var highlight = $Highlight
+
+signal selected
 
 var species : Constants.Species
 
 var debug = false
 
-var controlled = false
+#TODO handle unselectable spawn
+var is_selected = true
+
+var sensed_predators : Array[Animal] = []
+var predator_sensed_count = 0
+
 
 func _ready():
-    self.set_name(resource.name)
+    self.set_name.call_deferred(resource.name)
     self.set_scale(Vector2(resource.scale,resource.scale))
     self.speed = resource.speed
     self.species = resource.species
@@ -31,7 +39,7 @@ func _ready():
     sprite.set_texture(resource.texture)
     sprite.hframes = resource.texture_shape[0]
     sprite.vframes = resource.texture_shape[1]
-    prints("animation library",resource.animation_library.get_animation_list())
+    prints(resource.name,"animation library",resource.animation_library.get_animation_list())
     for library in animation_player.get_animation_library_list():
         animation_player.remove_animation_library(library)
     animation_player.add_animation_library("animal",resource.animation_library)
@@ -40,6 +48,8 @@ func _ready():
     $StateChartDebugger.visible = false
     input_pickable = true
 
+    if get_parent() == get_tree().root:
+        $NavigationRegion2D.set_enabled(true)
 
 func _input(event):
     if event.is_action_pressed("ui_state_debug"):
@@ -58,8 +68,15 @@ func _input(event):
         kill()
 
 func _input_event(viewport, event, shape_idx):
+
     if event.is_action_pressed("ui_select_actor"):
-        $StateChartDebugger.visible = !$StateChartDebugger.visible
+
+        if event is InputEventMouseButton and event.is_double_click():
+            var was_selected = get_selected()
+            set_selected(!get_selected())
+            prints(self.name,"selected?",was_selected,"->",get_selected())
+        else:
+            $StateChartDebugger.visible = !$StateChartDebugger.visible
 
 # un-estated input processing
 func _physics_process(delta):
@@ -70,21 +87,23 @@ func _physics_input_process(delta):
 #	if Input.is_action_just_pressed("ui_accept"):
 #		velocity.y = JUMP_VELOCITY
 #
-    var direction = Input.get_vector("ui_left", "ui_right", "ui_down", "ui_up")
-    if direction:
-        velocity = direction * speed * Vector2(1,-1)
-        controlled = true
-        state_machine.send_event("posess")
-    elif controlled:
-        velocity = velocity.lerp(Vector2(0,0), delta*acceleration)
-#
-    if velocity.is_zero_approx():
-        controlled = false
-        state_machine.send_event("unposess")
-    else:
-        prints(velocity)
+    if get_selected():
+        var direction = Input.get_vector("ui_left", "ui_right", "ui_down", "ui_up")
+        if direction:
+            velocity = direction * speed * Vector2(1,-1)
+            state_machine.send_event("posess")
+        else:
+            velocity = velocity.lerp(Vector2(0,0), delta*acceleration)
 
-#	state_machine.set_param("velocity", velocity.length())
+        if Input.is_action_pressed("ui_deselect_actor"):
+#        if velocity.is_zero_approx():
+            state_machine.send_event("unposess")
+            set_selected(false)
+
+            velocity = velocity.lerp(Vector2(0,0), delta*acceleration)
+#        else:
+#            pass
+
 
     # this logic should be in the state machine somehow
     if velocity.x < 0.01:
@@ -100,12 +119,23 @@ func _physics_input_process(delta):
 func set_target_lifeform(target_lifeform : Node2D):
     self.movement.target_lifeform = target_lifeform
 
+func set_selected(turn_on):
+    set_highlight(turn_on)
+    is_selected = turn_on
+    if is_selected:
+        state_machine.send_event("posess")
+    else:
+        state_machine.send_event("unposess")
+    # how to deal with deselect on click?
+        selected.emit(self)
+
+func get_selected():
+    return is_selected
+
 func set_highlight(turn_on = true, blueish = false):
-    var highlight : Sprite2D = $Highlight
     highlight.visible = turn_on
     if blueish:
         highlight.modulate = Color(0, 0, 1) # blue shade
-
 
 func kill():
     state_machine.send_event("death")
@@ -132,3 +162,22 @@ func _on_idle_anim_state_physics_processing(delta):
     if not velocity.length_squared() <= 0.05:
         state_machine.send_event("is_moving")
 
+func _on_sensory_radius_body_entered(body):
+    #prints(body.name,"entered",self.name,"sensory")
+    if body is Animal:
+        # todo use GLV to determine predators at setup or dynamically
+        if self.species == Constants.Species.RABBIT and body.species == Constants.Species.WOLF:
+            sensed_predators.append(body)
+            predator_sensed_count += 1
+            state_machine.set_expression_property("predator_sensed_count", predator_sensed_count)
+            state_machine.send_event("predator_sensed")
+
+func _on_sensory_radius_body_exited(body):
+    #prints(body.name,"exited",self.name,"sensory")
+    if body is Animal:
+        # todo use GLV to determine predators at setup or dynamically
+        if self.species == Constants.Species.RABBIT and body.species == Constants.Species.WOLF:
+            sensed_predators.erase(body)
+            predator_sensed_count -= 1
+            state_machine.set_expression_property("predator_sensed_count", predator_sensed_count)
+            state_machine.send_event("predator_lost")

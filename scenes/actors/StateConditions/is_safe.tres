@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ExpressionGuard" load_steps=2 format=3 uid="uid://c2d1qwbetpa35"]
+
+[ext_resource type="Script" path="res://addons/godot_state_charts/expression_guard.gd" id="1_cyrpb"]
+
+[resource]
+script = ExtResource("1_cyrpb")
+expression = "predator_sensed_count == 0"

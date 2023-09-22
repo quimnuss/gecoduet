@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bob0pxtor755"]
+[gd_scene load_steps=24 format=3 uid="uid://bob0pxtor755"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_animal.gd" id="1_jq6ja"]
 [ext_resource type="Resource" uid="uid://b5r4w26o5cwlc" path="res://data/lifeform_boar.tres" id="2_wk7oc"]
@@ -16,11 +16,15 @@
 [ext_resource type="Texture2D" uid="uid://b4egb35lt1y82" path="res://art/sproutlands/Objects/Egg item.png" id="12_0eber"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/not_guard.gd" id="12_h28at"]
 [ext_resource type="Resource" uid="uid://brea607hp7eq3" path="res://scenes/actors/StateConditions/is_moving.tres" id="13_ibwot"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_is_active_guard.gd" id="16_2srcw"]
+[ext_resource type="Resource" uid="uid://c2d1qwbetpa35" path="res://scenes/actors/StateConditions/is_safe.tres" id="17_dbq8d"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/expression_guard.gd" id="18_rk37w"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pqhh5"]
 radius = 8.0
 height = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h0cfi"]
+radius = 55.2268
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_vy1fw"]
 vertices = PackedVector2Array(-88, -80, 136, -80, 136, 96, -88, 96)
@@ -31,9 +35,9 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-88, -80, 136, -80, 136
 script = ExtResource("12_h28at")
 guard = ExtResource("13_ibwot")
 
-[sub_resource type="Resource" id="Resource_sonac"]
-script = ExtResource("16_2srcw")
-state = NodePath("")
+[sub_resource type="Resource" id="Resource_yoquq"]
+script = ExtResource("18_rk37w")
+expression = "predator_sensed_count > 0"
 
 [node name="Animal" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -48,7 +52,7 @@ position = Vector2(0, -16)
 texture = ExtResource("3_kedx4")
 hframes = 7
 vframes = 7
-frame = 42
+frame = 21
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite2D")
@@ -59,6 +63,14 @@ libraries = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8)
 shape = SubResource("CapsuleShape2D_pqhh5")
+
+[node name="SensoryRadius" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SensoryRadius"]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_h0cfi")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 10.0
@@ -94,7 +106,6 @@ visible = false
 script = ExtResource("11_3mfao")
 
 [node name="Highlight" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(0, -16)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("12_0eber")
@@ -146,15 +157,19 @@ script = ExtResource("10_13ioa")
 to = NodePath("../../IdleAnim")
 event = &"stopped"
 
+[node name="ToAttack" type="Node" parent="StateChart/ParallelState/Animation/RunAnim"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../AttackAnim")
+event = &"target_reached"
+
 [node name="AttackAnim" type="Node" parent="StateChart/ParallelState/Animation"]
 script = ExtResource("10_frylo")
 animation_player = NodePath("../../../../AnimationPlayer")
-animation_name = &"eat"
+animation_name = &"animal/eat"
 
 [node name="ToIdle" type="Node" parent="StateChart/ParallelState/Animation/AttackAnim"]
 script = ExtResource("10_13ioa")
 to = NodePath("../../IdleAnim")
-guard = SubResource("Resource_sonac")
 delay_seconds = 3.0
 
 [node name="DeathAnim" type="Node" parent="StateChart/ParallelState/Animation"]
@@ -196,6 +211,11 @@ delay_seconds = 3.0
 [node name="SeekTarget" type="Node" parent="StateChart/ParallelState/Behavior"]
 script = ExtResource("9_x7iv2")
 
+[node name="ToFleePredators" type="Node" parent="StateChart/ParallelState/Behavior/SeekTarget"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../RunPattern/FleePredators")
+guard = SubResource("Resource_yoquq")
+
 [node name="ToRun" type="Node" parent="StateChart/ParallelState/Behavior/SeekTarget"]
 script = ExtResource("10_13ioa")
 to = NodePath("../../RunPattern/Roam")
@@ -221,6 +241,7 @@ event = &"target_reached"
 [node name="LeaderAssigned" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/Roam"]
 script = ExtResource("10_13ioa")
 to = NodePath("../../Follow")
+event = &"leader_assigned"
 
 [node name="TargetLost" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
 script = ExtResource("10_13ioa")
@@ -241,6 +262,8 @@ script = ExtResource("9_x7iv2")
 [node name="IsSafe" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/FleePredators"]
 script = ExtResource("10_13ioa")
 to = NodePath("../../../Idle")
+event = &"predator_lost"
+guard = ExtResource("17_dbq8d")
 
 [node name="Chase" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
 script = ExtResource("9_x7iv2")
@@ -256,11 +279,13 @@ script = ExtResource("9_x7iv2")
 [node name="FinishedEating" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/Eat"]
 script = ExtResource("10_13ioa")
 to = NodePath("../../Roam")
-event = &"finished_eating"
+delay_seconds = 3.0
 
 [node name="Death" type="Node" parent="StateChart/ParallelState/Behavior"]
 script = ExtResource("9_x7iv2")
 
+[connection signal="body_entered" from="SensoryRadius" to="." method="_on_sensory_radius_body_entered"]
+[connection signal="body_exited" from="SensoryRadius" to="." method="_on_sensory_radius_body_exited"]
 [connection signal="navigation_finished" from="NavigationAgent2D" to="Movement" method="_on_navigation_finished"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="Movement" method="_on_navigation_agent_2d_velocity_computed"]
@@ -271,4 +296,7 @@ script = ExtResource("9_x7iv2")
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/SeekTarget" to="Movement" method="_on_seek_target_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/Roam" to="Movement" method="_on_run_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/ParallelState/Behavior/RunPattern/Roam" to="Movement" method="_on_run_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/FleePredators" to="Movement" method="_on_flee_predators_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/Chase" to="Movement" method="_on_chase_state_entered"]
+[connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/Eat" to="Movement" method="_on_eat_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/Death" to="Movement" method="_on_death_state_entered"]

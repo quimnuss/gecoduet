@@ -5,14 +5,11 @@ extends Node
 
 var guard = 0
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
     for prey in preys:
         prey.movement.move_mode = "avoid_predator"
-    pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
     if guard > 0:
         guard -= delta

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bmisd1j354jf4"]
+[gd_scene load_steps=7 format=3 uid="uid://bmisd1j354jf4"]
 
 [ext_resource type="Script" path="res://scenes/debug/test_movement_behavior.gd" id="1_vrnjh"]
 [ext_resource type="PackedScene" uid="uid://bob0pxtor755" path="res://scenes/actors/lifeform_animal.tscn" id="2_ab23v"]
@@ -9,6 +9,8 @@
 vertices = PackedVector2Array(170, 45, 428, 48, 385, 298, 50, 297, 46, 38)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(170, 45, 428, 48, 385, 298, 50, 297, 46, 38)])
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lbslo"]
 
 [node name="test_movement_behavior" type="Node2D" node_paths=PackedStringArray("predators", "preys")]
 y_sort_enabled = true
@@ -27,3 +29,28 @@ resource = ExtResource("4_js2ya")
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 position = Vector2(-5, -1)
 navigation_polygon = SubResource("NavigationPolygon_njwi6")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(230, 301)
+scale = Vector2(2.3, 1)
+shape = SubResource("WorldBoundaryShape2D_lbslo")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(34, 166)
+rotation = 1.5708
+scale = Vector2(2.3, 1)
+shape = SubResource("WorldBoundaryShape2D_lbslo")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(243, 33)
+rotation = 3.14159
+scale = Vector2(2.3, 1)
+shape = SubResource("WorldBoundaryShape2D_lbslo")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(428, 157)
+rotation = 4.71239
+scale = Vector2(2.3, 1)
+shape = SubResource("WorldBoundaryShape2D_lbslo")

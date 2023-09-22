@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var pawn : CharacterBody2D
+@export var pawn : Animal
 @export var nav : NavigationAgent2D
 
 var tired_timer = 2
@@ -135,7 +135,8 @@ func _avoid_predator() -> Vector2:
     var away_angle = randf_range(0,0.2) if predator_distance.length() > 30 else 0.5*PI
     var opposite = self.global_position - away_direction.rotated(away_angle*PI)*100
 
-    return opposite
+    var bound_opposite = bound_to_world(opposite)
+    return bound_opposite
 
 
 func _follow_leader() -> Vector2:
@@ -145,37 +146,17 @@ func _chase_prey() -> Vector2:
     return self.global_position
 
 func _set_velocity_given_move_mode(delta = 0.01):
-    match move_mode:
-        Constants.MoveMode.CHASE_PREY:
-            var target = target_lifeform.global_position
-            nav.set_target_position(target)
-            if(nav.distance_to_target() < 5):
-                state_machine.send_event("target_reached")
-            else:
-                velocity_to_nav_target()
-        Constants.MoveMode.AVOID_PREDATOR:
-            var predator = target_lifeform
-            var opposite = _avoid_predator()
-            nav.set_target_position(opposite)
-            if(nav.distance_to_target() < 5):
-                state_machine.send_event("target_reached")
-            elif(self.global_position.distance_to(predator.global_position) > 100):
-                #state_machine.send_event("safe")
-                state_machine.send_event("target_reached")
-            else:
-                velocity_to_nav_target()
-        Constants.MoveMode.DEFAULT,_:
-            #prints("distance to target",nav.distance_to_target())
-            if not nav.is_navigation_finished() and not (nav.distance_to_target() < 15):
-                velocity_to_nav_target(delta)
-            elif not nav.is_target_reachable():
-                if pawn.debug:
-                    print(nav.get_final_position(), " is unreachable. Next pos ", nav.get_next_path_position())
-                state_machine.send_event("target_reached")
-            elif nav.is_navigation_finished():
-                state_machine.send_event("target_reached")
-            else:
-                state_machine.send_event("target_reached")
+    #prints("distance to target",nav.distance_to_target())
+    if not nav.is_navigation_finished() and not (nav.distance_to_target() < 15):
+        velocity_to_nav_target(delta)
+    elif not nav.is_target_reachable():
+        if pawn.debug:
+            print(nav.get_final_position(), " is unreachable. Next pos ", nav.get_next_path_position())
+        state_machine.send_event("target_reached")
+    elif nav.is_navigation_finished():
+        state_machine.send_event("target_reached")
+    else:
+        state_machine.send_event("target_reached")
 
 func _on_run_state_entered():
     _set_velocity_given_move_mode()
@@ -192,4 +173,38 @@ func _on_death_state_entered():
 
 func _on_run_anim_state_physics_processing(delta):
 
+    pass # Replace with function body.
+
+
+func _on_chase_state_entered():
+    var target = target_lifeform.global_position
+    nav.set_target_position(target)
+    if(nav.distance_to_target() < 5):
+        state_machine.send_event("target_reached")
+    else:
+        velocity_to_nav_target()
+
+
+func _on_flee_predators_state_entered():
+    if pawn.sensed_predators.is_empty():
+        prints("!!predator list is null",pawn.sensed_predators)
+        return
+    target_lifeform = pawn.sensed_predators.pick_random()
+    if not target_lifeform:
+        prints("!!predator list is null",pawn.sensed_predators)
+        return
+    var predator = target_lifeform
+    var opposite = _avoid_predator()
+    nav.set_target_position(opposite)
+    if(nav.distance_to_target() < 5):
+        state_machine.send_event("target_reached")
+    elif(self.global_position.distance_to(predator.global_position) > 100):
+        #state_machine.send_event("safe")
+        state_machine.send_event("target_reached")
+    else:
+        velocity_to_nav_target()
+
+
+func _on_eat_state_entered():
+    self.stop()
     pass # Replace with function body.
