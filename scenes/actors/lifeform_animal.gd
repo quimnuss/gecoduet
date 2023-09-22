@@ -5,6 +5,7 @@ class_name Animal
 var speed = 200.0
 var acceleration = 100.0
 const JUMP_VELOCITY = -400.0
+const MOVING_THRESHOLD = 0.05
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -55,7 +56,7 @@ func _ready():
 
     var _res_mutuality = preload("res://data/glv.json")
     var species_name = Constants.species_name(self.species)
-    var mutuality : Dictionary = _res_mutuality.get_data()[species_name]
+    var mutuality : Dictionary = _res_mutuality.get_data().get(species_name,{})
     var predator_species_names : Array[String] = []
     for other_species_name in mutuality:
         var other_species = Constants.Species.get(other_species_name.to_upper(), null)
@@ -169,7 +170,7 @@ func _on_idle_state_entered():
 
 func _on_run_anim_state_physics_processing(delta):
     _physics_input_process(delta)
-    if velocity.length_squared() <= 0.1:
+    if velocity.length_squared() <= MOVING_THRESHOLD:
         state_machine.send_event("stopped")
     else:
         #prints("velocity",self.name,velocity.length_squared())
@@ -177,7 +178,7 @@ func _on_run_anim_state_physics_processing(delta):
 
 func _on_idle_anim_state_physics_processing(delta):
     _physics_input_process(delta)
-    if not velocity.length_squared() <= 0.05:
+    if not velocity.length_squared() <= MOVING_THRESHOLD:
         state_machine.send_event("is_moving")
 
 func _on_sensory_radius_body_entered(body : Animal):
@@ -194,7 +195,7 @@ func _on_sensory_radius_body_exited(body):
     #prints(body.name,"exited",self.name,"sensory")
     if body is Animal:
         # todo use GLV to determine predators at setup or dynamically
-        if self.species == Constants.Species.RABBIT and body.species == Constants.Species.WOLF:
+        if self.species != body.species and body.species in predator_species:
             sensed_predators.erase(body)
             predator_sensed_count -= 1
             state_machine.set_expression_property("predator_sensed_count", predator_sensed_count)

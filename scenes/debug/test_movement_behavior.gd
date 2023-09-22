@@ -17,11 +17,11 @@ func _process(delta):
         var predator = predators.pick_random()
         var prey = preys.pick_random()
         if not prey:
-            prints("no prey!!")
+            prints(prey,"is no prey!!",preys)
             return
+        predator.set_target_lifeform(prey)
         predator.set_highlight(true,true)
-        predator.movement.set_move_mode(Constants.MoveMode.CHASE_PREY, prey)
-        prey.movement.set_move_mode(Constants.MoveMode.AVOID_PREDATOR, predator)
+        predator.state_machine.send_event('chase')
 
-        prints(predator.name,"switching to",Constants.move_mode_name(predator.movement.move_mode))
+        prints(predator.name,"switching to chase")
 

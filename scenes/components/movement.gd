@@ -15,6 +15,9 @@ var target_lifeform : Node2D = null
 
 var world_size : Vector2 = Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"),ProjectSettings.get_setting("display/window/size/viewport_height"))
 
+var EATING_DISTANCE = 15
+var TARGET_REACHED_THRESHOLD = 15
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
     pass # Replace with function body.
@@ -88,18 +91,6 @@ func velocity_to_nav_target(delta = 0.01):
         prints(pawn.name, pawn.global_position, pawn.position, agent_position, "->", target, pawn.velocity)
     return pawn.velocity
 
-func nav_target_selector() -> Vector2:
-    var target = get_random_point(200)
-    match move_mode:
-        Constants.MoveMode.CHASE_PREY:
-            target = target_lifeform.global_position
-            pass
-        Constants.MoveMode.CHASE_LEADER:
-            pass
-        Constants.MoveMode.AVOID_PREDATOR:
-            pass
-    return target
-
 func _on_navigation_finished():
     state_machine.send_event("target_reached")
     self.stop()
@@ -113,7 +104,6 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity):
     pawn.move_and_slide()
     return
 
-
 func _avoid_predator() -> Vector2:
     var predator_position = target_lifeform.global_position
     var predator_distance = (predator_position - self.global_position)
@@ -124,7 +114,6 @@ func _avoid_predator() -> Vector2:
     var bound_opposite = bound_to_world(opposite)
     return bound_opposite
 
-
 func _follow_leader() -> Vector2:
     return self.global_position
 
@@ -133,7 +122,7 @@ func _chase_prey() -> Vector2:
 
 func _set_velocity_from_nav(delta = 0.01):
     #prints("distance to target",nav.distance_to_target())
-    if not nav.is_navigation_finished() and not (nav.distance_to_target() < 15):
+    if not nav.is_navigation_finished() and not (nav.distance_to_target() < TARGET_REACHED_THRESHOLD):
         velocity_to_nav_target(delta)
     elif not nav.is_target_reachable():
         if pawn.debug:
@@ -150,6 +139,20 @@ func _on_roam_state_physics_processing(delta):
 func _on_flee_predators_state_physics_processing(delta):
     _set_velocity_from_nav(delta)
 
+func _on_chase_state_physics_processing(delta):
+    _set_velocity_from_nav(delta)
+
+func _on_chase_state_processing(delta):
+    var target = target_lifeform.global_position
+    nav.set_target_position(target)
+    if nav.is_navigation_finished() or (nav.distance_to_target() < TARGET_REACHED_THRESHOLD):
+        target_lifeform.kill()
+        # TODO how does godot handle referenced to free lifeforms?
+        target_lifeform = null
+        state_machine.send_event("chase_reached")
+    else:
+        velocity_to_nav_target()
+
 func _on_idle_state_entered():
     self.stop()
 
@@ -157,10 +160,13 @@ func _on_death_state_entered():
     self.stop()
 
 func _on_chase_state_entered():
+    if not target_lifeform:
+        prints(self.name,"entered chase without target")
+        return
     var target = target_lifeform.global_position
     nav.set_target_position(target)
-    if(nav.distance_to_target() < 5):
-        state_machine.send_event("target_reached")
+    if(self.global_position.distance_to(target_lifeform.global_position) < 5):
+        state_machine.send_event("chase_reached")
     else:
         velocity_to_nav_target()
 
@@ -186,6 +192,8 @@ func _on_flee_predators_state_entered():
 
 func _on_eat_state_entered():
     self.stop()
+    state_machine.send_event("eat_anim")
+
 
 
 func _on_roam_state_entered():
@@ -204,5 +212,4 @@ func _on_roam_state_entered():
     prints(target,"is unreachable by",get_parent().name,"distance",pawn.global_position - target,"nav final position",nav.get_final_position())
     state_machine.send_event("cancel_seek")
     # TODO do we need to do this?
-
 

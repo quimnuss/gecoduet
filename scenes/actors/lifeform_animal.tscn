@@ -139,6 +139,11 @@ script = ExtResource("10_13ioa")
 to = NodePath("../DeathAnim")
 event = &"death"
 
+[node name="ToAttack" type="Node" parent="StateChart/ParallelState/Animation"]
+script = ExtResource("10_13ioa")
+to = NodePath("../AttackAnim")
+event = &"eat_anim"
+
 [node name="IdleAnim" type="Node" parent="StateChart/ParallelState/Animation"]
 script = ExtResource("10_frylo")
 animation_player = NodePath("../../../../AnimationPlayer")
@@ -170,11 +175,6 @@ guard = SubResource("Resource_83iit")
 script = ExtResource("10_13ioa")
 to = NodePath("../../IdleAnim")
 event = &"stopped"
-
-[node name="ToAttack" type="Node" parent="StateChart/ParallelState/Animation/RunAnim"]
-script = ExtResource("10_13ioa")
-to = NodePath("../../AttackAnim")
-event = &"target_reached"
 
 [node name="AttackAnim" type="Node" parent="StateChart/ParallelState/Animation"]
 script = ExtResource("10_frylo")
@@ -257,8 +257,24 @@ initial_state = NodePath("Roam")
 script = ExtResource("19_7qqfb")
 default_state = NodePath("../Roam")
 
+[node name="PredatorSensed" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
+script = ExtResource("10_13ioa")
+to = NodePath("../FleePredators")
+event = &"predator_sensed"
+
 [node name="Roam" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
 script = ExtResource("9_x7iv2")
+
+[node name="ToChase" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/Roam"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../Chase")
+event = &"chase"
+delay_seconds = 1.0
+
+[node name="LeaderAssigned" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/Roam"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../Follow")
+event = &"leader_assigned"
 
 [node name="ToIdleCancel" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/Roam"]
 script = ExtResource("10_13ioa")
@@ -270,11 +286,6 @@ script = ExtResource("10_13ioa")
 to = NodePath("../../../Idle")
 event = &"target_reached"
 
-[node name="LeaderAssigned" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/Roam"]
-script = ExtResource("10_13ioa")
-to = NodePath("../../Follow")
-event = &"leader_assigned"
-
 [node name="TargetLost" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
 script = ExtResource("10_13ioa")
 to = NodePath("../../Idle")
@@ -282,11 +293,6 @@ event = &"target_lost"
 
 [node name="Follow" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
 script = ExtResource("9_x7iv2")
-
-[node name="PredatorSensed" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
-script = ExtResource("10_13ioa")
-to = NodePath("../FleePredators")
-event = &"predator_sensed"
 
 [node name="FleePredators" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
 script = ExtResource("9_x7iv2")
@@ -300,10 +306,15 @@ guard = ExtResource("17_dbq8d")
 [node name="Chase" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
 script = ExtResource("9_x7iv2")
 
-[node name="TargetReached" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/Chase"]
+[node name="ChaseReached" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/Chase"]
 script = ExtResource("10_13ioa")
 to = NodePath("../../Eat")
-event = &"target_reached"
+event = &"chase_reached"
+
+[node name="ChaseAborted" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/Chase"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../Roam")
+event = &"chase_aborted"
 
 [node name="Eat" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
 script = ExtResource("9_x7iv2")
@@ -330,5 +341,7 @@ script = ExtResource("9_x7iv2")
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/FleePredators" to="Movement" method="_on_flee_predators_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/ParallelState/Behavior/RunPattern/FleePredators" to="Movement" method="_on_flee_predators_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/Chase" to="Movement" method="_on_chase_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/Behavior/RunPattern/Chase" to="Movement" method="_on_chase_state_physics_processing"]
+[connection signal="state_processing" from="StateChart/ParallelState/Behavior/RunPattern/Chase" to="Movement" method="_on_chase_state_processing"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/Eat" to="Movement" method="_on_eat_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/Death" to="Movement" method="_on_death_state_entered"]

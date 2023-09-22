@@ -7,12 +7,15 @@ extends Label
 func _ready():
     pass # Replace with function body.
 
+var foo : Node2D
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+    var debug_text = ""
     if pawn:
-        self.set_text(str(pawn.velocity.round()))
-    else:
-        self.set_text("(0,0)")
+        debug_text += str(pawn.velocity.round())
+        if pawn.movement and pawn.movement.target_lifeform and not pawn.movement.target_lifeform.is_queued_for_deletion():
+            debug_text += "\n" + str(int(pawn.global_position.distance_to(pawn.movement.target_lifeform.global_position)))
+    self.set_text(debug_text)
 
 
