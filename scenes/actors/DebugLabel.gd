@@ -1,16 +1,18 @@
-extends Node2D
+extends Label
 
+
+@export var pawn : Animal
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    pass
+    pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-    pass
+    if pawn:
+        self.set_text(str(pawn.velocity.round()))
+    else:
+        self.set_text("(0,0)")
 
 
-func _on_state_machine_player_transited(from, to):
-#	prints(self.name,"  transited from",from,"to",to)
-    pass

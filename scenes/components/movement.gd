@@ -113,20 +113,6 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity):
     pawn.move_and_slide()
     return
 
-func _on_seek_target_state_entered():
-    var target = null
-    for try in range(10):
-        target = nav_target_selector()
-
-        nav.set_target_position(target)
-        if nav.is_target_reachable():
-            if pawn.debug:
-                prints(target,"is reachable.")
-            state_machine.send_event("has_target")
-
-            return
-    prints(target,"is unreachable by",get_parent().name,"distance",pawn.global_position - target,"nav final position",nav.get_final_position())
-    state_machine.send_event("cancel_seek")
 
 func _avoid_predator() -> Vector2:
     var predator_position = target_lifeform.global_position
@@ -145,7 +131,7 @@ func _follow_leader() -> Vector2:
 func _chase_prey() -> Vector2:
     return self.global_position
 
-func _set_velocity_given_move_mode(delta = 0.01):
+func _set_velocity_from_nav(delta = 0.01):
     #prints("distance to target",nav.distance_to_target())
     if not nav.is_navigation_finished() and not (nav.distance_to_target() < 15):
         velocity_to_nav_target(delta)
@@ -158,23 +144,17 @@ func _set_velocity_given_move_mode(delta = 0.01):
     else:
         state_machine.send_event("target_reached")
 
-func _on_run_state_entered():
-    _set_velocity_given_move_mode()
+func _on_roam_state_physics_processing(delta):
+    _set_velocity_from_nav(delta)
 
-func _on_run_state_physics_processing(delta):
-    _set_velocity_given_move_mode(delta)
+func _on_flee_predators_state_physics_processing(delta):
+    _set_velocity_from_nav(delta)
 
 func _on_idle_state_entered():
     self.stop()
 
 func _on_death_state_entered():
     self.stop()
-
-
-func _on_run_anim_state_physics_processing(delta):
-
-    pass # Replace with function body.
-
 
 func _on_chase_state_entered():
     var target = target_lifeform.global_position
@@ -183,7 +163,6 @@ func _on_chase_state_entered():
         state_machine.send_event("target_reached")
     else:
         velocity_to_nav_target()
-
 
 func _on_flee_predators_state_entered():
     if pawn.sensed_predators.is_empty():
@@ -207,4 +186,23 @@ func _on_flee_predators_state_entered():
 
 func _on_eat_state_entered():
     self.stop()
-    pass # Replace with function body.
+
+
+func _on_roam_state_entered():
+    var target = null
+
+    for try in range(10):
+        target = get_random_point(200)
+
+        nav.set_target_position(target)
+        if nav.is_target_reachable():
+            if pawn.debug:
+                prints(target,"is reachable.")
+            _set_velocity_from_nav()
+            state_machine.send_event("has_target")
+            return
+    prints(target,"is unreachable by",get_parent().name,"distance",pawn.global_position - target,"nav final position",nav.get_final_position())
+    state_machine.send_event("cancel_seek")
+    # TODO do we need to do this?
+
+

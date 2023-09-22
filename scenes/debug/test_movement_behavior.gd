@@ -6,9 +6,7 @@ extends Node
 var guard = 0
 
 func _ready():
-    for prey in preys:
-        prey.movement.move_mode = "avoid_predator"
-
+    pass
 
 func _process(delta):
     if guard > 0:
@@ -24,7 +22,6 @@ func _process(delta):
         predator.set_highlight(true,true)
         predator.movement.set_move_mode(Constants.MoveMode.CHASE_PREY, prey)
         prey.movement.set_move_mode(Constants.MoveMode.AVOID_PREDATOR, predator)
-
 
         prints(predator.name,"switching to",Constants.move_mode_name(predator.movement.move_mode))
 

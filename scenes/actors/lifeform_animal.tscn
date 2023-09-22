@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bob0pxtor755"]
+[gd_scene load_steps=26 format=3 uid="uid://bob0pxtor755"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_animal.gd" id="1_jq6ja"]
 [ext_resource type="Resource" uid="uid://b5r4w26o5cwlc" path="res://data/lifeform_boar.tres" id="2_wk7oc"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="5_5ny6y"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="7_dgbcq"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="8_dverp"]
+[ext_resource type="Script" path="res://scenes/actors/DebugLabel.gd" id="8_l7x1e"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="8_lqor1"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="9_x7iv2"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="10_13ioa"]
@@ -17,7 +18,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/not_guard.gd" id="12_h28at"]
 [ext_resource type="Resource" uid="uid://brea607hp7eq3" path="res://scenes/actors/StateConditions/is_moving.tres" id="13_ibwot"]
 [ext_resource type="Resource" uid="uid://c2d1qwbetpa35" path="res://scenes/actors/StateConditions/is_safe.tres" id="17_dbq8d"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/expression_guard.gd" id="18_rk37w"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/history_state.gd" id="19_7qqfb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pqhh5"]
 radius = 8.0
@@ -31,13 +32,17 @@ vertices = PackedVector2Array(-88, -80, 136, -80, 136, 96, -88, 96)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-88, -80, 136, -80, 136, 96, -88, 96)])
 
+[sub_resource type="LabelSettings" id="LabelSettings_sif72"]
+font_size = 10
+font_color = Color(0.658824, 0.619608, 0.909804, 1)
+
 [sub_resource type="Resource" id="Resource_83iit"]
 script = ExtResource("12_h28at")
 guard = ExtResource("13_ibwot")
 
-[sub_resource type="Resource" id="Resource_yoquq"]
-script = ExtResource("18_rk37w")
-expression = "predator_sensed_count > 0"
+[sub_resource type="Resource" id="Resource_u87sq"]
+script = ExtResource("12_h28at")
+guard = ExtResource("17_dbq8d")
 
 [node name="Animal" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -104,6 +109,15 @@ initial_node_to_watch = NodePath("../StateChart")
 [node name="DebugNode" type="Node2D" parent="."]
 visible = false
 script = ExtResource("11_3mfao")
+
+[node name="DebugLabel" type="Label" parent="." node_paths=PackedStringArray("pawn")]
+offset_left = -20.0
+offset_top = -43.0
+offset_right = 20.0
+offset_bottom = -20.0
+label_settings = SubResource("LabelSettings_sif72")
+script = ExtResource("8_l7x1e")
+pawn = NodePath("..")
 
 [node name="Highlight" type="Sprite2D" parent="."]
 position = Vector2(0, -16)
@@ -202,36 +216,54 @@ event = &"unposess"
 [node name="Idle" type="Node" parent="StateChart/ParallelState/Behavior"]
 script = ExtResource("9_x7iv2")
 
-[node name="ToSeekTarget" type="Node" parent="StateChart/ParallelState/Behavior/Idle"]
-script = ExtResource("10_13ioa")
-to = NodePath("../../SeekTarget")
-event = &"seek"
-delay_seconds = 3.0
-
-[node name="SeekTarget" type="Node" parent="StateChart/ParallelState/Behavior"]
-script = ExtResource("9_x7iv2")
-
-[node name="ToFleePredators" type="Node" parent="StateChart/ParallelState/Behavior/SeekTarget"]
+[node name="ToFleePredators" type="Node" parent="StateChart/ParallelState/Behavior/Idle"]
 script = ExtResource("10_13ioa")
 to = NodePath("../../RunPattern/FleePredators")
-guard = SubResource("Resource_yoquq")
+guard = SubResource("Resource_u87sq")
+delay_seconds = 3.0
 
-[node name="ToRun" type="Node" parent="StateChart/ParallelState/Behavior/SeekTarget"]
+[node name="PredatorSensed" type="Node" parent="StateChart/ParallelState/Behavior/Idle"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../RunPattern/FleePredators")
+event = &"predator_sensed"
+
+[node name="ToChase" type="Node" parent="StateChart/ParallelState/Behavior/Idle"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../RunPattern/Chase")
+event = &"chase"
+delay_seconds = 1.0
+
+[node name="ToFollow" type="Node" parent="StateChart/ParallelState/Behavior/Idle"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../RunPattern/Follow")
+event = &"follow"
+delay_seconds = 1.0
+
+[node name="ToRunHistory" type="Node" parent="StateChart/ParallelState/Behavior/Idle"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../RunPattern/RunHistoryState")
+delay_seconds = 3.0
+
+[node name="ToRoam" type="Node" parent="StateChart/ParallelState/Behavior/Idle"]
 script = ExtResource("10_13ioa")
 to = NodePath("../../RunPattern/Roam")
-event = &"has_target"
-
-[node name="ToIdle" type="Node" parent="StateChart/ParallelState/Behavior/SeekTarget"]
-script = ExtResource("10_13ioa")
-to = NodePath("../../Idle")
-event = &"cancel_seek"
+delay_seconds = 3.0
 
 [node name="RunPattern" type="Node" parent="StateChart/ParallelState/Behavior"]
 script = ExtResource("8_dverp")
 initial_state = NodePath("Roam")
 
+[node name="RunHistoryState" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
+script = ExtResource("19_7qqfb")
+default_state = NodePath("../Roam")
+
 [node name="Roam" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
 script = ExtResource("9_x7iv2")
+
+[node name="ToIdleCancel" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/Roam"]
+script = ExtResource("10_13ioa")
+to = NodePath("../../../Idle")
+event = &"cancel_seek"
 
 [node name="ToIdle" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/Roam"]
 script = ExtResource("10_13ioa")
@@ -293,10 +325,10 @@ script = ExtResource("9_x7iv2")
 [connection signal="state_physics_processing" from="StateChart/ParallelState/Animation/RunAnim" to="." method="_on_run_anim_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/Idle" to="." method="_on_idle_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/Idle" to="Movement" method="_on_idle_state_entered"]
-[connection signal="state_entered" from="StateChart/ParallelState/Behavior/SeekTarget" to="Movement" method="_on_seek_target_state_entered"]
-[connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/Roam" to="Movement" method="_on_run_state_entered"]
-[connection signal="state_physics_processing" from="StateChart/ParallelState/Behavior/RunPattern/Roam" to="Movement" method="_on_run_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/Roam" to="Movement" method="_on_roam_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/Behavior/RunPattern/Roam" to="Movement" method="_on_roam_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/FleePredators" to="Movement" method="_on_flee_predators_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/ParallelState/Behavior/RunPattern/FleePredators" to="Movement" method="_on_flee_predators_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/Chase" to="Movement" method="_on_chase_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/Eat" to="Movement" method="_on_eat_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/Death" to="Movement" method="_on_death_state_entered"]

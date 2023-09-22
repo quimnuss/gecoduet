@@ -16,6 +16,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var sprite = $Sprite2D
 @onready var highlight = $Highlight
 
+var predator_species : Array[Constants.Species] = []
+
 signal selected
 
 var species : Constants.Species
@@ -50,6 +52,26 @@ func _ready():
 
     if get_parent() == get_tree().root:
         $NavigationRegion2D.set_enabled(true)
+
+    var _res_mutuality = preload("res://data/glv.json")
+    var species_name = Constants.species_name(self.species)
+    var mutuality : Dictionary = _res_mutuality.get_data()[species_name]
+    var predator_species_names : Array[String] = []
+    for other_species_name in mutuality:
+        var other_species = Constants.Species.get(other_species_name.to_upper(), null)
+        if other_species_name.to_upper() == 'NONE':
+            continue
+        if not other_species:
+            prints("species",other_species_name.to_upper(),"not found in",Constants.Species.keys())
+            continue
+
+        if self.species != other_species and mutuality[other_species_name] < -0.03:
+            predator_species.append(other_species)
+            predator_species_names.append(other_species_name)
+        else:
+            prints(other_species_name,"is not a predator with",mutuality[other_species_name])
+
+    prints("predators of",species_name,"has predators",predator_species_names)
 
 func _input(event):
     if event.is_action_pressed("ui_state_debug"):
@@ -106,7 +128,7 @@ func _physics_input_process(delta):
 
 
     # this logic should be in the state machine somehow
-    if velocity.x < 0.01:
+    if velocity.x < -0.01:
         sprite.set_flip_h(true)
     elif velocity.x > 0.01:
         sprite.set_flip_h(false)
@@ -142,12 +164,8 @@ func kill():
     await get_tree().create_timer(4).timeout
     queue_free()
 
-func _on_navigation_agent_2d_velocity_computed(safe_velocity):
-    state_machine.set_param("velocity", safe_velocity.length())
-
 func _on_idle_state_entered():
-    state_machine.send_event("seek")
-
+    state_machine.set_expression_property("predator_sensed_count", predator_sensed_count)
 
 func _on_run_anim_state_physics_processing(delta):
     _physics_input_process(delta)
@@ -162,11 +180,11 @@ func _on_idle_anim_state_physics_processing(delta):
     if not velocity.length_squared() <= 0.05:
         state_machine.send_event("is_moving")
 
-func _on_sensory_radius_body_entered(body):
+func _on_sensory_radius_body_entered(body : Animal):
     #prints(body.name,"entered",self.name,"sensory")
     if body is Animal:
         # todo use GLV to determine predators at setup or dynamically
-        if self.species == Constants.Species.RABBIT and body.species == Constants.Species.WOLF:
+        if self.species != body.species and body.species in predator_species:
             sensed_predators.append(body)
             predator_sensed_count += 1
             state_machine.set_expression_property("predator_sensed_count", predator_sensed_count)
