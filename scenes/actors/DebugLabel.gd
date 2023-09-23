@@ -14,8 +14,10 @@ func _process(delta):
     var debug_text = ""
     if pawn:
         debug_text += str(pawn.velocity.round())
-        if pawn.movement and pawn.movement.target_lifeform and not pawn.movement.target_lifeform.is_queued_for_deletion():
+        if pawn.movement and pawn.movement.target_lifeform and is_instance_valid(pawn.movement.target_lifeform):
             debug_text += "\n" + str(int(pawn.global_position.distance_to(pawn.movement.target_lifeform.global_position)))
+
+
     self.set_text(debug_text)
 
 

@@ -26,7 +26,7 @@ var species : Constants.Species
 var debug = false
 
 #TODO handle unselectable spawn
-var is_selected = true
+var is_selected = false
 
 var sensed_predators : Array[Animal] = []
 var predator_sensed_count = 0
@@ -53,26 +53,11 @@ func _ready():
 
     if get_parent() == get_tree().root:
         $NavigationRegion2D.set_enabled(true)
+        set_selected(true)
+    else:
+        set_selected(false)
 
-    var _res_mutuality = preload("res://data/glv.json")
-    var species_name = Constants.species_name(self.species)
-    var mutuality : Dictionary = _res_mutuality.get_data().get(species_name,{})
-    var predator_species_names : Array[String] = []
-    for other_species_name in mutuality:
-        var other_species = Constants.Species.get(other_species_name.to_upper(), null)
-        if other_species_name.to_upper() == 'NONE':
-            continue
-        if not other_species:
-            prints("species",other_species_name.to_upper(),"not found in",Constants.Species.keys())
-            continue
-
-        if self.species != other_species and mutuality[other_species_name] < -0.03:
-            predator_species.append(other_species)
-            predator_species_names.append(other_species_name)
-        else:
-            prints(other_species_name,"is not a predator with",mutuality[other_species_name])
-
-    prints("predators of",species_name,"has predators",predator_species_names)
+    _set_predator_species()
 
 func _input(event):
     if event.is_action_pressed("ui_state_debug"):
@@ -107,9 +92,6 @@ func _physics_process(delta):
 
 func _physics_input_process(delta):
 
-#	if Input.is_action_just_pressed("ui_accept"):
-#		velocity.y = JUMP_VELOCITY
-#
     if get_selected():
         var direction = Input.get_vector("ui_left", "ui_right", "ui_down", "ui_up")
         if direction:
@@ -119,14 +101,10 @@ func _physics_input_process(delta):
             velocity = velocity.lerp(Vector2(0,0), delta*acceleration)
 
         if Input.is_action_pressed("ui_deselect_actor"):
-#        if velocity.is_zero_approx():
             state_machine.send_event("unposess")
             set_selected(false)
 
             velocity = velocity.lerp(Vector2(0,0), delta*acceleration)
-#        else:
-#            pass
-
 
     # this logic should be in the state machine somehow
     if velocity.x < -0.01:
@@ -134,10 +112,28 @@ func _physics_input_process(delta):
     elif velocity.x > 0.01:
         sprite.set_flip_h(false)
 
-#	state_machine.set_expression_property("velocity",velocity.length())
-#	state_machine.send_event("velocity_update")
     move_and_slide()
 
+func _set_predator_species():
+    var _res_mutuality = preload("res://data/glv.json")
+    var species_name = Constants.species_name(self.species)
+    var mutuality : Dictionary = _res_mutuality.get_data().get(species_name,{})
+    var predator_species_names : Array[String] = []
+    for other_species_name in mutuality:
+        var other_species = Constants.Species.get(other_species_name.to_upper(), null)
+        if other_species_name.to_upper() == 'NONE':
+            continue
+        if not other_species:
+            prints("species",other_species_name.to_upper(),"not found in",Constants.Species.keys())
+            continue
+
+        if self.species != other_species and mutuality[other_species_name] < -0.03:
+            predator_species.append(other_species)
+            predator_species_names.append(other_species_name)
+        else:
+            prints(other_species_name,"is not a predator with",mutuality[other_species_name])
+
+    prints("predators of",species_name,"has predators",predator_species_names)
 
 func set_target_lifeform(target_lifeform : Node2D):
     self.movement.target_lifeform = target_lifeform
