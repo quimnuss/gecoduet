@@ -305,6 +305,12 @@ to = NodePath("../../../Idle")
 event = &"predator_lost"
 guard = ExtResource("17_dbq8d")
 
+[node name="ToIdle" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern/FleePredators"]
+editor_description = "this transition shouldn't be necessary, but opposite when cornered gets the prey reaching the nav end constantly. If that is fixed, we can remove this transition."
+script = ExtResource("10_13ioa")
+to = NodePath("../../../Idle")
+event = &"target_reached"
+
 [node name="Chase" type="Node" parent="StateChart/ParallelState/Behavior/RunPattern"]
 script = ExtResource("9_x7iv2")
 
