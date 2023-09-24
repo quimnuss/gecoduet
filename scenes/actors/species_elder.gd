@@ -29,6 +29,7 @@ func _ready():
 	glv.display_name = species_name
 	
 	glv.density_number_change.emit(ceil(glv.density))
+	glv.mutuality_drivers["none"] = glv.density - ceil(glv.density)
 	glv.my_species = self.species
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

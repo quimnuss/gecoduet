@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1gl74t33v28m"]
+
+[ext_resource type="Script" path="res://scenes/debug/test_scene_groups.gd" id="1_i71fg"]
+[ext_resource type="Script" path="res://scenes/debug/a_node.gd" id="2_h8hay"]
+
+[node name="test_scene_groups" type="Node2D"]
+script = ExtResource("1_i71fg")
+
+[node name="ANode" type="Node2D" parent="."]
+script = ExtResource("2_h8hay")

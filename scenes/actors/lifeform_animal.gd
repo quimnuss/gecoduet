@@ -6,6 +6,7 @@ var speed = 200.0
 var acceleration = 100.0
 const JUMP_VELOCITY = -400.0
 const MOVING_THRESHOLD = 0.05
+const WAIT_FOR_KILLER_TIMEOUT = 6
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -20,6 +21,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var predator_species : Array[Constants.Species] = []
 
 signal selected
+signal dying
 
 var species : Constants.Species
 
@@ -177,19 +179,29 @@ func set_status_effect(status : Constants.StatusEffect, visible = true):
 			$StatusBar/Dying.set_visible(visible)
 
 func kill():
+	remove_from_group(Constants.species_name(self.species))
 	state_machine.send_event("death")
+	dying.emit()
+	# let the death animation play
 	await get_tree().create_timer(4).timeout
 	queue_free()
 
 func set_hunted(predator):
 	set_status_effect(Constants.StatusEffect.DYING)
-	await get_tree().create_timer(3).timeout
+	await get_tree().create_timer(WAIT_FOR_KILLER_TIMEOUT).timeout
+	if predator != null:
+		prints(self.name, "distance to predator",predator.name,"before dying:",self.global_position.distance_to(predator.global_position))
 	kill()
 
 func hunt(prey):
 	set_target_lifeform(prey)
 	set_status_effect(Constants.StatusEffect.CHASE_PREY)
 	self.state_machine.send_event('chase')
+	prey.dying.connect(movement._on_target_lifeform_dying)
+	prey.dying.connect(end_hunt)
+
+func end_hunt():
+	set_status_effect(Constants.StatusEffect.CHASE_PREY, false)
 
 func _on_idle_state_entered():
 	state_machine.set_expression_property("predator_sensed_count", predator_sensed_count)

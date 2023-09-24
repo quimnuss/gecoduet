@@ -130,14 +130,26 @@ func _on_flee_predators_state_physics_processing(delta):
 func _on_chase_state_physics_processing(delta):
 	_set_velocity_from_nav(delta)
 
+func _on_target_lifeform_dying():
+	# TODO this seems to always abort before eating
+	self.state_machine.send_event('chase_aborted')
+	target_lifeform = null
+
 func _on_chase_state_processing(delta):
+	if not target_lifeform: # assume already dead
+		prints("! target_lifeform was already dead?")
+		state_machine.send_event("chase_aborted")
+		target_lifeform = null
+		return
+
 	var target = target_lifeform.global_position
 	nav.set_target_position(target)
 	if nav.is_navigation_finished() or (nav.distance_to_target() < TARGET_REACHED_THRESHOLD):
+		# it's important to exit chase before killing and receiving dying signal
+		state_machine.send_event("chase_reached")
 		target_lifeform.kill()
 		# TODO how does godot handle referenced to free lifeforms?
 		target_lifeform = null
-		state_machine.send_event("chase_reached")
 	else:
 		velocity_to_nav_target()
 

@@ -1,8 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4categqdoybm"]
+[gd_scene load_steps=8 format=3 uid="uid://b4categqdoybm"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_flora.gd" id="1_6qnma"]
+[ext_resource type="Texture2D" uid="uid://cywvl7ikjw8iq" path="res://art/Generic Status Icons.png" id="2_8khso"]
+[ext_resource type="Script" path="res://scenes/actors/DebugLabelFlora.gd" id="3_coesy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tswmy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2rlo"]
+atlas = ExtResource("2_8khso")
+region = Rect2(64, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxunc"]
+atlas = ExtResource("2_8khso")
+region = Rect2(192, 96, 32, 32)
+
+[sub_resource type="LabelSettings" id="LabelSettings_sll3n"]
+font_size = 7
+font_color = Color(0.658824, 0.619608, 0.909804, 1)
 
 [node name="LifeformFlora" type="StaticBody2D"]
 collision_layer = 4
@@ -14,3 +28,32 @@ shape = SubResource("CapsuleShape2D_tswmy")
 disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="StatusBar" type="HBoxContainer" parent="."]
+offset_left = -4.0
+offset_top = -20.0
+offset_right = 64.0
+offset_bottom = 12.0
+scale = Vector2(0.15, 0.15)
+alignment = 1
+
+[node name="Dying" type="TextureRect" parent="StatusBar"]
+visible = false
+layout_mode = 2
+texture = SubResource("AtlasTexture_b2rlo")
+
+[node name="Hunting" type="TextureRect" parent="StatusBar"]
+visible = false
+layout_mode = 2
+texture = SubResource("AtlasTexture_lxunc")
+
+[node name="DebugLabelFlora" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -43.0
+offset_right = 20.0
+offset_bottom = -20.0
+text = "foo"
+label_settings = SubResource("LabelSettings_sll3n")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_coesy")

@@ -1,20 +1,24 @@
 extends Label
 
 
-@export var pawn : Animal
+@export var pawn : Flora
+
+var predator
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
-var foo : Node2D
+func add_predator(predator):
+	self.predator = predator
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var debug_text = ""
 	if pawn:
-		debug_text += str(pawn.velocity.round())
-		if pawn.movement and pawn.movement.target_lifeform and is_instance_valid(pawn.movement.target_lifeform):
+		debug_text += str(pawn.name)
+		if predator:
+			debug_text += "\n" + predator.name
 			debug_text += "\n" + str(int(pawn.global_position.distance_to(pawn.movement.target_lifeform.global_position)))
 
 

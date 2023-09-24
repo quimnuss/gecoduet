@@ -85,10 +85,11 @@ func kill_all_children():
 			child.kill()
 
 func kill_children(num_children_to_kill: int):
-	var children = get_tree().get_nodes_in_group(Constants.species_name(self.species))
+	var species_name = Constants.species_name(self.species)
+	var children = get_tree().get_nodes_in_group(species_name)
 	while num_children_to_kill > 0 and not children.is_empty():
 		num_children_to_kill -= 1
-		var child = children.pop_back()
+		var child = children.pick_random()
 		child.kill()
 #		remove_child(child)
 
@@ -155,5 +156,7 @@ func _process_debug(delta):
 
 # TODO should we use childrenSync timeout instead of lotka to allow longer spawning time rates?
 func _on_glv_density_number_change(density_number_delta : int):
-	prints(Constants.species_name(self.species),"integer density",density_number_delta)
+	var children = get_tree().get_nodes_in_group(Constants.species_name(self.species))
 	sync_children_to_density(density_number_delta)
+	var children_now = get_tree().get_nodes_in_group(Constants.species_name(self.species))
+	prints(Constants.species_name(self.species),"integer density",density_number_delta,"to add to",children.size(),"resulting",children_now.size())

@@ -53,7 +53,7 @@ func lotka(densities : Dictionary):
 
 # replacing instant set density with natural deferred set density
 #	self.set_density(new_density)
-	self.set_density_natural(previous_density, new_density, mutuality_drivers)
+	set_density_natural(previous_density, new_density, mutuality_drivers)
 
 	return new_density # is it confusing to change internal state but also return?
 
@@ -88,7 +88,6 @@ func _order_kill(my_species, driver, num_kills):
 		var prey = prey_candidates.pick_random()
 		prey_candidates.erase(prey)
 		
-		# TODO implement for animal and flora, it's a timer for deletion and whatever we want
 		prey.set_hunted(killer)
 		killer.hunt(prey)
 
@@ -99,7 +98,9 @@ func set_density_natural(previous_density : float, density : float, mutuality_dr
 #		density_change.emit(density)
 	
 	var density_number_variation : int = ceil(density) - ceil(previous_density)
+	prints(self.display_name,"pre-settling mutuality_drivers is",mutuality_drivers)
 	var drivers = _get_integer_drivers(mutuality_drivers)
+	prints(self.display_name,"with density",previous_density,density,"has drivers",drivers,"remainder of",mutuality_drivers)
 	for driver in drivers:
 		var delta_pop : int = drivers[driver]
 		if delta_pop > 0:
