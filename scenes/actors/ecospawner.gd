@@ -23,8 +23,6 @@ const DEFAULT_SPAWN_RADIUS : int = 50
 
 var viewport_size : Vector2 = Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"),ProjectSettings.get_setting("display/window/size/viewport_height"))
 
-var lifeforms : Array[Node2D]
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("Hello")
@@ -52,8 +50,7 @@ func _process(delta):
 		_process_debug(delta)
 
 func _input(event):
-	if event.is_action_pressed("ui_debug_action"):
-		lifeforms.clear()
+	pass
 
 func polar2cartesian(r,alpha:float):
 	var x = r * cos(alpha)
@@ -69,11 +66,16 @@ func random_in_radius(spawnpoint : Vector2, radius = DEFAULT_SPAWN_RADIUS):
 	return bound_proposal
 
 func spawn():
-	if lifeforms.is_empty():
-		prints("no lifeforms for breeding",self.name)
+	var lifeforms = get_tree().get_nodes_in_group("lifeforms")
+	if lifeforms:
+		prints(lifeforms.pick_random().get_groups())
+	var species_name = Constants.species_name(self.species)
+	var children = get_tree().get_nodes_in_group(species_name)
+	if children.is_empty():
+		prints("no lifeforms for breeding",Constants.species_name(self.species))
 		self.spawn_from_position()
 	else:
-		var breeder = lifeforms.pick_random()
+		var breeder = children.pick_random()
 		self.spawn_from_position(breeder.position)
 
 func kill_all_children():
@@ -82,35 +84,34 @@ func kill_all_children():
 		if child.name != "Marker":
 			child.kill()
 
-func kill_children(num_children: int):
-	var num_children_to_kill = min(num_children,len(lifeforms))
-	while num_children_to_kill > 0 and not lifeforms.is_empty():
+func kill_children(num_children_to_kill: int):
+	var children = get_tree().get_nodes_in_group(Constants.species_name(self.species))
+	while num_children_to_kill > 0 and not children.is_empty():
 		num_children_to_kill -= 1
-		var child = lifeforms.pop_back()
+		var child = children.pop_back()
 		child.kill()
 #		remove_child(child)
 
-func birth_children(num_children: int):
-	num_children = min(10,num_children)
-	for i in range(num_children):
+func birth_children(num_children_to_spawn: int):
+	num_children_to_spawn = min(10,num_children_to_spawn)
+	# only spawn 10 maximum (doesn't that break sync?)
+	for i in range(num_children_to_spawn):
 		spawn()
 
-func sync_children_to_density(density : float):
-	var delta_children : int = ceil(density) - len(lifeforms)
-	if delta_children < 0:
-		kill_children(-delta_children)
-	elif delta_children > 0:
-		birth_children(delta_children)
+func sync_children_to_density(delta_density : int):
+	if delta_density < 0:
+		kill_children(-delta_density)
+	elif delta_density > 0:
+		birth_children(delta_density)
 
 func spawn_from_position(spawn_center : Vector2 = DEFAULT_SPAWN_CENTER, radius : int = DEFAULT_SPAWN_RADIUS):
 	var spawn_position = random_in_radius(spawn_center, radius)
 	# The scene path could also be in the resource, no need for the factory after all...
 	var child_spawn = _spawn_from_resource(self.species)
 	add_child(child_spawn)
-	lifeforms.append(child_spawn)
 	child_spawn.set_position(spawn_position)
 	child_spawn.add_to_group("lifeform")
-	child_spawn.add_to_group(Constants.Species.keys()[species])
+	child_spawn.add_to_group(Constants.species_name(species))
 	return child_spawn
 
 func _spawn_from_resource(species: Constants.Species) -> Node:
@@ -152,9 +153,7 @@ func _process_debug(delta):
 		else:
 			prints("Selected marker, skipping.")
 
-# TODO this is connected to delta changes of density, should it be integer changes
-# Also, should we use childrenSync timeout instead of lotka to allow longer spawning time rates?
-# isn't it better to do event-triggered instead of polling? more reactive also
-func _on_sync_children_to_density(density : float):
-	sync_children_to_density(density)
-
+# TODO should we use childrenSync timeout instead of lotka to allow longer spawning time rates?
+func _on_glv_density_number_change(density_number_delta : int):
+	prints(Constants.species_name(self.species),"integer density",density_number_delta)
+	sync_children_to_density(density_number_delta)

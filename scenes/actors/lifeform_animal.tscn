@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bob0pxtor755"]
+[gd_scene load_steps=29 format=3 uid="uid://bob0pxtor755"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_animal.gd" id="1_jq6ja"]
 [ext_resource type="Resource" uid="uid://b5r4w26o5cwlc" path="res://data/lifeform_boar.tres" id="2_wk7oc"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="8_dverp"]
 [ext_resource type="Script" path="res://scenes/actors/DebugLabel.gd" id="8_l7x1e"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="8_lqor1"]
+[ext_resource type="Texture2D" uid="uid://cywvl7ikjw8iq" path="res://art/Generic Status Icons.png" id="9_i04tf"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="9_x7iv2"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="10_13ioa"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/animation_player_state.gd" id="10_frylo"]
@@ -35,6 +36,14 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-88, -80, 136, -80, 136
 [sub_resource type="LabelSettings" id="LabelSettings_sif72"]
 font_size = 7
 font_color = Color(0.658824, 0.619608, 0.909804, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2t43"]
+atlas = ExtResource("9_i04tf")
+region = Rect2(64, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6yiv"]
+atlas = ExtResource("9_i04tf")
+region = Rect2(192, 96, 32, 32)
 
 [sub_resource type="Resource" id="Resource_83iit"]
 script = ExtResource("12_h28at")
@@ -79,6 +88,7 @@ shape = SubResource("CircleShape2D_h0cfi")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 10.0
+target_desired_distance = 5.0
 path_max_distance = 200.0
 radius = 20.0
 debug_use_custom = true
@@ -121,8 +131,26 @@ vertical_alignment = 1
 script = ExtResource("8_l7x1e")
 pawn = NodePath("..")
 
+[node name="StatusBar" type="HBoxContainer" parent="."]
+offset_left = -4.0
+offset_top = -20.0
+offset_right = 64.0
+offset_bottom = 12.0
+scale = Vector2(0.15, 0.15)
+alignment = 1
+
+[node name="Dying" type="TextureRect" parent="StatusBar"]
+visible = false
+layout_mode = 2
+texture = SubResource("AtlasTexture_v2t43")
+
+[node name="Hunting" type="TextureRect" parent="StatusBar"]
+visible = false
+layout_mode = 2
+texture = SubResource("AtlasTexture_q6yiv")
+
 [node name="Highlight" type="Sprite2D" parent="."]
-position = Vector2(0, -16)
+position = Vector2(0, -24)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("12_0eber")
 
@@ -348,8 +376,11 @@ script = ExtResource("9_x7iv2")
 [connection signal="state_physics_processing" from="StateChart/ParallelState/Behavior/RunPattern/Roam" to="Movement" method="_on_roam_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/FleePredators" to="Movement" method="_on_flee_predators_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/ParallelState/Behavior/RunPattern/FleePredators" to="Movement" method="_on_flee_predators_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/Chase" to="." method="_on_chase_state_entered"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/Chase" to="Movement" method="_on_chase_state_entered"]
+[connection signal="state_exited" from="StateChart/ParallelState/Behavior/RunPattern/Chase" to="." method="_on_chase_state_exited"]
 [connection signal="state_physics_processing" from="StateChart/ParallelState/Behavior/RunPattern/Chase" to="Movement" method="_on_chase_state_physics_processing"]
 [connection signal="state_processing" from="StateChart/ParallelState/Behavior/RunPattern/Chase" to="Movement" method="_on_chase_state_processing"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/RunPattern/Eat" to="Movement" method="_on_eat_state_entered"]
+[connection signal="state_exited" from="StateChart/ParallelState/Behavior/RunPattern/Eat" to="." method="_on_eat_state_exited"]
 [connection signal="state_entered" from="StateChart/ParallelState/Behavior/Death" to="Movement" method="_on_death_state_entered"]

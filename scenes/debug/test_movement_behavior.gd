@@ -20,7 +20,6 @@ func _process(delta):
 			prints(prey,"is no prey!!",preys)
 			return
 		predator.set_target_lifeform(prey)
-		predator.set_highlight(true,true)
 		predator.state_machine.send_event('chase')
 
 		prints(predator.name,"switching to chase")

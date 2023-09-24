@@ -1,6 +1,6 @@
 extends Node2D
 
-var elders = []
+var elders : Array[SpeciesElder] = []
 var density_map : Dictionary = {}
 
 var species_elder_scene = preload("res://scenes/actors/species_elder.tscn")
@@ -43,7 +43,7 @@ func _on_density_sync_timer_timeout():
 	for elder in elders_to_remove:
 		elders.erase(elder)
 	fetch_density() # one of the sync_densities might be unnecessary if only this function changes densities
-#    prints("Density map",self.density_map)
+	prints("Density map",self.density_map)
 
 func create_species(species : Constants.Species):
 	# TODO does not work. sample_elders can't be sleeping node... I have to figure out how to defer initialization...

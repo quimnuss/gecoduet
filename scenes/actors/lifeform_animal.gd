@@ -37,6 +37,9 @@ func _ready():
 	self.set_scale(Vector2(resource.scale,resource.scale))
 	self.speed = resource.speed
 	self.species = resource.species
+	var species_name = Constants.species_name(self.species)
+	add_to_group(species_name)
+
 	if resource.mobility_type == 'fly':
 		self.set_collision_mask_value(2,false)
 	sprite.set_texture(resource.texture)
@@ -123,6 +126,7 @@ func _physics_input_process(delta):
 
 	move_and_slide()
 
+# one-time setup all my predators
 func _set_predator_species():
 	var _res_mutuality = preload("res://data/glv.json")
 	var species_name = Constants.species_name(self.species)
@@ -140,7 +144,7 @@ func _set_predator_species():
 			predator_species.append(other_species)
 			predator_species_names.append(other_species_name)
 		else:
-			prints(other_species_name,"is not a predator with",mutuality[other_species_name])
+			prints(other_species_name,"is not a predator of",species_name,"with",mutuality[other_species_name])
 
 	prints("predators of",species_name,"has predators",predator_species_names)
 
@@ -165,10 +169,27 @@ func set_highlight(turn_on = true, blueish = false):
 	if blueish:
 		highlight.modulate = Color(0, 0, 1) # blue shade
 
+func set_status_effect(status : Constants.StatusEffect, visible = true):
+	match status:
+		Constants.StatusEffect.CHASE_PREY:
+			$StatusBar/Hunting.set_visible(visible)
+		Constants.StatusEffect.DYING:
+			$StatusBar/Dying.set_visible(visible)
+
 func kill():
 	state_machine.send_event("death")
 	await get_tree().create_timer(4).timeout
 	queue_free()
+
+func set_hunted(predator):
+	set_status_effect(Constants.StatusEffect.DYING)
+	await get_tree().create_timer(3).timeout
+	kill()
+
+func hunt(prey):
+	set_target_lifeform(prey)
+	set_status_effect(Constants.StatusEffect.CHASE_PREY)
+	self.state_machine.send_event('chase')
 
 func _on_idle_state_entered():
 	state_machine.set_expression_property("predator_sensed_count", predator_sensed_count)
@@ -205,3 +226,13 @@ func _on_sensory_radius_body_exited(body):
 			predator_sensed_count -= 1
 			state_machine.set_expression_property("predator_sensed_count", predator_sensed_count)
 			state_machine.send_event("predator_lost")
+
+func _on_eat_state_exited():
+	set_status_effect(Constants.StatusEffect.CHASE_PREY,false)
+
+func _on_chase_state_entered():
+	set_status_effect(Constants.StatusEffect.CHASE_PREY,true)
+	
+func _on_chase_state_exited():
+	set_status_effect(Constants.StatusEffect.CHASE_PREY,false)
+

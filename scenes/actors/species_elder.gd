@@ -2,7 +2,7 @@ extends Node2D
 
 class_name SpeciesElder
 
-@export var species : Constants.Species = Constants.Species.CARROT
+@export var species : Constants.Species = Constants.Species.NONE
 var res_mutuality = preload("res://data/glv.json")
 
 @onready var spawner : EcoSpawner = $EcoSpawner
@@ -27,6 +27,9 @@ func _ready():
 	var species_name = Constants.species_name(self.species)
 	glv.mutuality = res_mutuality.get_data()[species_name]
 	glv.display_name = species_name
+	
+	glv.density_number_change.emit(ceil(glv.density))
+	glv.my_species = self.species
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

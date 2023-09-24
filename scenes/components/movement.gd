@@ -7,8 +7,6 @@ var tired_timer = 2
 
 var movement_delta : float = 0
 
-var move_mode : Constants.MoveMode = Constants.MoveMode.DEFAULT
-
 var target_lifeform : Node2D = null
 
 @export var state_machine : StateChart
@@ -29,16 +27,6 @@ func _process(delta):
 
 func polar2cartesian(travel_radius, angle):
 	return Vector2(travel_radius*sin(angle), travel_radius*cos(angle))
-
-func set_move_mode(new_move_mode : Constants.MoveMode, target_lifeform : Node2D):
-	self.target_lifeform = target_lifeform
-	prints(pawn.name,"switched to", Constants.move_mode_name(new_move_mode))
-	self.move_mode = new_move_mode
-	match self.move_mode:
-		Constants.MoveMode.CHASE_PREY:
-			self.target_lifeform.set_highlight(true)
-		_:
-			self.target_lifeform.set_highlight(false)
 
 func bound_to_world(point : Vector2):
 

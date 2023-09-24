@@ -18,5 +18,5 @@ script = ExtResource("2_olwtv")
 
 [node name="DebugTimer" type="Timer" parent="."]
 
-[connection signal="density_change" from="GLV" to="EcoSpawner" method="_on_sync_children_to_density"]
+[connection signal="density_number_change" from="GLV" to="EcoSpawner" method="_on_glv_density_number_change"]
 [connection signal="timeout" from="DebugTimer" to="." method="_on_density_integer_increased" binds= [1]]
