@@ -26,11 +26,6 @@ func fetch_density():
 	for elder in elders:
 		density_map[Constants.species_name(elder.species)] = elder.get_density()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func _on_density_sync_timer_timeout():
 	fetch_density()
 	var elders_to_remove = []

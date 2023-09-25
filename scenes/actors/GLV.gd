@@ -91,16 +91,16 @@ func _order_kill(my_species, driver, num_kills):
 		prey.set_hunted(killer)
 		killer.hunt(prey)
 
-func set_density_natural(previous_density : float, density : float, mutuality_drivers):
+func set_density_natural(previous_density : float, density : float, current_mutuality_drivers):
 	self.density = density
 
 #	if abs(density - previous_density) > 0.0001:
 #		density_change.emit(density)
 	
 	var density_number_variation : int = ceil(density) - ceil(previous_density)
-	prints(self.display_name,"pre-settling mutuality_drivers is",mutuality_drivers)
-	var drivers = _get_integer_drivers(mutuality_drivers)
-	prints(self.display_name,"with density",previous_density,density,"has drivers",drivers,"remainder of",mutuality_drivers)
+	prints(self.display_name,"pre-settling mutuality_drivers is",current_mutuality_drivers)
+	var drivers = _get_integer_drivers(current_mutuality_drivers)
+	prints(self.display_name,"with density",previous_density,density,"has drivers",drivers,"remainder of",current_mutuality_drivers)
 	for driver in drivers:
 		var delta_pop : int = drivers[driver]
 		if delta_pop > 0:

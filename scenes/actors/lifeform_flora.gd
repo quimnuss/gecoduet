@@ -45,15 +45,13 @@ func set_hunted(predator):
 	if $DebugLabelFlora:
 		$DebugLabelFlora.add_predator(predator.name)
 	await get_tree().create_timer(WAIT_FOR_KILLER_TIMEOUT).timeout
-	if predator != null:
-		prints(self.name, "distance to predator before dying:",self.global_position.distance_to(predator.global_position))
 	kill()
 
 func hunt(prey):
 	set_status_effect(Constants.StatusEffect.CHASE_PREY, true)
 	prey.connect("dying", end_hunt)
 
-func end_hunt(prey):
+func end_hunt():
 	set_status_effect(Constants.StatusEffect.CHASE_PREY, false)
 
 func _input(event):
@@ -65,8 +63,8 @@ func _input(event):
 		kill()
 
 func _update_global_settings():
-	if $DebugLabel:
-		$DebugLabel.visible = GlobalSettings.debug_show_label
+	if $DebugLabelFlora:
+		$DebugLabelFlora.visible = GlobalSettings.debug_show_label
 
 func set_status_effect(status : Constants.StatusEffect, visible = true):
 	match status:

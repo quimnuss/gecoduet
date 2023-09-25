@@ -49,9 +49,6 @@ func _process(delta):
 	if Engine.is_editor_hint():
 		_process_debug(delta)
 
-func _input(event):
-	pass
-
 func polar2cartesian(r,alpha:float):
 	var x = r * cos(alpha)
 	var y = r * sin(alpha)

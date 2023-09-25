@@ -9,11 +9,11 @@ var predator
 func _ready():
 	pass # Replace with function body.
 
-func add_predator(predator):
-	self.predator = predator
+func add_predator(new_predator):
+	self.predator = new_predator
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	var debug_text = ""
 	if pawn:
 		debug_text += str(pawn.name)

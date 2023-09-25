@@ -51,7 +51,7 @@ func _ready():
 	for library in animation_player.get_animation_library_list():
 		animation_player.remove_animation_library(library)
 	animation_player.add_animation_library("animal",resource.animation_library)
-	var has_idle = animation_player.has_animation('animal/idle')
+
 	movement.pawn = self
 	$StateChartDebugger.visible = false
 	input_pickable = true
@@ -88,7 +88,7 @@ func _input(event):
 #		state_machine.set_trigger("die")
 		kill()
 
-func _input_event(viewport, event, shape_idx):
+func _input_event(_viewport, event, _shape_idx):
 
 	if event.is_action_pressed("ui_select_actor"):
 
@@ -99,10 +99,6 @@ func _input_event(viewport, event, shape_idx):
 		else:
 			GlobalSettings.globals_changed.emit()
 			$StateChartDebugger.visible = true
-
-# un-estated input processing
-func _physics_process(delta):
-	pass
 
 func _physics_input_process(delta):
 

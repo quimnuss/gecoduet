@@ -16,15 +16,6 @@ var world_size : Vector2 = Vector2(ProjectSettings.get_setting("display/window/s
 var EATING_DISTANCE = 15
 var TARGET_REACHED_THRESHOLD = 15
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the tired_timer time since the previous frame.
-func _process(delta):
-	pass
-
 func polar2cartesian(travel_radius, angle):
 	return Vector2(travel_radius*sin(angle), travel_radius*cos(angle))
 
@@ -135,7 +126,7 @@ func _on_target_lifeform_dying():
 	self.state_machine.send_event('chase_aborted')
 	target_lifeform = null
 
-func _on_chase_state_processing(delta):
+func _on_chase_state_processing(_delta):
 	if not target_lifeform: # assume already dead
 		prints("! target_lifeform was already dead?")
 		state_machine.send_event("chase_aborted")
@@ -178,7 +169,7 @@ func _on_flee_predators_state_entered():
 	if not target_lifeform:
 		prints("!!predator list is null",pawn.sensed_predators)
 		return
-	var predator = target_lifeform
+
 	var opposite = _avoid_predator()
 	nav.set_target_position(opposite)
 	if(pawn.sensed_predators.is_empty()):

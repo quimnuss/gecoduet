@@ -32,10 +32,6 @@ func _ready():
 	glv.mutuality_drivers["none"] = glv.density - ceil(glv.density)
 	glv.my_species = self.species
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func get_density() -> float:
 	return glv.density
 

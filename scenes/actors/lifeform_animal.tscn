@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bob0pxtor755"]
+[gd_scene load_steps=28 format=3 uid="uid://bob0pxtor755"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_animal.gd" id="1_jq6ja"]
 [ext_resource type="Resource" uid="uid://b5r4w26o5cwlc" path="res://data/lifeform_boar.tres" id="2_wk7oc"]
@@ -14,7 +14,6 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="9_x7iv2"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="10_13ioa"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/animation_player_state.gd" id="10_frylo"]
-[ext_resource type="Script" path="res://scenes/actors/DebugNode.gd" id="11_3mfao"]
 [ext_resource type="Texture2D" uid="uid://b4egb35lt1y82" path="res://art/sproutlands/Objects/Egg item.png" id="12_0eber"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/not_guard.gd" id="12_h28at"]
 [ext_resource type="Resource" uid="uid://brea607hp7eq3" path="res://scenes/actors/StateConditions/is_moving.tres" id="13_ibwot"]
@@ -115,10 +114,6 @@ offset_right = 156.0
 offset_bottom = 218.0
 scale = Vector2(0.500511, 0.500511)
 initial_node_to_watch = NodePath("../StateChart")
-
-[node name="DebugNode" type="Node2D" parent="."]
-visible = false
-script = ExtResource("11_3mfao")
 
 [node name="DebugLabel" type="Label" parent="." node_paths=PackedStringArray("pawn")]
 offset_left = -20.0
