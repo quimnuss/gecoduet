@@ -7,6 +7,12 @@ var debug_show_label : bool = false
 
 signal globals_changed
 
+enum DebugLevel {
+	FATAL, ERROR, WARN, INFO, DEBUG
+}
+
+var global_debug_level : DebugLevel = DebugLevel.INFO
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

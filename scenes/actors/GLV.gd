@@ -13,6 +13,8 @@ var display_name : String = 'NONE'
 # dictionary species-float with the species debt
 var mutuality_drivers : Dictionary
 
+var accumulated_mutuality_drivers : Dictionary
+
 signal density_change
 signal density_number_change
 
@@ -23,6 +25,7 @@ var major_driver = [null,0,null,0]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	accumulated_mutuality_drivers['none'] = 1.5
 	pass
 
 func lotka(densities : Dictionary):
@@ -31,6 +34,8 @@ func lotka(densities : Dictionary):
 	var new_density
 
 	major_driver = [null,0,null,0]
+
+	var aux_mutuality_drivers = {}
 
 	for species in mutuality:
 		var mutual = mutuality[species]/time_stretch
@@ -41,6 +46,7 @@ func lotka(densities : Dictionary):
 			var d_other = densities.get(species, 0)
 			delta_d = mutual*d_other*previous_density
 
+		aux_mutuality_drivers[species] = delta_d
 		mutuality_drivers[species] = mutuality_drivers.get(species,0) + delta_d
 
 		total_delta_d += delta_d
@@ -53,7 +59,7 @@ func lotka(densities : Dictionary):
 
 # replacing instant set density with natural deferred set density
 #	self.set_density(new_density)
-	set_density_natural(previous_density, new_density, mutuality_drivers)
+	set_density_natural(previous_density, new_density, mutuality_drivers, aux_mutuality_drivers)
 
 	return new_density # is it confusing to change internal state but also return?
 
@@ -68,18 +74,8 @@ func set_density(density : float):
 	if abs(density_number_variation) > 0:
 		density_number_change.emit(density_number_variation)
 
-# TODO returns the integer ceil +/- drivers and adjusts the mutuality_drivers debt bag accordingly
-func _get_integer_drivers(mutuality_drivers):
-	var drivers = {}
-	for species in mutuality_drivers:
-		var mutual : float = mutuality_drivers[species] 
-		var delta_number : int = ceil(mutual)
-		drivers[species] = delta_number
-		mutuality_drivers[species] -= delta_number
-	
-	return drivers
-
 func _order_kill(my_species, driver, num_kills):
+
 	var killer_candidates = get_tree().get_nodes_in_group(driver)
 	var prey_candidates = get_tree().get_nodes_in_group(Constants.species_name(my_species))
 
@@ -90,17 +86,30 @@ func _order_kill(my_species, driver, num_kills):
 		
 		prey.set_hunted(killer)
 		killer.hunt(prey)
+	
+	var children_now = get_tree().get_nodes_in_group(Constants.species_name(my_species))
+	if GlobalSettings.global_debug_level >= GlobalSettings.DebugLevel.DEBUG:
+		prints(Constants.species_name(my_species),"integer density",-num_kills,"to add to",prey_candidates.size())#,"resulting",children_now.size())
 
-func set_density_natural(previous_density : float, density : float, current_mutuality_drivers):
+func set_density_natural(previous_density : float, density : float, current_mutuality_drivers, aux_mutuality_drivers):
 	self.density = density
 
 #	if abs(density - previous_density) > 0.0001:
 #		density_change.emit(density)
-	
-	var density_number_variation : int = ceil(density) - ceil(previous_density)
-	prints(self.display_name,"pre-settling mutuality_drivers is",current_mutuality_drivers)
-	var drivers = _get_integer_drivers(current_mutuality_drivers)
-	prints(self.display_name,"with density",previous_density,density,"has drivers",drivers,"remainder of",current_mutuality_drivers)
+#	var density_number_variation : int = ceil(density) - ceil(previous_density)
+	if GlobalSettings.global_debug_level >= GlobalSettings.DebugLevel.DEBUG:
+		prints(self.display_name,"pre-settling mutuality_drivers is",current_mutuality_drivers,"\ndelta_mutuality",aux_mutuality_drivers,"\nacc",accumulated_mutuality_drivers)
+	var drivers = {}
+	for species in current_mutuality_drivers:
+		var mutual : float = current_mutuality_drivers[species] 
+		accumulated_mutuality_drivers[species] = accumulated_mutuality_drivers.get(species,0) + aux_mutuality_drivers[species]
+		# todo maybe we could use accumulated and everytime is exceeds 1/-1, emit and remove the one
+		# but we definitelly have to simplify this
+		var delta_number : int = int(mutual)
+		drivers[species] = delta_number
+		current_mutuality_drivers[species] -= delta_number
+	if GlobalSettings.global_debug_level >= GlobalSettings.DebugLevel.DEBUG:
+		prints(self.display_name,"with density",previous_density,density,"has drivers",drivers,"remainder of",current_mutuality_drivers)
 	for driver in drivers:
 		var delta_pop : int = drivers[driver]
 		if delta_pop > 0:

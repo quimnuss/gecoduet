@@ -42,6 +42,7 @@ func kill():
 
 func set_hunted(predator):
 	set_status_effect(Constants.StatusEffect.DYING, true)
+	remove_from_group(Constants.species_name(self.species))
 	if $DebugLabelFlora:
 		$DebugLabelFlora.add_predator(predator.name)
 	await get_tree().create_timer(WAIT_FOR_KILLER_TIMEOUT).timeout

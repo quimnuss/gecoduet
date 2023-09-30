@@ -63,13 +63,15 @@ func random_in_radius(spawnpoint : Vector2, radius = DEFAULT_SPAWN_RADIUS):
 	return bound_proposal
 
 func spawn():
-	var lifeforms = get_tree().get_nodes_in_group("lifeforms")
-	if lifeforms:
-		prints(lifeforms.pick_random().get_groups())
+	if GlobalSettings.global_debug_level >= GlobalSettings.DebugLevel.DEBUG:
+		var lifeforms = get_tree().get_nodes_in_group("lifeforms")
+		if lifeforms:
+			prints(lifeforms.pick_random().get_groups())
 	var species_name = Constants.species_name(self.species)
 	var children = get_tree().get_nodes_in_group(species_name)
 	if children.is_empty():
-		prints("no lifeforms for breeding",Constants.species_name(self.species))
+		if GlobalSettings.global_debug_level >= GlobalSettings.DebugLevel.INFO:
+			prints("no lifeforms for breeding",Constants.species_name(self.species))
 		self.spawn_from_position()
 	else:
 		var breeder = children.pick_random()
@@ -121,7 +123,10 @@ func _spawn_from_resource(species: Constants.Species) -> Node:
 		"animal" :
 			return _set_from_animal_resource(lifeform_resource)
 		_:
-			prints("Lifeform type",lifeform_resource.type,"unknown to creation factory")
+			if GlobalSettings.global_debug_level >= GlobalSettings.DebugLevel.ERROR:
+				var msg : String = "Lifeform type %s unknown to creation factory" % lifeform_resource.type
+				prints(msg)
+				push_error(msg)
 			return null
 
 func _set_from_animal_resource(animal_resource):
@@ -156,4 +161,5 @@ func _on_glv_density_number_change(density_number_delta : int):
 	var children = get_tree().get_nodes_in_group(Constants.species_name(self.species))
 	sync_children_to_density(density_number_delta)
 	var children_now = get_tree().get_nodes_in_group(Constants.species_name(self.species))
-	prints(Constants.species_name(self.species),"integer density",density_number_delta,"to add to",children.size(),"resulting",children_now.size())
+	if GlobalSettings.global_debug_level >= GlobalSettings.DebugLevel.DEBUG:
+		prints(Constants.species_name(self.species),"integer density",density_number_delta,"to add to",children.size(),"resulting",children_now.size())

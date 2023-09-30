@@ -184,6 +184,7 @@ func kill():
 
 func set_hunted(predator):
 	set_status_effect(Constants.StatusEffect.DYING)
+	remove_from_group(Constants.species_name(self.species))
 	await get_tree().create_timer(WAIT_FOR_KILLER_TIMEOUT).timeout
 	if predator != null:
 		prints(self.name, "distance to predator",predator.name,"before dying:",self.global_position.distance_to(predator.global_position))
