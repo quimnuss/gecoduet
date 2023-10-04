@@ -4,8 +4,8 @@
 [ext_resource type="Resource" uid="uid://b5r4w26o5cwlc" path="res://data/lifeform_boar.tres" id="2_wk7oc"]
 [ext_resource type="Texture2D" uid="uid://bh3kruda7jagj" path="res://art/lifeforms/outline/MiniDeer2.png" id="3_kedx4"]
 [ext_resource type="AnimationLibrary" uid="uid://qr4hkr5vsu6l" path="res://scenes/actors/animations/stag_animation_library.tres" id="4_eyc41"]
-[ext_resource type="Script" path="res://scenes/components/movement.gd" id="5_5danb"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="5_5ny6y"]
+[ext_resource type="Script" path="res://scenes/components/movement.gd" id="5_70v70"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="7_dgbcq"]
 [ext_resource type="Script" path="res://scenes/actors/DebugLabelFlora.gd" id="8_62wfx"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="8_dverp"]
@@ -95,7 +95,7 @@ debug_path_custom_color = Color(0.0235294, 1, 1, 0.792157)
 debug_path_custom_point_size = 1.0
 
 [node name="Movement" type="Node2D" parent="." node_paths=PackedStringArray("pawn", "nav", "state_machine")]
-script = ExtResource("5_5danb")
+script = ExtResource("5_70v70")
 pawn = NodePath("..")
 nav = NodePath("../NavigationAgent2D")
 state_machine = NodePath("../StateChart")
