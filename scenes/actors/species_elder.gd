@@ -11,55 +11,55 @@ var res_mutuality = preload("res://data/glv.json")
 signal elder_extinct(elder : SpeciesElder)
 
 func _init():
-	pass
+    pass
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	randomize()
-	var main_scene = ProjectSettings.get_setting("application/run/main_scene")
-	var current_scene = get_tree().current_scene.scene_file_path
-	if main_scene == current_scene:
-		spawner.species = self.species
-	else: # not main scene
-		spawner.species = self.species
-	prints(res_mutuality.get_data())
-	var species_name = Constants.species_name(self.species)
-	glv.mutuality = res_mutuality.get_data()[species_name]
-	glv.display_name = species_name
-	
-	glv.density_number_change.emit(ceil(glv.density))
-	glv.mutuality_drivers["none"] = glv.density - ceil(glv.density)
-	glv.my_species = self.species
+    randomize()
+    var main_scene = ProjectSettings.get_setting("application/run/main_scene")
+    var current_scene = get_tree().current_scene.scene_file_path
+    if main_scene == current_scene:
+        spawner.species = self.species
+    else: # not main scene
+        spawner.species = self.species
+    prints(res_mutuality.get_data())
+    var species_name = Constants.species_name(self.species)
+    glv.mutuality = res_mutuality.get_data()[species_name]
+    glv.display_name = species_name
+
+    glv.density_number_change.emit(ceil(glv.density))
+    glv.mutuality_drivers["none"] = glv.density - ceil(glv.density)
+    glv.my_species = self.species
 
 func get_density() -> float:
-	return glv.density
+    return glv.density
 
 func set_density(density : float):
-	glv.set_density(density)
+    glv.set_density(density)
 
 func increase_density(delta_density : float):
-	self.set_density(get_density() + delta_density)
+    self.set_density(get_density() + delta_density)
 
 func kill_elder():
-	$ChildrenSync.stop()
-	await get_tree().create_timer(2).timeout
-	queue_free()
+    $ChildrenSync.stop()
+    await get_tree().create_timer(2).timeout
+    queue_free()
 
 func check_extinction(density: float) -> bool:
-	if density < 0.1:
-		prints("elder",self.name,"went extinct with density",density)
-		spawner.kill_all_children()
-		kill_elder()
-		elder_extinct.emit(self)
-		return true
-	return false
+    if density < 0.1:
+        prints("elder",self.name,"went extinct with density",density)
+        spawner.kill_all_children()
+        kill_elder()
+        elder_extinct.emit(self)
+        return true
+    return false
 
 func _on_density_integer_increased(num_births : int):
-	prints("spawning",num_births)
-	while num_births > 0:
-		num_births -= 1
-		spawner.spawn()
+    prints("spawning",num_births)
+    while num_births > 0:
+        num_births -= 1
+        spawner.spawn()
 
 
 
