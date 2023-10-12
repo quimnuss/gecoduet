@@ -100,6 +100,8 @@ func _input_event(_viewport, event, _shape_idx):
             GlobalSettings.globals_changed.emit()
             $StateChartDebugger.visible = true
 
+
+
 func _physics_input_process(delta):
 
     if get_selected():
