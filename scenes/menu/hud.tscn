@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dddjexq84ur7m"]
+[gd_scene load_steps=6 format=3 uid="uid://dddjexq84ur7m"]
 
 [ext_resource type="Script" path="res://scenes/menu/hud.gd" id="1_otiii"]
 [ext_resource type="Theme" uid="uid://3fjfnfk27srh" path="res://scenes/menu/theme.theme" id="2_nta24"]
 [ext_resource type="Texture2D" uid="uid://crdbn81g6qxjc" path="res://art/lifeforms/veggies.png" id="3_72122"]
+[ext_resource type="PackedScene" uid="uid://dvyyoxuhlt5fq" path="res://scenes/UI/species_modifier.tscn" id="3_beca8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1nmr8"]
 atlas = ExtResource("3_72122")
@@ -38,64 +39,91 @@ offset_bottom = 352.0
 layout_mode = 0
 offset_top = 8.0
 offset_right = 40.0
-offset_bottom = 183.0
+offset_bottom = 440.0
 scale = Vector2(0.5, 0.5)
-theme_override_constants/separation = 15
+theme_override_constants/separation = 32
 
 [node name="Button1" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme = ExtResource("2_nta24")
 text = "🐻"
 
+[node name="SpeciesModifier" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button1" instance=ExtResource("3_beca8")]
+position = Vector2(64, 0)
+species = 2
+
+[node name="SpeciesModifier2" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button1" instance=ExtResource("3_beca8")]
+position = Vector2(64, 32)
+is_negative = true
+species = 2
+
 [node name="Button2" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme = ExtResource("2_nta24")
 text = "🐇"
 
+[node name="SpeciesModifier" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button2" instance=ExtResource("3_beca8")]
+position = Vector2(64, 0)
+
+[node name="SpeciesModifier2" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button2" instance=ExtResource("3_beca8")]
+position = Vector2(64, 32)
+is_negative = true
+
 [node name="Button3" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme = ExtResource("2_nta24")
 text = "🥕"
 
 [node name="Button4" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme = ExtResource("2_nta24")
 text = "🦊"
 
 [node name="Button5" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme = ExtResource("2_nta24")
 text = "🐦"
 
 [node name="Button6" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme = ExtResource("2_nta24")
 disabled = true
 text = "🐟"
 
 [node name="Button7" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme = ExtResource("2_nta24")
 text = "🌱"
 
 [node name="Button8" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme = ExtResource("2_nta24")
 text = "🍒"
 
 [node name="Button9" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme = ExtResource("2_nta24")
 disabled = true
 text = "🐝"
 
 [node name="Button10" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme = ExtResource("2_nta24")
 disabled = true
 text = "🐛"
 
 [node name="Button11" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme = ExtResource("2_nta24")
 disabled = true

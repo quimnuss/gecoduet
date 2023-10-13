@@ -59,7 +59,7 @@ func random_in_radius(spawnpoint : Vector2, radius = DEFAULT_SPAWN_RADIUS):
     var alpha = randf_range(0,2*PI)
     # TODO check is target reachable or in bounds
     var proposal = spawnpoint + polar2cartesian(r,alpha)
-    var bound_proposal = proposal.clamp(Vector2(10,10), viewport_size - Vector2(10,10))
+    var bound_proposal = proposal.clamp(Vector2(16*2,16*2), viewport_size - Vector2(16*4,16*4))
     return bound_proposal
 
 func spawn():

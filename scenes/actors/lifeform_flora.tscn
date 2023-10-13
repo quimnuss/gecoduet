@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4categqdoybm"]
+[gd_scene load_steps=9 format=3 uid="uid://b4categqdoybm"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_flora.gd" id="1_6qnma"]
 [ext_resource type="Texture2D" uid="uid://cywvl7ikjw8iq" path="res://art/Generic Status Icons.png" id="2_8khso"]
+[ext_resource type="Script" path="res://scenes/components/draggable.gd" id="2_s8eaj"]
 [ext_resource type="Script" path="res://scenes/actors/DebugLabelFlora.gd" id="3_coesy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tswmy"]
@@ -26,6 +27,7 @@ script = ExtResource("1_6qnma")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_tswmy")
 disabled = true
+script = ExtResource("2_s8eaj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 

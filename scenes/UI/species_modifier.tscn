@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvyyoxuhlt5fq"]
+
+[ext_resource type="Texture2D" uid="uid://boyv8tjvfhuff" path="res://art/ecoduet_species_icons.png" id="1_qfidf"]
+[ext_resource type="Script" path="res://scenes/UI/SpeciesModifier.gd" id="2_0iew3"]
+[ext_resource type="Script" path="res://scenes/components/draggable.gd" id="3_dqpdl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ouf23"]
+size = Vector2(32, 32)
+
+[node name="SpeciesModifier" type="Sprite2D"]
+modulate = Color(0, 1, 0, 1)
+texture = ExtResource("1_qfidf")
+vframes = 11
+frame = 1
+region_rect = Rect2(0, 0, 32, 32)
+script = ExtResource("2_0iew3")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("3_dqpdl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_ouf23")
