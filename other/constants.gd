@@ -10,6 +10,12 @@ enum StatusEffect {
     DEFAULT, CHASE_PREY, CHASE_LEADER, AVOID_PREDATOR, DYING
 }
 
+var species_emojis : Dictionary = {
+    Species.NONE : '',
+    Species.BEAR : '🐻',
+    Species.RABBIT : '🐇',
+}
+
 static func species_name(species : Constants.Species):
     return Species.keys()[species].to_lower()
 

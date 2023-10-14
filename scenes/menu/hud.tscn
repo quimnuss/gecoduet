@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dddjexq84ur7m"]
+[gd_scene load_steps=7 format=3 uid="uid://dddjexq84ur7m"]
 
 [ext_resource type="Script" path="res://scenes/menu/hud.gd" id="1_otiii"]
 [ext_resource type="Theme" uid="uid://3fjfnfk27srh" path="res://scenes/menu/theme.theme" id="2_nta24"]
+[ext_resource type="Script" path="res://scenes/menu/draggable_species_mod.gd" id="2_tyuyq"]
 [ext_resource type="Texture2D" uid="uid://crdbn81g6qxjc" path="res://art/lifeforms/veggies.png" id="3_72122"]
-[ext_resource type="PackedScene" uid="uid://dvyyoxuhlt5fq" path="res://scenes/UI/species_modifier.tscn" id="3_beca8"]
+[ext_resource type="PackedScene" uid="uid://u1on3lp1j0uo" path="res://scenes/components/drop_zone.tscn" id="5_n32gw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1nmr8"]
 atlas = ExtResource("3_72122")
@@ -18,6 +19,9 @@ offset_right = -432.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_otiii")
+
+[node name="DropZone" parent="." instance=ExtResource("5_n32gw")]
+position = Vector2(360, 176)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -38,38 +42,84 @@ offset_bottom = 352.0
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUI/LifeformBox"]
 layout_mode = 0
 offset_top = 8.0
-offset_right = 40.0
-offset_bottom = 440.0
+offset_right = 80.0
+offset_bottom = 720.0
 scale = Vector2(0.5, 0.5)
 theme_override_constants/separation = 32
 
-[node name="Button1" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 layout_mode = 2
+
+[node name="Button1" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 theme = ExtResource("2_nta24")
 text = "🐻"
 
-[node name="SpeciesModifier" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button1" instance=ExtResource("3_beca8")]
-position = Vector2(64, 0)
-species = 2
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/HBoxContainer"]
+layout_mode = 2
 
-[node name="SpeciesModifier2" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button1" instance=ExtResource("3_beca8")]
-position = Vector2(64, 32)
-is_negative = true
-species = 2
+[node name="SpeciesModGreen" type="ColorRect" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "+0.1"
+color = Color(1, 1, 1, 0)
+script = ExtResource("2_tyuyq")
+
+[node name="Label" type="Label" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/HBoxContainer/VBoxContainer/SpeciesModGreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = -19.5
+offset_right = 19.0
+offset_bottom = 19.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_nta24")
+theme_override_colors/font_color = Color(0, 0.839216, 0, 1)
+theme_override_font_sizes/font_size = 22
+text = "🐻"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpeciesModRed" type="ColorRect" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+script = ExtResource("2_tyuyq")
+
+[node name="Label" type="Label" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/HBoxContainer/VBoxContainer/SpeciesModRed"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -19.0
+offset_top = -19.5
+offset_right = 19.0
+offset_bottom = 19.5
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "-0.1"
+mouse_filter = 1
+theme = ExtResource("2_nta24")
+theme_override_colors/font_color = Color(0.827451, 0.188235, 0, 1)
+theme_override_font_sizes/font_size = 22
+text = "🐻"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Button2" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme = ExtResource("2_nta24")
 text = "🐇"
-
-[node name="SpeciesModifier" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button2" instance=ExtResource("3_beca8")]
-position = Vector2(64, 0)
-
-[node name="SpeciesModifier2" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button2" instance=ExtResource("3_beca8")]
-position = Vector2(64, 32)
-is_negative = true
 
 [node name="Button3" type="Button" parent="CanvasLayer/GUI/LifeformBox/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
@@ -129,7 +179,7 @@ theme = ExtResource("2_nta24")
 disabled = true
 icon = SubResource("AtlasTexture_1nmr8")
 
-[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button1" to="." method="_on_species_name_button_pressed" binds= ["bear"]]
+[connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/HBoxContainer/Button1" to="." method="_on_species_name_button_pressed" binds= ["bear"]]
 [connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button2" to="." method="_on_species_name_button_pressed" binds= ["rabbit"]]
 [connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button3" to="." method="_on_species_name_button_pressed" binds= ["carrot"]]
 [connection signal="pressed" from="CanvasLayer/GUI/LifeformBox/VBoxContainer/Button4" to="." method="_on_species_name_button_pressed" binds= ["wolf"]]

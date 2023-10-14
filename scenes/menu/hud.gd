@@ -15,6 +15,12 @@ var emoji_to_species : Dictionary = {
 
 signal create_species(lifeform : Constants.Species)
 
+func _ready():
+    if get_parent() == get_tree().root:
+        $DropZone.visible = true
+    else:
+        $DropZone.visible = false
+
 func _on_species_name_button_pressed(species_name : String):
     var species = Constants.Species.get(species_name.to_upper())
     if species != null:

@@ -1,7 +1,6 @@
 [gd_scene load_steps=29 format=3 uid="uid://bob0pxtor755"]
 
 [ext_resource type="Script" path="res://scenes/actors/lifeform_animal.gd" id="1_jq6ja"]
-[ext_resource type="Resource" uid="uid://b5r4w26o5cwlc" path="res://data/lifeform_boar.tres" id="2_wk7oc"]
 [ext_resource type="Texture2D" uid="uid://bh3kruda7jagj" path="res://art/lifeforms/outline/MiniDeer2.png" id="3_kedx4"]
 [ext_resource type="AnimationLibrary" uid="uid://qr4hkr5vsu6l" path="res://scenes/actors/animations/stag_animation_library.tres" id="4_eyc41"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="5_5ny6y"]
@@ -20,6 +19,7 @@
 [ext_resource type="Resource" uid="uid://brea607hp7eq3" path="res://scenes/actors/StateConditions/is_moving.tres" id="13_ibwot"]
 [ext_resource type="Resource" uid="uid://c2d1qwbetpa35" path="res://scenes/actors/StateConditions/is_safe.tres" id="17_dbq8d"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/history_state.gd" id="19_7qqfb"]
+[ext_resource type="PackedScene" uid="uid://u1on3lp1j0uo" path="res://scenes/components/drop_zone.tscn" id="21_3dwg3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pqhh5"]
 radius = 8.0
@@ -59,7 +59,9 @@ collision_layer = 4
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_jq6ja")
-resource = ExtResource("2_wk7oc")
+
+[node name="DropZone" parent="." instance=ExtResource("21_3dwg3")]
+position = Vector2(0, -8)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -16)
