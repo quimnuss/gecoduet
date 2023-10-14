@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dq5lhnloiv17b"]
+[gd_scene load_steps=3 format=3 uid="uid://co27hvjqgxnry"]
 
 [ext_resource type="Texture2D" uid="uid://bo56g1l7isql6" path="res://art/selector_square.svg" id="1_bxps5"]
 [ext_resource type="Script" path="res://scenes/components/drop_zone_control.gd" id="2_0ecsw"]

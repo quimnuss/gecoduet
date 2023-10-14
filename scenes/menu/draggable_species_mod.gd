@@ -6,8 +6,8 @@ var dropped_on_target: bool = false
 
 var t = preload("res://scenes/menu/theme.theme")
 
-@export var is_negative : float = false
-@export var red_modulate : Color = Color(1,0,1)
+@export var is_negative : bool = false
+@export var red_modulate : Color = Color(1,0,0)
 @export var green_modulate : Color = Color(0,1,0)
 
 func _get_drag_data(_at_position: Vector2):
